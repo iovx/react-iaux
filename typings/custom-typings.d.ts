@@ -20,7 +20,3 @@ declare module "react-iaux" {
   export * from 'lib';
   export * from 'lib/style';
 }
-
-declare module "marked" {
-  export * from "marked";
-}
