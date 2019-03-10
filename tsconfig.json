@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "skipLibCheck":true,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "react-iaux":["lib/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

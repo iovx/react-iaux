@@ -1,0 +1,72 @@
+{
+  "name": "iuax",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "antd-tools run dist",
+    "compile": "antd-tools run compile",
+    "tsc": "tsc",
+    "start": "webpack-dev-server --config scripts/docs.config.js",
+    "build": "webpack --config scripts/build.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibreeze2017/react-iaux.git"
+  },
+  "author": "wx-2017",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ibreeze2017/react-iaux/issues"
+  },
+  "homepage": "https://github.com/ibreeze2017/react-iaux#readme",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
+  "typings": "lib/index.d.ts",
+  "devDependencies": {
+    "@types/classnames": "^2.2.6",
+    "@types/node": "^11.9.4",
+    "@types/prop-types": "^15.5.9",
+    "@types/react": "~16.8.1",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-intl": "^2.3.14",
+    "@types/react-router": "^4.4.4",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-slick": "^0.23.2",
+    "@types/warning": "^3.0.0",
+    "antd-tools": "^7.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-import": "^1.11.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-typescript": "^7.0.0-alpha.19",
+    "colorful": "^2.1.0",
+    "commander": "^2.19.0",
+    "css-loader": "^1.0.1",
+    "json-loader": "^0.5.7",
+    "less-loader": "^4.1.0",
+    "merge2": "^1.2.3",
+    "moment": "^2.24.0",
+    "postcss-loader": "^3.0.0",
+    "raw-loader": "^1.0.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "through2": "^3.0.0",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  },
+  "dependencies": {}
+}
