@@ -1,0 +1,34 @@
+.wx-mix-radius(@radius:50%) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.wx-mix-sizing(@sizing:border-box) {
+  -webkit-box-sizing: @sizing;
+  box-sizing: @sizing;
+}
+
+.wx-mix-shadow(@size:4px, @color:rgba(0,0,0,0.13)) {
+  -webkit-box-shadow: 0 0 @size @color;
+  -moz-box-shadow: 0 0 @size @color;
+  box-shadow: 0 0 @size @color;
+}
+.wx-mix-transition(@property:all, @time:800ms) {
+  -webkit-transition: @property @time;
+  -moz-transition: @property @time;
+  -ms-transition: @property @time;
+  -o-transition: @property @time;
+  transition: @property @time;
+}
+
+.wx-mix-width(@exp) {
+  width:-webkit-calc(~"@{exp}");
+  width:-moz-calc(~"@{exp}");
+  width:calc(~"@{exp}");
+}
+.wx-mix-calc(@prop, @exp) {
+  @{prop}:-webkit-calc(~"@{exp}");
+  @{prop}:-moz-calc(~"@{exp}");
+  @{prop}:calc(~"@{exp}");
+}
