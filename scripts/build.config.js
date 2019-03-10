@@ -1,5 +1,5 @@
-var path = require("path");
-var webpack = require("webpack");
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   entry: path.resolve(__dirname, "../docs/index.tsx"),
@@ -17,8 +17,8 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-      { test: /\.(txt|md)/, use: ["raw-loader"] },
+      {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
+      {test: /\.(txt|md)/, use: ["raw-loader"]},
       {
         test: /\.json$/,
         type: "javascript/auto",
@@ -42,14 +42,23 @@ module.exports = {
           //     camelCase: true
           //   }
           // },
+          // {
+          //   loader: "typings-for-css-modules-loader",
+          //   options: {
+          //     modules: true,
+          //     namedExport: true
+          //   }
+          // },
           {
-            loader: "typings-for-css-modules-loader",
+            loader: "postcss-loader",
             options: {
-              modules: true,
-              namedExport: true
+              // 如果没有options这个选项将会报错 No PostCSS Config found
+              plugins: () => [
+                require("autoprefixer")()
+                //CSS浏览器兼容
+              ]
             }
           },
-          "postcss-loader"
         ],
         exclude: ["/node_modules/"]
       },
@@ -80,8 +89,8 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        use: ["babel-loader"],
-        exclude: [/node_modules/]
+        exclude: /node_modules/,
+        use: ["babel-loader"]
       },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -90,7 +99,7 @@ module.exports = {
           limit: 10000
         }
       },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   },
   plugins: [
@@ -101,6 +110,6 @@ module.exports = {
     })
   ],
   optimization: {
-    minimize: false
+    minimize: true
   }
 };
