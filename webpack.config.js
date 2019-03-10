@@ -1,105 +1,39 @@
-/* eslint-disable */
-const webpack = require("webpack");
-const path = require("path");
-module.exports = {
-  entry: "./components/index.ts",
-  output: {
-    filename: "index.js",
-    path: path.resolve(__dirname) + "/dist"
-  },
-  devtool: "source-map",
-  resolve: {
-    alias: {
-      "react-iaux": path.resolve(__dirname,"/lib"),
-    },
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".js", ".jsx", ".ts", ".tsx", "js", ".json"]
-  },
-  mode: "development",
-  module: {
-    rules: [
-      {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
-      {test: /\.txt/, use: ["raw-loader"]},
-      {
-        test: /\.json$/,
-        type: 'javascript/auto',
-        loader: "json-loader"
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader",
-            options: {}
-          },
-          // {
-          //   loader: "css-loader",
-          //   options: {
-          //     // alias 解析别名
-          //     // importLoader(@import)
-          //     // modules: 是否开启css-modules
-          //     module:true,
-          //     Minimize: false,
-          //     camelCase: true
-          //   }
-          // },
-          {
-            loader: 'typings-for-css-modules-loader',
-            options: {
-              modules: true,
-              namedExport: true
-            }
-          },
-          "postcss-loader"
-        ],
-        exclude: ["/node_modules/"]
-      },
-      {
-        test: /\.less/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              Minimize: false,
-              camelCase: true
-            }
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              // 如果没有options这个选项将会报错 No PostCSS Config found
-              plugins: () => [
-                require("autoprefixer")()
-                //CSS浏览器兼容
-              ]
-            }
-          },
-          "less-loader"
-        ],
-        exclude: ["/node_modules/"]
-      },
-      {
-        test: /\.jsx?$/,
-        use: ["babel-loader"],
-        exclude: ["/node_modules/"]
-      },
-      {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000
-        }
-      },
-      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
-    ]
-  },
-  devServer: {
-    hot: true,
-    publicPath: '/dist/',
-    port: 7001
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
-};
+/* eslint no-param-reassign: 0 */
+// This config is for building dist files
+const getWebpackConfig = require('antd-tools/lib/getWebpackConfig');
+
+const {webpack} = getWebpackConfig;
+
+function ignoreMomentLocale(webpackConfig) {
+  delete webpackConfig.module.noParse;
+  webpackConfig.plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
+}
+
+function externalMoment(config) {
+  config.externals.moment = {
+    root: 'moment',
+    commonjs2: 'moment',
+    commonjs: 'moment',
+    amd: 'moment',
+  };
+  config.externals['react-iaux'] = {
+    root: 'react-iaux',
+    commonjs2: 'react-iaux',
+    commonjs: 'react-iaux',
+    amd: 'react-iaux',
+  };
+}
+
+
+// function setLibraryName(config) {
+//   config.output.library = 'iux';
+// }
+const webpackConfig = getWebpackConfig(false);
+if (process.env.RUN_ENV === 'PRODUCTION') {
+  webpackConfig.forEach(config => {
+    ignoreMomentLocale(config);
+    externalMoment(config);
+  });
+}
+
+module.exports = webpackConfig;

@@ -4,7 +4,6 @@
       "import",
       {
         "libraryName": "react-iaux",
-        "libraryDirectory": "lib",
         "style": true
       }
     ]

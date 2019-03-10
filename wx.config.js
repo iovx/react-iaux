@@ -1,28 +1,28 @@
-const path = require("path");
+/* eslint-disable */
 const webpack = require("webpack");
-
+const path = require("path");
 module.exports = {
-  entry: path.resolve(__dirname, "../docs/index.tsx"),
+  entry: "./components/index.ts",
   output: {
-    path: path.resolve(__dirname, "../docs/build"),
-    publicPath: "http://127.0.0.1:7007/docs/build/",
-    filename: "index.js"
+    filename: "index.js",
+    path: path.resolve(__dirname) + "/dist"
   },
-  mode: "development",
+  devtool: "source-map",
   resolve: {
     alias: {
-      components: path.resolve(__dirname, "../components"),
-      "react-iaux": path.resolve(__dirname, "../lib")
+      "react-iaux": path.resolve(__dirname,"/lib"),
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx"]
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".js", ".jsx", ".ts", ".tsx", "js", ".json"]
   },
+  mode: "development",
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-      { test: /\.(txt|md)/, use: ["raw-loader"] },
+      {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
+      {test: /\.txt/, use: ["raw-loader"]},
       {
         test: /\.json$/,
-        type: "javascript/auto",
+        type: 'javascript/auto',
         loader: "json-loader"
       },
       {
@@ -43,23 +43,14 @@ module.exports = {
           //     camelCase: true
           //   }
           // },
-          // {
-          //   loader: "typings-for-css-modules-loader",
-          //   options: {
-          //     modules: true,
-          //     namedExport: true
-          //   }
-          // },
           {
-            loader: "postcss-loader",
+            loader: 'typings-for-css-modules-loader',
             options: {
-              // 如果没有options这个选项将会报错 No PostCSS Config found
-              plugins: () => [
-                require("autoprefixer")()
-                //CSS浏览器兼容
-              ]
+              modules: true,
+              namedExport: true
             }
           },
+          "postcss-loader"
         ],
         exclude: ["/node_modules/"]
       },
@@ -90,8 +81,8 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader"],
+        exclude: ["/node_modules/"]
       },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -100,29 +91,33 @@ module.exports = {
           limit: 10000
         }
       },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   },
-  devtool: "cheap-eval-source-map",
+  externals: {
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'react',
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom',
+    },
+    moment: {
+      commonjs: 'moment',
+      commonjs2: 'moment',
+      amd: 'moment',
+    },
+  },
   devServer: {
-    contentBase: path.resolve(__dirname, "../docs/build"),
-    historyApiFallback: true,
     hot: true,
-    inline: true,
-    publicPath: "/docs/build/",
-    host: "127.0.0.1",
-    port: 7007,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080",
-        pathRewrite: { "^/api": "/api" }
-      }
-    }
+    publicPath: '/dist/',
+    port: 7001
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env.NODE.ENV": "development"
-    }),
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
 };

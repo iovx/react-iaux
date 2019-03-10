@@ -1,0 +1,33 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@inputPrefix: ~"@{prefix}-input";
+
+.@{inputPrefix} {
+  border: 1px solid;
+  width:100%;
+  padding:0 6px;
+  height:34px;
+  vertical-align: middle;
+}
+.ws-input-default {
+  border-color: @wx-v2-input-default-border;
+}
+.ws-input-success {
+  border-color: @wxSuccessColor;
+}
+.ws-input-error {
+  border-color: @wxErrorColor;
+}
+.ws-input-empty {
+  border-color: @wxErrorColor;
+}
+.ws-input-warning {
+  border-color: @wxWarningColor;
+}
+.ws-input-primary {
+  border-color: @wxPrimaryColor;
+}
+.ws-input-focus {
+  border-color: @themeColor;
+}

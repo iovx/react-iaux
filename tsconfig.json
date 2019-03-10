@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
+    "sourceMap": false,
     "skipLibCheck":true,
     "noImplicitAny": false,
     "noUnusedParameters": false,

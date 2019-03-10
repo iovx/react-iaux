@@ -11,7 +11,7 @@ module.exports = {
   resolve: {
     alias: {
       components: path.resolve(__dirname, "../components"),
-      "react-iaux": path.resolve(__dirname, "../lib")
+      "react-iaux": path.resolve(__dirname, "../es")
     },
     extensions: [".js", ".jsx", ".ts", ".tsx"]
   },

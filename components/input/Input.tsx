@@ -1,27 +1,48 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import omit from 'omit.js';
+import {tuple} from "../_utils/type";
 
-const STATUS = {
-  ERROR: 'error',
-  SUCCESS: 'success',
-  DEFAULT: 'default',
-  WARNING: 'warning',
-  PRIMARY: 'primary',
-  FOCUS: 'focus',
+const InputStatus = tuple('error', 'success', 'default', 'warning', 'primary', 'focus');
+
+const InputType = tuple('text', 'password');
+
+
+export declare interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
+  status?: (typeof InputStatus)[number],
+  type?: (typeof InputType)[number],
+  value?: string,
 }
 
-class Input extends Component {
+
+export declare type  InputState = {
+  status?: (typeof InputStatus)[number];
+  value?: string | string[];
+}
+
+class Input extends React.Component<InputProps, InputState> {
   static defaultProps = {
-    status: STATUS.DEFAULT,
-    type:'text',
+    status: 'default',
+    type: 'text',
   }
-  state = {}
-  componentWillMount() {
-    const {status, value, defaultValue} = this.props;
-    this.setState({status, value: defaultValue || value});
+  static propTypes = {
+    type: PropTypes.string,
+    status: PropTypes.oneOf(InputStatus),
+  };
+  input: HTMLInputElement;
+
+  constructor(props: InputProps) {
+    super(props);
+    const {status, value, defaultValue} = props;
+    const initValue = typeof value === 'undefined' ? defaultValue : value;
+    this.state = {
+      status,
+      value: initValue,
+    }
   }
-  componentWillReceiveProps(nextProps) {
+
+  componentWillReceiveProps(nextProps: InputProps): void {
     const {status, value} = nextProps;
     if (this.state.status !== status) {
       this.setState({status});
@@ -30,34 +51,63 @@ class Input extends Component {
       this.setState({value});
     }
   }
-  onFocus = (e) => {
+  getInputClassName(prefixCls: string) {
+    const { status } = this.props;
+    return cx(prefixCls, {
+      [`${prefixCls}-default`]: status === 'default',
+    });
+  }
+  saveInput = (node: HTMLInputElement) => {
+    this.input = node;
+  };
+
+  onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
     const {onFocus} = this.props;
-    this.setState({status: STATUS.FOCUS}, () => {
+    let event = e;
+    this.setState({status: 'focus'}, () => {
       if (onFocus) {
-        onFocus(e);
+        event = Object.create(e);
+        event.target = this.input;
+        event.currentTarget = this.input;
+        const originalInputValue = this.input.value;
+        this.input.value = '';
+        onFocus(event as React.FocusEvent<HTMLInputElement>);
+        // reset input value
+        this.input.value = originalInputValue;
       }
     })
   }
-  onBlur = (e) => {
+  onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     const {status, onBlur} = this.props;
     this.setState({status}, () => {
+      let event = e;
       if (onBlur) {
-        onBlur(e);
+        event = Object.create(e);
+        event.target = this.input;
+        event.currentTarget = this.input;
+        const originalInputValue = this.input.value;
+        this.input.value = '';
+        onBlur(event as React.FocusEvent<HTMLInputElement>);
+        // reset input value
+        this.input.value = originalInputValue;
       }
     })
   }
-  onChange = (e) => {
-    const {onChange} = this.props;
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = e.target;
-    this.setState({value}, () => {
-      if (onChange) {
-        onChange(value);
-      }
-    })
+    if (!('value' in this.props)) {
+      this.setState({value})
+    }
+    const {onChange} = this.props;
+    if (onChange) {
+      onChange(e as React.ChangeEvent<HTMLInputElement>);
+    }
   }
-  render() {
+
+  render(): JSX.Element {
     const {status} = this.state;
-    const {defaultValue, value, onChange,type, ...extraProps} = this.props;
+    const {type} = this.props;
+    const extraProps = omit(this.props, ['defaultValue', 'onChange', 'type','status']);
     const clsName = cx('wx-v2-input', `ws-input-${status}`);
     return (
       <input
@@ -68,15 +118,10 @@ class Input extends Component {
         onBlur={this.onBlur}
         type={type}
         onChange={this.onChange}
+        ref={this.saveInput}
       />
     );
   }
 }
 
-Input.propTypes = {
-  type:PropTypes.string,
-  status:PropTypes.oneOf(Object.values(STATUS)),
-};
-
-Input.Status = STATUS;
 export default Input;

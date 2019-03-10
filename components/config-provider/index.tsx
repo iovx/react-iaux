@@ -1,5 +1,5 @@
 import * as React from 'react';
-import createReactContext, { Context } from 'create-react-context';
+// import createReactContext, { Context } from 'create-react-context';
 
 import defaultRenderEmpty, { RenderEmptyHandler } from './renderEmpty';
 
@@ -27,12 +27,12 @@ interface ConfigProviderProps {
   autoInsertSpaceInButton?: boolean;
 }
 
-const ConfigContext: Context<ConfigConsumerProps | null> = createReactContext({
+const ConfigContext: React.Context<ConfigConsumerProps | null> = React.createContext({
   // We provide a default function for Context without provider
   getPrefixCls: (suffixCls: string, customizePrefixCls?: string) => {
     if (customizePrefixCls) return customizePrefixCls;
 
-    return `ant-${suffixCls}`;
+    return `wx-v2-${suffixCls}`;
   },
 
   renderEmpty: defaultRenderEmpty,
@@ -42,7 +42,7 @@ export const ConfigConsumer = ConfigContext.Consumer;
 
 class ConfigProvider extends React.Component<ConfigProviderProps> {
   getPrefixCls = (suffixCls: string, customizePrefixCls?: string) => {
-    const { prefixCls = 'ant' } = this.props;
+    const { prefixCls = 'wx-v2' } = this.props;
 
     if (customizePrefixCls) return customizePrefixCls;
 
