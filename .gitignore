@@ -33,7 +33,10 @@ config/base.yaml
 /coverage
 yarn.lock
 package-lock.json
+docs/**/*.js
+docs/**/*.js.map
 components/**/*.js
+components/**/*.js.map
 components/**/*.jsx
 !components/**/__tests__/*.js
 !components/**/__tests__/*.js.snap
