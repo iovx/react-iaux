@@ -1,7 +1,6 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import code from './source';
 import {getRandColor} from "react-iaux";
 import {getDocsList} from "./docs";
 
