@@ -1,8 +1,10 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor,Loading} from "react-iaux";
+import {getRandColor, Loading, Header} from "react-iaux";
 import {getDocsList} from "./docs";
+
+const {Left:HeaderLeft,Logo:HeaderLogo,Right:HeaderRight} = Header;
 
 const highlight = require('highlight.js');
 // require('highlight.js/styles/androidstudio.css');
@@ -12,7 +14,6 @@ const highlight = require('highlight.js');
 require('highlight.js/styles/googlecode.css');
 // require('highlight.js/styles/tomorrow.css');
 // require('highlight.js/styles/xcode.css');
-
 
 interface BaseProps {
 }
@@ -53,14 +54,23 @@ class App extends React.PureComponent<AppProps, {}> {
   state = {
     bg: getRandColor()
   };
+
   render() {
     return (
       <div>
-        <div style={{height:200,width:'100%',background:'#eee',border:'1px solid #ddd'}}>
+        <Header>
+          <HeaderLeft>
+            <HeaderLogo>微风平台</HeaderLogo>
+          </HeaderLeft>
+          <HeaderRight>
+            关于 | 开放平台
+          </HeaderRight>
+        </Header>
+        <div style={{height: 200, width: '100%', background: '#eee', border: '1px solid #ddd'}}>
           This is Header!
-          <Loading text="拼命加载中..." />
+          <Loading text="拼命加载中..."/>
         </div>
-        <Loading text="拼命加载中..." />
+        <Loading text="拼命加载中..." mask={false}/>
         <MarkDown content={docs.getStarted} renderer={markdownRender}/>
         <MarkDown content={docs.example} renderer={markdownRender}/>
       </div>

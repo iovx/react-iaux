@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import LoadingIcon from "./LoadingIcon";
 
 export interface LoadingProps {
-  text?: boolean;
+  text?: string;
   loading?: boolean;
   style?: React.CSSProperties;
   mask?: boolean;
