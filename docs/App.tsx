@@ -1,7 +1,7 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor} from "react-iaux";
+import {getRandColor,Loading} from "react-iaux";
 import {getDocsList} from "./docs";
 
 const highlight = require('highlight.js');
@@ -53,10 +53,14 @@ class App extends React.PureComponent<AppProps, {}> {
   state = {
     bg: getRandColor()
   };
-
   render() {
     return (
       <div>
+        <div style={{height:200,width:'100%',background:'#eee',border:'1px solid #ddd'}}>
+          This is Header!
+          <Loading text="拼命加载中..." />
+        </div>
+        <Loading text="拼命加载中..." />
         <MarkDown content={docs.getStarted} renderer={markdownRender}/>
         <MarkDown content={docs.example} renderer={markdownRender}/>
       </div>

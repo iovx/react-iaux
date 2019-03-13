@@ -18,7 +18,7 @@ export declare type FormState = any
 
 
 export default class Form extends React.Component<FormProps, FormState> {
-
+  static Decorator: typeof FieldDecorator;
   static create = (WrappedForm) => {
     const fieldDecorator = new FieldDecorator();
     const form = {
