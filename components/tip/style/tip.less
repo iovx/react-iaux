@@ -1,0 +1,71 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@tipPrefix: ~"@{prefix}-tip";
+/**提示信息 -start**/
+.@{tipPrefix} {
+  min-height: 100%;
+  background: #edecec;
+  color: #485390;
+  font-size: 0.95em;
+  line-height: 32px;
+  padding: 0 24px 0 12px;
+  border-radius: 1px;
+  word-wrap: break-word;
+
+  &.ws-tip-top {
+    min-width: 180px;
+    min-height: 60px;
+    position: fixed;
+    left: -webkit-calc(50% - 90px);
+    left: -moz-calc(50% - 90px);
+    left: calc(50% - 90px);
+    top: 0;
+    background-color: rgba(198, 183, 248, 0.90);
+    -webkit-box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    -moz-box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    -o-box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  }
+
+  &.ws-tip {
+    color: #4d71ed;
+    background-color: #eaebff;
+    border-left: 2px solid #868ecc;
+  }
+
+  &.ws-danger {
+    background-color: #f2dcd5;
+    border-left: 3px solid #f90b0b;
+    color: #ec4b38;
+  }
+
+  &.ws-success {
+    background-color: #e7ffec;
+    color: #319c2e;
+    border-left: 3px solid #067208;
+  }
+
+  &.ws-warning {
+    background-color: #ffeddc;
+    color: #936e25;
+    border-left: 3px solid #f96e08;
+  }
+
+  &.ws-orange {
+    background-color: #ffeddc;
+    color: #f54520;
+    border-left: 3px solid #f54520;
+  }
+
+  &.ws-fix {
+    position: absolute;
+    min-width: 110px;
+    left: 101.5%;
+    border-left: 3px solid;
+  }
+
+  &.ws-intent {
+    text-indent: 60px;
+  }
+}

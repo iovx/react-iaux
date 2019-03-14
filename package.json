@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "antd-tools run dist",
     "compile": "antd-tools run compile",
+    "cc": "antd-tools run compile && antd-tools run dist",
     "tsc": "tsc",
     "start": "webpack-dev-server --config scripts/docs.config.js",
     "build": "webpack --config scripts/build.config.js",

@@ -1,0 +1,39 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@panelPrefix: ~"@{prefix}-panel";
+
+/** wx card **/
+.@{panelPrefix} {
+  background-color: #fff;
+  border: @wx-panel-border;
+  margin: 5px;
+  min-height: 100px;
+  .wx-mix-radius(2px);
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom:@wx-panel-border;
+  }
+  &-body {
+    padding: 4px 10px;
+  }
+}
+
+/** wx card end**/
+
+@framePanelPrefix: ~"@{prefix}-frame-panel";
+
+.@{framePanelPrefix} {
+  position: relative;
+  width:100%;
+  height:100%;
+  .wx-xs-frame {
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+  }
+}

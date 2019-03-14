@@ -1,10 +1,12 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor, Loading, Header} from "react-iaux";
+import {getRandColor, Loading, Header, List, Panel} from "react-iaux";
 import {getDocsList} from "./docs";
 
-const {Left:HeaderLeft,Logo:HeaderLogo,Right:HeaderRight} = Header;
+const {Left: HeaderLeft, Logo: HeaderLogo, Right: HeaderRight} = Header;
+const {PicDesc: PicDescItem} = List;
+const {FullScreen, Wrapper, DragWrapper} = Panel;
 
 const highlight = require('highlight.js');
 // require('highlight.js/styles/androidstudio.css');
@@ -66,13 +68,79 @@ class App extends React.PureComponent<AppProps, {}> {
             关于 | 开放平台
           </HeaderRight>
         </Header>
+        <DragWrapper>
+          <Panel header={<span>今日要点</span>}>
+            <PicDescItem
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+            <PicDescItem
+              align='left'
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+            <PicDescItem
+              align='right'
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+            <PicDescItem
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+            <PicDescItem
+              align='left'
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+            <PicDescItem
+              align='right'
+              data={{
+                id: "1001",
+                title: '微风平台',
+                picUrl: '/entry.jpg',
+                description: '原来一个也不能少',
+                url: '#'
+              }}
+            />
+          </Panel>
+        </DragWrapper>
         <div style={{height: 200, width: '100%', background: '#eee', border: '1px solid #ddd'}}>
           This is Header!
           <Loading text="拼命加载中..."/>
         </div>
-        <Loading text="拼命加载中..." mask={false}/>
-        <MarkDown content={docs.getStarted} renderer={markdownRender}/>
-        <MarkDown content={docs.example} renderer={markdownRender}/>
+        <Wrapper>
+          <Loading text="拼命加载中..." mask={false}/>
+          <MarkDown content={docs.getStarted} renderer={markdownRender}/>
+          <FullScreen>
+            <MarkDown content={docs.example} renderer={markdownRender}/>
+          </FullScreen>
+        </Wrapper>
       </div>
     );
   }
