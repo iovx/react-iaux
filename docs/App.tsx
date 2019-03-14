@@ -1,10 +1,11 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor, Loading, Header} from "react-iaux";
+import {getRandColor, Loading, Header, Card} from "react-iaux";
 import {getDocsList} from "./docs";
 
-const {Left:HeaderLeft,Logo:HeaderLogo,Right:HeaderRight} = Header;
+const {Left: HeaderLeft, Logo: HeaderLogo, Right: HeaderRight} = Header;
+const {ImageCard} = Card;
 
 const highlight = require('highlight.js');
 // require('highlight.js/styles/androidstudio.css');
@@ -66,9 +67,12 @@ class App extends React.PureComponent<AppProps, {}> {
             关于 | 开放平台
           </HeaderRight>
         </Header>
-        <div style={{height: 200, width: '100%', background: '#eee', border: '1px solid #ddd'}}>
+        <div style={{height: 200, width: '100%', background: '#fefefe', border: '1px solid #ddd'}}>
           This is Header!
           <Loading text="拼命加载中..."/>
+        </div>
+        <div>
+          <ImageCard style={{height:400}} title="一个也不能少" picUrl={"/entry.jpg"}/>
         </div>
         <Loading text="拼命加载中..." mask={false}/>
         <MarkDown content={docs.getStarted} renderer={markdownRender}/>

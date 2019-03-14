@@ -1,0 +1,55 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@cardPrefix: ~"@{prefix}-card";
+
+.@{cardPrefix} {
+  position: relative;
+  .wx-mix-radius(3px);
+  overflow: hidden;
+  border: 1px solid #e3e3e3;
+  background-color: #fff;
+  box-shadow: 0 0 4px #fff;
+  width: 100%;
+  height: 100%;
+  &-body {
+    padding: 10px;
+  }
+  &-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &-title {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2px 4px;
+    background-color: rgba(0, 0, 0, .3);
+    color: #fff;
+  }
+  &.ws-hr &-title {
+    opacity: 0;
+    height: 0;
+  }
+  &.ws-hr:hover &-title {
+    opacity: 1;
+    height: 36px;
+    transition: all 400ms;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+}
