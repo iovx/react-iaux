@@ -1,0 +1,41 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@wrapperPrefix: ~"@{prefix}-wrapper";
+
+.@{wrapperPrefix} {
+  margin: 10px;
+}
+
+@dragWrapperPrefix: ~"@{prefix}-drag-wrapper";
+
+.@{dragWrapperPrefix} {
+  border: 1px solid #e1e1e1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  z-index: 9999999;
+  &-title {
+    background: #e0e0e0;
+    padding: 10px;
+  }
+  &-body {
+    padding: 10px;
+    background-color: #fff;
+  }
+  &.ws-moving &-title {
+    cursor: move;
+  }
+}
+
+@fullWrapperPrefix: ~"@{prefix}-wrapper-full";
+.@{fullWrapperPrefix} {
+  &-content {
+    background: #fff;
+    overflow: auto;
+  }
+}

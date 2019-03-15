@@ -1,0 +1,54 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@sectionPrefix: ~"@{prefix}-section";
+/** section **/
+/**节**/
+.@{sectionPrefix} {
+  padding: 10px 10px 0;
+  overflow: hidden;
+  border: 1px solid @wx-section-color-border;
+  &-title {
+    padding: 6px 10px;
+    font-size: 1.01em;
+    color: #414141;
+    border-left: 3px solid;
+    &-bage {
+      float: right;
+      padding: 0 10px;
+      font-size: 0.9em;
+      color: #777575
+    }
+    &.ws-default {
+      background: #bfe1cf;
+      border-left-color: #69b468;
+    }
+    &.ws-red {
+      background: #efd0d0;
+      border-left-color:  #b46868;
+    }
+    &.ws-blue {
+      background: #d0ddef;
+      border-left-color: #7886d7;
+    }
+    &.ws-warning {
+      background: #f4d9bd;
+      border-left-color: #f38f20;
+    }
+    &.ws-primary {
+      background: #e3e3e3;
+      border-left-color: #596783;
+    }
+  }
+  &-body {
+    padding: 10px 0 0;
+    .wx-section-line {
+      padding: 5px 4px;
+    }
+  }
+  &.ws-default {
+
+  }
+}
+
+/** section end **/
