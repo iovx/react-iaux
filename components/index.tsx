@@ -13,4 +13,6 @@ export {default as Panel} from './panel';
 export {default as Media} from './media';
 export {default as List} from './list';
 export {default as Card} from './card';
+export {default as ProgressBar} from './progressBar';
+export {default as Table} from './table/index';
 export * from './util';

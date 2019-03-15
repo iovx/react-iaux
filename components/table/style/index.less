@@ -1,0 +1,78 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+/**表格**/
+@tablePrefix: ~"@{prefix}-table";
+
+.@{tablePrefix} {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  caption {
+    padding: 10px;
+    color: #333;
+  }
+  & > tbody > tr.ws-headline,
+  & > thead > tr {
+    background-color: #f8f8f8;
+  }
+  & > tfoot > tr {
+    background-color: #f8f8f8;
+  }
+  /*间隔色*/
+
+  &.ws-striped > tbody > tr:nth-child(2n) {
+    background-color: #edf3ef;
+  }
+  &.ws-striped > tbody > tr:nth-child(2n+1) {
+    background-color: #fff;
+  }
+
+  /*悬浮色*/
+  & > tbody > tr.ws-at,
+  &.ws-hr > tbody > tr:hover,
+  &.ws-striped.ws-hr > tbody > tr:hover {
+    background-color: #e4e7ed;
+  }
+  /*默认边框*/
+  & > thead > tr,
+  & > tfoot > tr,
+  & > tbody > tr {
+    border-top: 1px solid #d3d3d3;
+  }
+  & > thead > tr:last-child,
+  & > tfoot > tr:last-child,
+  & > tbody > tr:last-child {
+    border-bottom: 1px solid #d3d3d3;
+  }
+
+  & > thead > tr:first-child {
+
+  }
+  & > tfoot > tr {
+
+  }
+  & > thead > tr > td,
+  & > thead > tr > th,
+  & > tfoot > tr > td,
+  & > tfoot > tr > th,
+  & > tbody > tr > td,
+  & > tbody > tr > th {
+    padding: 6px 2px;
+    color: #333;
+    font-weight: normal;
+  }
+  /*边框 ws-bd*/
+  &.ws-bd > thead > tr > td,
+  &.ws-bd > thead > tr > th,
+  &.ws-bd > tbody > tr > td,
+  &.ws-bd > tbody > tr > th,
+  &.ws-bd > tfoot > tr > td,
+  &.ws-bd > tfoot > tr > th {
+    border-left: 1px solid #cbcccc;
+    border-right: 1px solid #cbcccc;
+    padding: 5px 7px;
+  }
+}
+
+/*table -css*/
+/**表格 end**/
