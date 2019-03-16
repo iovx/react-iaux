@@ -1,0 +1,27 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@navPrefix: ~"@{prefix}-nav";
+
+/**直接按钮**/
+.@{navPrefix} {
+  display: flex;
+  &-item {
+    color: @themeColor;
+    &::after {
+      content: '|';
+      margin: 0 5px;
+      display: inline-block;
+    }
+    &:last-child::after {
+      display: none;
+      content: '';
+    }
+    a {
+      color: @themeColor;
+    }
+    &.ws-link a:hover {
+      opacity: 0.7;
+    }
+  }
+}

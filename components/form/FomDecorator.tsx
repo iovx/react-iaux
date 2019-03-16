@@ -1,6 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
-import {execFunction, isFunction, isEmpty} from "../util";
+import {execFunction, isFunction, isEmpty} from "../utils";
 
 export declare type ValidateResult = {
   error?: boolean;

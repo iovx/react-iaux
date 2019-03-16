@@ -13,4 +13,7 @@ export {default as Panel} from './panel';
 export {default as Media} from './media';
 export {default as List} from './list';
 export {default as Card} from './card';
-export * from './util';
+export {default as Slider} from './slider';
+export {default as Nav} from './nav';
+export {default as ReceizeCell} from './resizeCell';
+export * from './utils';
