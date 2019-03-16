@@ -1,7 +1,7 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor, Loading, Header, List, Panel, Card} from "react-iaux";
+import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider} from "react-iaux";
 import {getDocsList} from "./docs";
 
 const {PicDesc: PicDescItem} = List;
@@ -69,9 +69,11 @@ class App extends React.PureComponent<AppProps, {}> {
             关于 | 开放平台
           </HeaderRight>
         </Header>
-        <div style={{padding:10}}>
+        <div style={{padding: 10}}>
           <Wrapper style={{height: 200, width: '100%', background: '#fefefe', border: '1px solid #ddd'}}>
             This is Header!
+            <ProgressBar tip='none' progress={77}/>
+            <Slider max={100} progress={77}/>
             <Loading text="加载中..."/>
           </Wrapper>
           <Wrapper>

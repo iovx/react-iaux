@@ -1,4 +1,4 @@
-export {default as HttpUtil} from './http';
+export {default as Http} from './http';
 export {default as CurrentTime} from './currentTime';
 export {default as Input} from './input';
 export {default as Form} from './form';
@@ -18,4 +18,12 @@ export {default as Nav} from './nav';
 export {default as ReceizeCell} from './resizeCell';
 export {default as ProgressBar} from './progressBar';
 export {default as Table} from './table';
+export {default as Message} from './message';
+export {default as Selection} from './selection';
+export {default as Upload} from './upload';
+export {default as Icon} from './icon';
+export {default as Image} from './image';
+export {default as Drag} from './drag';
+export {default as Avatar} from './avatar';
+export {default as Menu} from './menu';
 export * from './utils';

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import {tuple} from '../_utils/type'
 
-const TipType = tuple('default', 'left', 'right', 'center');
+const TipType = tuple('none', 'default', 'left', 'right', 'center');
 
 interface BaseProps {
   className?: string;
@@ -11,6 +11,8 @@ interface BaseProps {
   total: number;
   tip?: typeof TipType[number];
   progress?: number;
+  bgBarStyle?: React.CSSProperties;
+  progressStyle?: React.CSSProperties;
 }
 
 export type ProgressBarProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
@@ -29,7 +31,7 @@ class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressBarState
     progress: 0,
     total: 100,
     type: 'default',
-    tip: 'default',
+    tip: 'none',
   }
 
   constructor(props) {
@@ -54,37 +56,50 @@ class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressBarState
   }
 
   render() {
-    const {className, barClassName, total, tip, progress: pg, ...props} = this.props;
+    const {className, barClassName, total, tip, progress: pg, bgBarStyle, progressStyle, ...props} = this.props;
     const {progress} = this.state;
-    const percent = (progress / total * 100);
+    const percent = (progress / (total || 1) * 100);
     const tipText = `${percent >= 100 ? percent.toFixed(0) : percent.toFixed(2)}%`;
     const width = `${percent}%`;
+    const innerStyle = {
+      ...progressStyle,
+      width
+    }
     const tipTextStyle: React.CSSProperties = {};
     const tipWidth = 40;
-    switch (tip) {
-      case 'default': {
-        tipTextStyle.left = percent > 50 ? `calc(${width} - ${tipWidth}px)` : width;
-        break;
+    const renderTip = tip === 'none';
+    if (renderTip) {
+
+    } else {
+      switch (tip) {
+        case 'default': {
+          tipTextStyle.left = percent > 50 ? `calc(${width} - ${tipWidth}px)` : width;
+          break;
+        }
+        case 'left':
+          tipTextStyle.left = 0;
+          break;
+        case 'center':
+          tipTextStyle.left = `calc(50% - ${tipWidth / 2}px)`;
+          break;
+        case 'right':
+          tipTextStyle.right = 0;
+          break;
       }
-      case 'left':
-        tipTextStyle.left = 0;
-        break;
-      case 'center':
-        tipTextStyle.left = `calc(50% - ${tipWidth / 2}px)`;
-        break;
-      case 'right':
-        tipTextStyle.right = 0;
-        break;
     }
     return (
       <div className={cx('wx-v2-progressBar-container', className)} {...props}>
         <div className={cx('wx-v2-progressBar', barClassName)}>
-          <div className='wx-v2-progressBar-background'/>
-          <div className='wx-v2-progressBar-progress'/>
+          <div className='wx-v2-progressBar-background' style={bgBarStyle}/>
+          <div className='wx-v2-progressBar-progress' style={innerStyle}/>
         </div>
-        <div className='wx-v2-progressBar-tip'>
-          <div className='wx-v2-progressBar-tip-text' style={tipTextStyle}>{tipText}</div>
-        </div>
+        {
+          !renderTip && (
+            <div className='wx-v2-progressBar-tip'>
+              <div className='wx-v2-progressBar-tip-text' style={tipTextStyle}>{tipText}</div>
+            </div>
+          )
+        }
       </div>
     );
   }

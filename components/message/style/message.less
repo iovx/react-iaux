@@ -1,0 +1,45 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+/* message start*/
+.wx-mix-message-xs(@type:primary,@color:@wx-color-primary,@bg:@wx-notice-bg-primary) {
+  &.wx-xs-@{type} {
+    background-color: @bg;
+    .wx-xs-content,
+    .wx-xs-icon .wx-iconfont {
+      color: @color;
+    }
+  }
+}
+
+.wx-message {
+  padding: 7px 30px 7px 11px;
+  display: inline-block;
+  margin: 27px auto;
+  //position: fixed;
+  min-width:160px;
+  .wx-mix-shadow();
+  .wx-mix-radius();
+  .wx-xs-icon {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px 5px 2px 2px;
+    .wx-iconfont {
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+  .wx-xs-content {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .wx-mix-message-xs(info, @wx-color-info, @wx-notice-bg-info);
+  .wx-mix-message-xs(success, @wx-color-success, @wx-notice-bg-success);
+  .wx-mix-message-xs(error, @wx-color-error, @wx-notice-bg-error);
+  .wx-mix-message-xs(primary, @wx-color-primary, @wx-notice-bg-primary);
+  .wx-mix-message-xs(warning, @wx-color-warning, @wx-notice-bg-warning);
+
+}
+
+/* message end*/

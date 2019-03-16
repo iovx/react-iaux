@@ -7,12 +7,12 @@ import {tuple} from "../_utils/type";
 const directionType = tuple('horizontal', 'vertical')
 
 interface BaseProps {
-  onChange: (progress: number, value: number) => void;
-  onDrag: (progress: number, value: number) => boolean | undefined;
-  onSkip: (progress: number, value: number) => boolean | undefined;
-  onMax: () => void;
-  min: number,
-  max: number,
+  onChange?: (progress: number, value: number) => void;
+  onDrag?: (progress: number, value: number) => boolean | undefined;
+  onSkip?: (progress: number, value: number) => boolean | undefined;
+  onMax?: () => void;
+  min?: number,
+  max?: number,
   progress?: number,
   accuracy?: number,
   allowDrag?: boolean;
@@ -238,6 +238,10 @@ class Slider extends React.Component<SliderProps, SliderState> {
   }
 
   render() {
+    const {
+      progress: pg, accuracy, type, max, min, onPointerLeave, onPointerMove,
+      onTouchEnd, onClick, onTouchMove, onMax, allowDrag, allowSkip, onSkip, ...extraProps
+    } = this.props;
     const {progress, isMouseDown} = this.state;
     const length = `${progress * 100}%`;
     const sliderCls = cx('wx-v2-slider ws-hr', isMouseDown ? 'ws-active' : '');
@@ -250,10 +254,9 @@ class Slider extends React.Component<SliderProps, SliderState> {
     const spStyle = {
       width: length,
     };
-    const {onPointerLeave, onPointerMove, onTouchEnd, onClick, onTouchMove, ...props} = this.props;
     return (
       <div
-        {...props}
+        {...extraProps}
         onPointerLeave={this.onMouseLeave}
         onPointerMove={this.onMouseMove}
         onTouchMove={this.onTouchMove}
