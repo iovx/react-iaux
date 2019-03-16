@@ -16,4 +16,6 @@ export {default as Card} from './card';
 export {default as Slider} from './slider';
 export {default as Nav} from './nav';
 export {default as ReceizeCell} from './resizeCell';
+export {default as ProgressBar} from './progressBar';
+export {default as Table} from './table';
 export * from './utils';
