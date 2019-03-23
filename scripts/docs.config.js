@@ -18,8 +18,8 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-      { test: /\.(txt|md)/, use: ["raw-loader"] },
+      {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
+      {test: /\.(txt|md)/, use: ["raw-loader"]},
       {
         test: /\.json$/,
         type: "javascript/auto",
@@ -32,17 +32,17 @@ module.exports = {
             loader: "style-loader",
             options: {}
           },
-          // {
-          //   loader: "css-loader",
-          //   options: {
-          //     // alias 解析别名
-          //     // importLoader(@import)
-          //     // modules: 是否开启css-modules
-          //     module:true,
-          //     Minimize: false,
-          //     camelCase: true
-          //   }
-          // },
+          {
+            loader: "css-loader",
+            options: {
+              // alias 解析别名
+              // importLoader(@import)
+              // modules: 是否开启css-modules
+              module: true,
+              Minimize: false,
+              camelCase: true
+            }
+          },
           // {
           //   loader: "typings-for-css-modules-loader",
           //   options: {
@@ -70,6 +70,10 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
+              // alias 解析别名
+              // importLoader(@import)
+              // modules: 是否开启css-modules
+              module: true,
               Minimize: false,
               camelCase: true
             }
@@ -100,7 +104,7 @@ module.exports = {
           limit: 10000
         }
       },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   },
   devtool: "cheap-eval-source-map",
@@ -115,7 +119,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://localhost:8080",
-        pathRewrite: { "^/api": "/api" }
+        pathRewrite: {"^/api": "/api"}
       }
     }
   },

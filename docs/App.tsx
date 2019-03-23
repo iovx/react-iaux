@@ -3,6 +3,7 @@ import "../dist/react-iaux.css"
 import * as marked from 'marked';
 import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider} from "react-iaux";
 import {getDocsList} from "./docs";
+import FormPage from './pages/form';
 
 const {PicDesc: PicDescItem} = List;
 const {Wrapper} = Panel;
@@ -72,9 +73,9 @@ class App extends React.PureComponent<AppProps, {}> {
         <div style={{padding: 10}}>
           <Wrapper style={{height: 200, width: '100%', background: '#fefefe', border: '1px solid #ddd'}}>
             This is Header!
-            <ProgressBar tip='none' progress={77}/>
-            <Slider max={100} progress={77}/>
-            <Loading text="加载中..."/>
+            <ProgressBar tip='none' progress={0.77}/>
+            <Slider max={100} progress={0.77}/>
+            <Loading text="加载中..." mask={false}/>
           </Wrapper>
           <Wrapper>
             <ImageCard style={{height: 400}} title="一个也不能少" picUrl={"/entry.jpg"}/>
@@ -139,6 +140,9 @@ class App extends React.PureComponent<AppProps, {}> {
                   url: '#'
                 }}
               />
+            </Panel>
+            <Panel>
+              <FormPage className='' style={{}}/>
             </Panel>
           </Wrapper>
           <Wrapper>

@@ -32,20 +32,20 @@ const RULE = {
 }
 
 export type Rule = {
-  pattern: RegExp;
-  validate: (value: any, data: object) => Promise<boolean> | boolean;
-  message: string;
+  pattern?: RegExp;
+  validate?: (value: any, data: object) => Promise<boolean> | boolean;
+  message?: string;
 }
 
 export interface DecorateOption {
-  label: React.ReactNode;
-  force: boolean;
-  initialValue: any;
-  stopValidate: boolean;
-  required: boolean;
-  validating: boolean;
-  rules: Rule[];
-  message: React.ReactNode;
+  label?: React.ReactNode;
+  force?: boolean;
+  initialValue?: any;
+  stopValidate?: boolean;
+  required?: boolean;
+  validating?: boolean;
+  rules?: Rule[];
+  message?: React.ReactNode;
 }
 
 class FieldDecorator {
@@ -151,8 +151,8 @@ class FieldDecorator {
 }
 
 export interface FieldDecoratorItemProps {
-  name?: string|any;
-  refDecorator: FieldDecorator|any;
+  name?: string | any;
+  refDecorator: FieldDecorator | any;
   onRef?: (ref: FieldDecoratorItem) => void;
   options: DecorateOption;
   comp: any;//React.ReactElement & React.ReactHTMLElement<any>;
@@ -182,10 +182,10 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     required: false,
     status: STATUS.DEFAULT,
     validating: '正在验证...',
-    options:{},
-    rules:[],
-    message:'',
-    label:null,
+    options: {},
+    rules: [],
+    message: '',
+    label: null,
   }
 
   constructor(props: FieldDecoratorItemProps) {
@@ -208,7 +208,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     const fieldProps = {
       ref: this.fieldRef,
       name,
-      defaultValue: initialValue,
+      value: initialValue,
       onChange: (value) => {
         this.setValue(value);
       },
@@ -275,7 +275,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i];
       const {pattern, validate, message} = rule;
-      if (isFunction(validate)) {
+      if (validate && isFunction(validate)) {
         const res = validate(value, this.refDecorator.data);
         if (res instanceof Promise) {
           this.setState({isValidating: true});
@@ -296,7 +296,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     return {error: false, message: ''};
   }
   // 触发验证
-  triggerValidate = async (paramScales?: string|null, callback?: () => void): Promise<ValidateResult> => {
+  triggerValidate = async (paramScales?: string | null, callback?: () => void): Promise<ValidateResult> => {
     const {required, label, options} = this.props;
     const {rules = [], message} = options;
     const {value} = this.state;
