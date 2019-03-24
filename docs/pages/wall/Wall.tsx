@@ -1,19 +1,16 @@
 import * as React from 'react';
 import {WaterFall} from "react-iaux";
-// import * as styles from './Wall.less';
+import * as style from './Wall.less';
 
-const styles = require('./Wall.less');
-console.log(styles);
+const styles = style as any;
 
 const url = 'http://api.assure.com/api/resource/image/getList';
-// const url = 'http://47.101.140.175:8080/api/imgService/getImgList';
-// const imgUrl = 'http://47.101.140.175:8080/';
 const imgUrl = 'http://api.assure.com/api/resource/image/thumb/';
 
 class Wall extends React.Component {
 
   onLoadOver = () => {
-    alert('onLoadOver')
+    // alert('onLoadOver')
   }
 
   loader = (page, pageSize) => {
@@ -42,8 +39,8 @@ class Wall extends React.Component {
           content={this.content}
           contentCls={styles.content}
           onLoadOver={this.onLoadOver}
-          holder={<div>loading...</div>}
-          itemWidth={200}
+          holder={<div className={styles.loading}>Loading...</div>}
+          cols={4}
         />
       </div>
     );
