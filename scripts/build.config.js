@@ -11,7 +11,7 @@ module.exports = {
   resolve: {
     alias: {
       components: path.resolve(__dirname, "../components"),
-      "react-iaux": path.resolve(__dirname, "../es")
+      "react-iaux": path.resolve(__dirname, "../lib")
     },
     extensions: [".js", ".jsx", ".ts", ".tsx"]
   },
@@ -68,9 +68,8 @@ module.exports = {
           "style-loader",
           {
             loader: "css-loader",
-            options: {
-              Minimize: false,
-              camelCase: true
+            options:{
+              modules:true,
             }
           },
           {

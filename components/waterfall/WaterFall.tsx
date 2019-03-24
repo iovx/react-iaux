@@ -180,6 +180,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
       const width = config.width;
       const {dataList} = this.state;
       const newList = list.map(item => ({
+        ...item,
         url: item.url,
         originWidth: item.width,
         originHeight: item.height,

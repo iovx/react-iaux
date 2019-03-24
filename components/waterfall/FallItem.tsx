@@ -2,6 +2,19 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 
+export type DataItem = {
+  originWidth?: number;
+  originHeight?: number;
+  width: number;
+  height: number;
+  url: string;
+  top: number;
+  left: number;
+  title: string;
+  description: string;
+  [index:string]:any;
+}
+
 interface BaseProps {
   onError?: (e: object) => void;
   onLoad?: (url: string, e: object) => void;
@@ -15,6 +28,7 @@ interface BaseProps {
   contentCls?: string;
   contentStyle?: React.CSSProperties;
   content?: React.ReactNode;
+  data?:DataItem;
 }
 
 export type FallItemProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
@@ -53,7 +67,7 @@ class FallItem extends React.Component<FallItemProps, any> {
 
   render() {
     const {error, loaded} = this.state;
-    const {children, errorUrl, url, width, height, style, holder, className, contentCls, contentStyle, content, ...extraProps} = this.props;
+    const {children, errorUrl, url, width, height, style, holder, className, contentCls, contentStyle, data,content, ...extraProps} = this.props;
     const wrapperStyle = {
       ...style,
       width,
