@@ -4,6 +4,7 @@ import * as marked from 'marked';
 import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider} from "react-iaux";
 import {getDocsList} from "./docs";
 import FormPage from './pages/form';
+import WallPage from './pages/wall';
 
 const {PicDesc: PicDescItem} = List;
 const {Wrapper} = Panel;
@@ -142,7 +143,10 @@ class App extends React.PureComponent<AppProps, {}> {
               />
             </Panel>
             <Panel>
-              <FormPage className='' style={{}}/>
+              <FormPage />
+            </Panel>
+            <Panel>
+              <WallPage />
             </Panel>
           </Wrapper>
           <Wrapper>

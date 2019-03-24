@@ -14,7 +14,7 @@ module.exports = {
       components: path.resolve(__dirname, "../components"),
       "react-iaux": path.resolve(__dirname, "../lib")
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx"]
+    extensions: [".js", ".jsx", ".ts", ".tsx","css",'less']
   },
   module: {
     rules: [
@@ -34,19 +34,14 @@ module.exports = {
           },
           {
             loader: "css-loader",
-            options: {
-              // alias 解析别名
-              // importLoader(@import)
-              // modules: 是否开启css-modules
-              module: true,
-              Minimize: false,
-              camelCase: true
+            options:{
+              modules:false,
             }
           },
           // {
-          //   loader: "typings-for-css-modules-loader",
+          //   loader: 'typings-for-css-modules-loader',
           //   options: {
-          //     modules: true,
+          //     modules:true,
           //     namedExport: true
           //   }
           // },
@@ -69,13 +64,8 @@ module.exports = {
           "style-loader",
           {
             loader: "css-loader",
-            options: {
-              // alias 解析别名
-              // importLoader(@import)
-              // modules: 是否开启css-modules
-              module: true,
-              Minimize: false,
-              camelCase: true
+            options:{
+              modules:true,
             }
           },
           {

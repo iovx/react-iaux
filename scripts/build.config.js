@@ -60,7 +60,7 @@ module.exports = {
             }
           },
         ],
-        exclude: ["/node_modules/"]
+        exclude: ["/node_modules/","/dist/"]
       },
       {
         test: /\.less/,
@@ -85,7 +85,7 @@ module.exports = {
           },
           "less-loader"
         ],
-        exclude: ["/node_modules/"]
+        exclude: ["/node_modules/","/dist/"]
       },
       {
         test: /\.jsx?$/,

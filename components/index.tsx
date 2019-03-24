@@ -26,4 +26,5 @@ export {default as Image} from './image';
 export {default as Drag} from './drag';
 export {default as Avatar} from './avatar';
 export {default as Menu} from './menu';
+export {default as WaterFall} from './waterfall';
 export * from './utils';
