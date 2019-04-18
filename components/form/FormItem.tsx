@@ -3,14 +3,15 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import FieldDecorator from "./FomDecorator";
 
-export declare type FormItemProps = {
-  required: boolean;
-  colon: string;
-  style: React.CSSProperties;
-  className: string;
-  label: React.ReactNode;
-  children: React.ReactChild,
+export interface FormItemProps {
+  required?: boolean;
+  colon?: string;
+  style?: React.CSSProperties;
+  className?: string;
+  label?: React.ReactNode;
+  children?: React.ReactChild,
 }
+
 export declare type FormItemState = {
   required?: boolean;
   label?: React.ReactNode;

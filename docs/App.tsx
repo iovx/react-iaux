@@ -4,7 +4,8 @@ import * as marked from 'marked';
 import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider, Button} from "react-iaux";
 import {getDocsList} from "./docs";
 import {Dialog} from "../components";
-
+import FormPage from './pages/form';
+import WallPage from './pages/wall';
 const {PicDesc: PicDescItem} = List;
 const {Wrapper} = Panel;
 const {Left: HeaderLeft, Logo: HeaderLogo, Right: HeaderRight} = Header;
@@ -76,7 +77,7 @@ class App extends React.PureComponent<AppProps, {}> {
             This is Header!
             <ProgressBar tip='none' total={100} progress={77}/>
             <Slider max={100} progress={77}/>
-            <Loading text="加载中..."/>
+            <Loading text="加载中..." mask={false}/>
           </Wrapper>
           <Wrapper>
             <ImageCard style={{height: 400}} title="一个也不能少" picUrl={"/entry.jpg"}/>
@@ -141,6 +142,12 @@ class App extends React.PureComponent<AppProps, {}> {
                   url: '#'
                 }}
               />
+            </Panel>
+            <Panel>
+              <FormPage />
+            </Panel>
+            <Panel>
+              <WallPage />
             </Panel>
           </Wrapper>
           <Wrapper>

@@ -14,12 +14,12 @@ module.exports = {
       components: path.resolve(__dirname, "../components"),
       "react-iaux": path.resolve(__dirname, "../lib")
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx"]
+    extensions: [".js", ".jsx", ".ts", ".tsx","css",'less']
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-      { test: /\.(txt|md)/, use: ["raw-loader"] },
+      {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
+      {test: /\.(txt|md)/, use: ["raw-loader"]},
       {
         test: /\.json$/,
         type: "javascript/auto",
@@ -32,21 +32,16 @@ module.exports = {
             loader: "style-loader",
             options: {}
           },
+          {
+            loader: "css-loader",
+            options:{
+              modules:false,
+            }
+          },
           // {
-          //   loader: "css-loader",
+          //   loader: 'typings-for-css-modules-loader',
           //   options: {
-          //     // alias 解析别名
-          //     // importLoader(@import)
-          //     // modules: 是否开启css-modules
-          //     module:true,
-          //     Minimize: false,
-          //     camelCase: true
-          //   }
-          // },
-          // {
-          //   loader: "typings-for-css-modules-loader",
-          //   options: {
-          //     modules: true,
+          //     modules:true,
           //     namedExport: true
           //   }
           // },
@@ -69,9 +64,8 @@ module.exports = {
           "style-loader",
           {
             loader: "css-loader",
-            options: {
-              Minimize: false,
-              camelCase: true
+            options:{
+              modules:true,
             }
           },
           {
@@ -100,7 +94,7 @@ module.exports = {
           limit: 10000
         }
       },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   },
   devtool: "cheap-eval-source-map",
@@ -115,7 +109,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://localhost:8080",
-        pathRewrite: { "^/api": "/api" }
+        pathRewrite: {"^/api": "/api"}
       }
     }
   },

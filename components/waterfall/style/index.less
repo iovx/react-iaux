@@ -1,0 +1,24 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@waterFallPrefix: ~"@{prefix}-waterfall";
+
+.@{waterFallPrefix} {
+  position: relative;
+  &-item {
+    position: absolute;
+  }
+  &-img {
+    width: 100%;
+    height: 100%;
+    background: #e8e8e8;
+  }
+  &-holder,
+  &-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -28,4 +28,5 @@ export {default as Avatar} from './avatar';
 export {default as Menu} from './menu';
 export {default as Dialog} from './dialog';
 export {default as Portal} from './portal';
+export {default as WaterFall} from './waterfall';
 export * from './utils';
