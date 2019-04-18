@@ -6,6 +6,7 @@ interface BaseProps {
   src?: string;
   onAvatarClick?: React.MouseEventHandler;
   round?: boolean;
+  style:React.CSSProperties
 }
 
 export type AvatarProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;

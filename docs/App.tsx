@@ -1,8 +1,9 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider} from "react-iaux";
+import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider, Button} from "react-iaux";
 import {getDocsList} from "./docs";
+import {Dialog} from "../components";
 
 const {PicDesc: PicDescItem} = List;
 const {Wrapper} = Panel;
@@ -55,7 +56,8 @@ const MarkDown = (props: MarkDownProps) => {
 class App extends React.PureComponent<AppProps, {}> {
   static propTypes = {};
   state = {
-    bg: getRandColor()
+    bg: getRandColor(),
+    show:false,
   };
 
   render() {
@@ -72,7 +74,7 @@ class App extends React.PureComponent<AppProps, {}> {
         <div style={{padding: 10}}>
           <Wrapper style={{height: 200, width: '100%', background: '#fefefe', border: '1px solid #ddd'}}>
             This is Header!
-            <ProgressBar tip='none' progress={77}/>
+            <ProgressBar tip='none' total={100} progress={77}/>
             <Slider max={100} progress={77}/>
             <Loading text="加载中..."/>
           </Wrapper>
@@ -146,6 +148,10 @@ class App extends React.PureComponent<AppProps, {}> {
             <MarkDown content={docs.getStarted} renderer={markdownRender}/>
             <MarkDown content={docs.example} renderer={markdownRender}/>
           </Wrapper>
+          <Dialog visible={this.state.show}>
+            <div>一个也不能少</div>
+          </Dialog>
+          <Button onClick={()=>{this.setState({show:true})}}>SHOW</Button>
         </div>
       </div>
     );
