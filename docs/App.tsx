@@ -1,9 +1,8 @@
 import * as React from "react";
 import "../dist/react-iaux.css"
 import * as marked from 'marked';
-import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider, Button} from "react-iaux";
+import {getRandColor, Loading, Header, List, Panel, Card, ProgressBar, Slider, Button,Dialog} from "react-iaux";
 import {getDocsList} from "./docs";
-import {Dialog} from "../components";
 import FormPage from './pages/form';
 import WallPage from './pages/wall';
 const {PicDesc: PicDescItem} = List;
