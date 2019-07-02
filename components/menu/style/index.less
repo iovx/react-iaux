@@ -1,0 +1,31 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@menuPrefix: @{prefix}-menu;
+
+.@{menuPrefix} {
+  line-height: normal;
+  color: #333;
+  &-title {
+    padding: 6px 0;
+    border-bottom: 1px solid #b4b4b4;
+    &-level {
+      padding: 2px 4px;
+      cursor: default;
+      color: #fff;
+      font-size: 12px;
+      background-color: #ea4a2f;
+    }
+  }
+  &-body {
+    padding: 2px 0;
+  }
+}
+
+.@{menuPrefix}-item {
+  padding: 6px 6px;
+  cursor: default;
+  &:hover {
+    background-color: #eaeaea;
+  }
+}

@@ -1,0 +1,32 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@avatarPrefix: @{prefix}-avatar;
+
+.@{avatarPrefix} {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  position: relative;
+  &-face {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+    .ws-circle {
+      .wx-mix-radius();
+    }
+  }
+  &-content {
+    display: none;
+  }
+  &:hover {
+    .content {
+      display: block;
+    }
+  }
+}
+

@@ -1,0 +1,46 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@tagPrefix: "@{prefix}-tag";
+
+/* tag color */
+.wx-mix-tag-color(@n,@bg) when (isnumber(@n)) {
+  &:nth-child(@{n}n) {
+    background-color: @bg;
+  }
+}
+
+.wx-mix-tag-color(@n,@bg) when (default()) {
+  &.@{tagPrefix}-item-@{n} {
+    background-color: @bg;
+  }
+}
+
+.@{tagPrefix}s {
+  .@{tagPrefix}-item {
+    display: inline-block;
+    padding: 3px 9px;
+    margin: 3px 4px;
+    cursor: default;
+    color: #fef;
+    .wx-mix-radius(2px);
+    .wx-mix-tag-color(1, #fe5633);
+    .wx-mix-tag-color(2, #2c7fea);
+    .wx-mix-tag-color(3, #0cd44e);
+    .wx-mix-tag-color(4, #596783);
+    .wx-mix-tag-color(5, #24c99b);
+    .wx-mix-tag-color(6, #ff3a3a);
+    .wx-mix-tag-color(7, #962efe);
+
+    .wx-mix-tag-color(v1, #fe5633);
+    .wx-mix-tag-color(v2, #2c7fea);
+    .wx-mix-tag-color(v3, #0cd44e);
+    .wx-mix-tag-color(v4, #596783);
+    .wx-mix-tag-color(v5, #24c99b);
+    .wx-mix-tag-color(v6, #ff3a3a);
+    .wx-mix-tag-color(v7, #962efe);
+    &.wx-xs-disabled {
+      background-color: #cbcbcb;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@rankPrefix: ~"@{prefix}-rank";
+
+/**排名序号**/
+.@{rankPrefix}-item {
+  .@{rankPrefix}-num {
+    width: 21px;
+    height: 21px;
+    line-height: 21px;
+    background: #a6aea3;
+    text-align: center;
+    color: #fff;
+    float: left;
+  }
+  &:first-child .@{rankPrefix}-num {
+    background-color: #fc5b26;
+  }
+  &:nth-of-type(2) .@{rankPrefix}-num {
+    background-color: #fc5b26;
+  }
+  &:nth-of-type(3) .@{rankPrefix}-num {
+    background-color: #fc9268;
+  }
+  &:nth-of-type(4) .@{rankPrefix}-num {
+    background-color: #e1af9f;
+  }
+  &:nth-of-type(5) .@{rankPrefix}-num {
+    background-color: #c0aea8;
+  }
+  .@{rankPrefix}-main {
+    margin: 0 10px;
+    float: left;
+    color: #09c;
+  }
+  .@{rankPrefix}-data {
+    padding: 0 1em;
+    color: #f85454;
+    float: right;
+  }
+  .@{rankPrefix}-count {
+    width: 21px;
+    height: 21px;
+    background-color: #f85454;
+    color: #fef;
+    text-align: center;
+    float: right;
+    padding: 1px;
+  }
+}
+
+/**排名序号 end**/

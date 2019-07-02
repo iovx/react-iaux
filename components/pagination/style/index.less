@@ -1,0 +1,50 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@vx-pagination-item-color: #848484;
+@vx-pagination-item-border-color: #e1e1e1;
+@vx-pagination-active-color: #fff;
+@vx-pagination-active-bg: @themeColor;
+@vx-pagination-hover-bg: #f5f5f5;
+@vx-pagination-item-height: 34px;
+@vx-pagination-item-radius: 2px;
+@vx-theme-not-allowed-bg: #f4f4f4;
+@vx-theme-not-allowed-color: #b9b9b9;
+.vx-pagination {
+  -moz-user-select : none;
+  &-prev,
+  &-next,
+  &-item {
+    display: inline-block;
+    height: @vx-pagination-item-height;
+    line-height: @vx-pagination-item-height;
+    min-width:44.2px;
+    text-align: center;
+    padding: 0 13px;
+    margin:5px 7px 5px 0;
+    border: 1px solid @vx-pagination-item-border-color;
+    outline: none;
+    color: @vx-pagination-item-color;
+    border-radius: @vx-pagination-item-radius;
+    cursor: pointer;
+    &:hover {
+      background-color: @vx-pagination-hover-bg;
+    }
+  }
+  &-item&-current {
+    background-color: @vx-pagination-active-bg;
+    color: @vx-pagination-active-color;
+    border-color: @vx-pagination-active-bg;
+    cursor: default;
+  }
+  &-next {
+    margin-right: 0;
+  }
+  &-prev&-unarrived,
+  &-next&-unarrived {
+    cursor: not-allowed;
+    background: @vx-theme-not-allowed-bg;
+    color: @vx-theme-not-allowed-color;
+  }
+}
+

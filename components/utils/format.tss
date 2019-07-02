@@ -1,0 +1,276 @@
+/**
+ * 格式转换库
+ * @author Administrator
+ * 2017年1月12日0:34:59
+ */
+/**
+ * 将字符串IP转成16进制形式
+ * @param  {[string]} ipStr [ip字符串]
+ * @return {[string]}       [十六进制ip值]
+ */
+export function hexIp(ipStr: string): string {
+  let result = "", temp: any = 0;
+  const ips = ipStr.split(".");
+  for (let i = ips.length - 1; i >= 0; i--) {
+    temp = parseInt(ips[i], 10).toString(16);
+    if (temp.length < 2)
+      temp = "0" + temp;
+    result += temp;
+  }
+  return "0x" + result;
+}
+
+/**
+ * 将弧度转为角度
+ * @param  {[Number]} arc [弧度]
+ * @return {[Number]}     [角度值]
+ */
+export function toAngle(arc) {
+  return arc / Math.PI * 180;
+}
+
+/**
+ * 将角度转为弧度
+ * @param  {[Number]} angle [角度]
+ * @return {[Number]}       [弧度值]
+ */
+export function toArc(angle) {
+  return angle / 180 * Math.PI;
+}
+
+/**
+ * 将16进制ip转为字符形式
+ * @param  {[string]} ip32 [十六进制ip]
+ * @return {[string]}      [ip字符串]
+ */
+export function getIPAddress(ip32) {
+  let temp: string = "", ips = [];
+  for (let i = ip32.length - 1; i >= 2; i = i - 2) {
+    temp = ip32[i - 1] + "" + ip32[i];
+    temp = parseInt(temp, 16) + '';
+    ips.push(temp)
+  }
+  return ips.join(".");
+}
+
+/**
+ * 数字格式
+ * @param number
+ * @param decimals
+ * @param dec_point
+ * @param thousands_sep
+ * @returns {string|*}
+ */
+export function numberFormat(number, decimals, dec_point, thousands_sep) {
+  number = (number + '').replace(/[^0-9+-Ee.]/g, '');
+  let n = !isFinite(+number) ? 0 : +number,
+    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+    s: string | string[],
+    toFixedFix = function (n, prec) {
+      let k = Math.pow(10, prec);
+      return '' + Math.ceil(n * k) / k;
+    };
+
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+  const re = /(-?\d+)(\d{3})/;
+  while (re.test(s[0])) {
+    s[0] = s[0].replace(re, "$1" + sep + "$2");
+  }
+
+  if ((s[1] || '').length < prec) {
+    s[1] = s[1] || '';
+    s[1] += new Array(prec - s[1].length + 1).join('0');
+  }
+  return s.join(dec);
+}
+
+/**
+ * 获取随机的十六进制颜色
+ * @return {[string]} [颜色值]
+ */
+export function getRandHexColor() {
+  let result = "#";
+  for (let i = 0; i < 6; i++) {
+    result += Math.floor(Math.random() * 16).toString(16);
+  }
+  return result;
+}
+
+/**
+ * 获取随机的RGB【A】颜色
+ * @param alpha [是否随机alpha通道]
+ * @returns {string} [含RGB字符串]
+ */
+export function getRandColor(alpha: boolean | number) {
+  if (alpha == undefined) {
+    alpha = false;
+  }
+  const result: number[] = [];
+  let mode = "rgb";
+  for (let i = 0; i < 3; i++) {
+    result.push(Math.floor(Math.random() * 255));
+  }
+  if (alpha) {
+    if (!(typeof alpha === "number" && alpha >= 0 && alpha <= 1)) {
+      alpha = Math.random();
+    }
+    result.push(alpha);
+    mode = "rgba";
+  }
+  return mode + "(" + result.join(",") + ")";
+}
+
+/**
+ * 将RGB字符串转为十六进制形式
+ * @param  {[string]} rgbStr [rgb字符串]
+ * @return {[string]}        [十六进制颜色值]
+ */
+export function toHex(rgbStr) {
+  const reg = /((\d(\.\d*)?){1,3}\,?)/ig;
+  let temp = "",
+    result = "#";
+  const cls: string[] = rgbStr.match(reg);
+  if (!cls) {
+    return false;
+  }
+  if (cls.length > 4) {
+    cls.slice(0, 3);
+  }
+  const len = cls.length;
+  for (let i = 0; i < len; i++) {
+    if (i < 3) {
+      temp = parseInt(cls[i]).toString(16);
+    } else {
+      temp = (parseInt(cls[i]) * 255).toString(16);
+    }
+    if (temp.length < 2)
+      temp = "0" + temp;
+    result += temp;
+  }
+  return result;
+}
+
+/**
+ * 将十六进制颜色转换为RGB(A)颜色
+ * @param hexStr
+ * @returns {*}
+ */
+export function toRGB(hexStr) {
+  var start = hexStr.indexOf('#');
+  var i = 0;
+  if (start == 0) {
+    i = 1;
+  } else if (start != -1) {
+    return false;
+  }
+  var store = [];
+  for (i; i < hexStr.length - 1; i += 2) {
+    store.push(parseInt(hexStr.substr(i, 2), 16));
+  }
+
+  var ct = 'rgb';
+
+  if (store.length == 4) {
+    var l = store.length - 1;
+    store[l] = (store[l] / 255).toFixed(2);
+    ct = 'rgba';
+  }
+  return ct + '(' + store.join(',') + ')';
+}
+
+/**
+ * 格式化CSS
+ * @param ocss 原始CSS
+ * @param flag 是否作压缩处理
+ * @returns {string}
+ */
+export function css(ocss, flag) {
+  var result = "";
+  var flag = flag || false;
+  var patt = /\s*([^\{\};]+?)\s*\{(.+?)}/g;
+  var count = 0;
+  var data = [], tmp;
+
+  while ((tmp = patt.exec(ocss)) !== null) {
+
+    data.push({
+      s: tmp[1],
+      p: tmp[2],
+    })
+  }
+  var g = [];
+  if (!flag) {
+    g[0] = " ";
+    g[1] = "\r";
+    g[2] = "\t";
+  } else {
+    g[2] = g[1] = g[0] = "";
+  }
+  for (var i in data) {
+    var c = data[i];
+    result += c.s + g[0] + "{" + g[1];
+    var prosLines = c.p.split(";");
+    for (var pl in prosLines) {
+      var line = prosLines[pl];
+      line = line.replace(/[\n\r\t]/, "");
+      if ((/^\s*$/).test(line)) {
+        continue;
+      }
+      result += g[2] + line + ";" + g[1];
+    }
+    result += "}" + g[1];
+  }
+  return result;
+}
+
+/**
+ * @param str 待除空格的字符串
+ * @param flag 是否除去所有空格
+ * @param dir true表示除后方空格 false除前方空格
+ * */
+export function trim(str, flag, tDir: any) {
+  var result = "";
+  var flag = flag || false;
+  var dir = tDir === undefined ? null : !!tDir;
+  if (!flag) {
+    var reg = null;
+    if (dir === null) {
+      //去除首尾空格
+      reg = /^\s*(.*?)\s*$/;
+    } else if (dir === false) {
+      //去头部空格
+      reg = /^\s*(.*?)$/;
+    } else {
+      //去尾部空格
+      reg = /^(.*?)\s*$/;
+    }
+    var data = reg.exec(str);
+    result = data[1];
+  } else {
+    //去除全部空格
+    result = str.replace(/\s*/g, "");
+  }
+  return result;
+}
+
+/**
+ * 分割单词和中文解释
+ * @param odata 原始混合串
+ * @returns {Array} 英文中文对应数组
+ */
+export function grepWordExplain(odata) {
+
+  var reg = /((?:(?:[a-zA-Z]+)\s)+)\s*(.+)/g;
+
+  var data = [], tmp;
+  while ((tmp = reg.exec(odata)) !== null) {
+
+    data.push({
+      en: tmp[1],
+      cn: tmp[2],
+    })
+  }
+  return data;
+}

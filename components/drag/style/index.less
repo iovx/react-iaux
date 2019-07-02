@@ -1,0 +1,21 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+@dragPrefix: ~"@{prefix}-drag";
+@dropPrefix: ~"@{prefix}-drop";
+
+/**拖拽**/
+.@{dragPrefix}-item {
+  padding: 5px;
+  cursor: default;
+}
+
+.@{dragPrefix}-locked-item {
+  padding: 5px;
+  cursor: not-allowed;
+}
+
+/**直接按钮**/
+.@{dropPrefix}-wrapper {
+  width: 100%;
+  height: 100%;
+}

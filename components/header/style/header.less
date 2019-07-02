@@ -1,0 +1,26 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@headerPrefix: ~"@{prefix}-header";
+
+/**直接按钮**/
+.@{headerPrefix} {
+  display: flex;
+  justify-content: space-between;
+  line-height: 45px;
+  padding: 5px;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  color: @wx-header-color;
+  &-left {
+
+  }
+  &-logo {
+    font-size: 19px;
+    padding: 0 10px
+  }
+  &-right {
+    margin-right: 10px;
+  }
+}

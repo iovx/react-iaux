@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "react-iaux",
+        "style": true
+      }
+    ]
+  ]
+}

@@ -1,0 +1,77 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@buttonPrefix: ~"@{prefix}-button";
+
+/**直接按钮**/
+.@{buttonPrefix} {
+  display: inline-block;
+  padding: 7px 20px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  .wx-mix-radius(2px);
+  border: 1px solid transparent;
+
+  &.ws-sm {
+    padding: 6px 16px;
+  }
+  &.ws-md {
+    padding: 10px 25px;
+  }
+  &.ws-lg {
+    padding: 15px 30px;
+  }
+  &.ws-res {
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+  }
+  &.ws-error,
+  &.ws-danger {
+    background-color: @wx-button-color-error;
+    &.ws-at,
+    &:hover {
+      background-color: @wx-button-color-error-hover;
+    }
+  }
+  &.ws-success {
+    background-color: @wx-button-color-success;
+    &.ws-at,
+    &:hover {
+      background-color: @wx-button-color-success-hover;
+    }
+  }
+  &.ws-default {
+    background-color: @themeColor;
+    &.ws-at,
+    &:hover {
+      background-color: @themeHoverColor;
+    }
+  }
+  &.ws-warning {
+    background-color: @wx-button-color-warning;
+    &.ws-at,
+    &:hover {
+      background-color: @wx-button-color-warning-hover;
+    }
+  }
+  &.ws-info {
+    background-color: @wx-button-color-info;
+    &.ws-at,
+    &:hover {
+      background-color: @wx-button-color-info-hover;
+    }
+  }
+  &.ws-primary {
+    background-color: @wx-button-color-primary;
+    &.ws-at,
+    &:hover {
+      background-color: @wx-button-color-primary-hover;
+    }
+  }
+  &.ws-disabled {
+    background-color: @wx-color-disable;
+    cursor: not-allowed;
+  }
+}

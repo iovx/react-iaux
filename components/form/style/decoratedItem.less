@@ -1,0 +1,23 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@formDecoratorPrefix: ~"@{prefix}-form-decorator";
+
+.@{formDecoratorPrefix} {
+  &-item {
+    flex: 2;
+    border:1px solid;
+    .@{prefix}-input{
+      border:0 none transparent;
+    }
+  }
+  &-message {
+    color: @wxErrorColor;
+    &-wrapper{
+      display: inline-block;
+    }
+  }
+  &-validate{
+    color: @wxErrorColor;
+  }
+}

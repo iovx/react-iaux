@@ -1,0 +1,60 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@markSize: @wx-fixedMark-size;
+@markHoverColor: @wx-fixed-MarkHover-color;
+@markOffset: @markSize / 2;
+
+@markPrefix: ~"@{prefix}-resize-cell-mark";
+
+.@{markPrefix} {
+  width: @markSize;
+  height: @markSize;
+  background-color: #fcfffe;
+  border: 1px solid #bcb6b6;
+  position: absolute;
+  &:hover {
+    border-color: @markHoverColor;
+  }
+  &.lt {
+    top: -@markOffset;
+    left: -@markOffset;
+    cursor: nw-resize;
+  }
+  &.lc {
+    .wx-mix-calc(top, "50% - @{markOffset}");
+    left: -@markOffset;
+    cursor: ew-resize;
+  }
+  &.lb {
+    bottom: -@markOffset;
+    left: -@markOffset;
+    cursor: sw-resize;
+  }
+  &.rt {
+    top: -@markOffset;
+    right: -@markOffset;
+    cursor: ne-resize;
+  }
+  &.rc {
+    .wx-mix-calc(top, "50% - @{markOffset}");
+    right: -@markOffset;
+    cursor: ew-resize;
+  }
+  &.rb {
+    bottom: -@markOffset;
+    right: -@markOffset;
+    cursor: se-resize;
+  }
+  &.tc {
+    top: -@markOffset;
+    .wx-mix-calc(left, "50% - @{markOffset}");
+    cursor: ns-resize;
+  }
+  &.bc {
+    bottom: -@markOffset;
+    .wx-mix-calc(left, "50% - @{markOffset}");
+    cursor: ns-resize;
+  }
+
+}

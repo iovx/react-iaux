@@ -1,0 +1,31 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@formItemPrefix: ~"@{prefix}-form-item";
+
+.@{formItemPrefix} {
+  display: flex;
+  &-wrapper {
+    flex: 2;
+  }
+  &-label {
+    display: flex;
+    width: 48px;
+    justify-content: flex-end;
+    line-height: 32px;
+    &-text {
+
+    }
+    &-mark {
+      &::before {
+        display: inline-block;
+        content: '*';
+        color: @wxErrorColor;
+        font-size: 12px;
+      }
+    }
+    &-colon {
+      padding: 0 6px 0 4px;
+    }
+  }
+}

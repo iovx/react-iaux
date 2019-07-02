@@ -1,0 +1,53 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@noticePrefix: ~"@{prefix}-notification";
+
+/* notice start*/
+.wx-mix-notice-xs(@type:primary,@color) {
+  &.ws-@{type} {
+    .wx-xs-header,
+    .wx-xs-content,
+    .wx-xs-header > .wx-xs-icon {
+      color: @color;
+    }
+  }
+}
+
+.@{noticePrefix} {
+  width: 377px;
+  padding: 10px;
+  margin: 10px;
+  /*position: fixed;*/
+  /*right: 20px;*/
+  background: #fcfcfc;
+  .wx-mix-shadow(4px, rgba(0, 0, 0, 0.13));
+  .wx-xs-header {
+    .wx-xs-icon,
+    .wx-xs-title {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .wx-xs-icon {
+      padding: 4px 5px;
+      .wx-iconfont {
+        font-size: 25px;
+      }
+    }
+  }
+  .wx-xs-content {
+    font-size: 14px;
+    margin: 5px 0 2px;
+    &.wx-xs-text {
+      padding: 10px;
+    }
+  }
+
+  .wx-mix-notice-xs(primary, @wx-color-primary);
+  .wx-mix-notice-xs(error, @wx-color-error);
+  .wx-mix-notice-xs(success, @wx-color-success);
+  .wx-mix-notice-xs(warning, @wx-color-warning);
+  .wx-mix-notice-xs(info, @wx-color-info);
+}
+
+/* notice end*/
