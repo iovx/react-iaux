@@ -1,7 +1,7 @@
 ## Example
 
 <div align="center">
-<img src="/images/entry.jpg" width='90%' alt="微风平台"/>
+<img src="http://static.assure.com/images/docs/entry.jpg" width='90%' alt="微风平台"/>
 </div>
 
 ```js

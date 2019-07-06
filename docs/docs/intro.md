@@ -3,7 +3,7 @@
  &emsp;&emsp;授权帐户为平台所有，对于应用A来说，在应用A中，用户点击第三方登录（微风平台授权登录），微风平台即可拿到应用A在平台申请时填入的相关信息，随后用户在授权页登录其帐户，此时在微风平台后台，可以识别该微风平台用户是否对该应用A有授权过（授权信息表），从而对于微风平台用户来说，可以查看自己帐户的授权应用，同时可以操作授权。
 
 <div align="center">
-<img src="/entry.jpg" width='90%' alt="微风平台"/>
+<img src="http://static.assure.com/images/docs/entry.jpg" width='90%' alt="微风平台"/>
 </div>
 
 

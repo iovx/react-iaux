@@ -1,15 +1,15 @@
 {
   "name": "react-iaux",
   "version": "1.1.0",
-  "description": "",
+  "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "antd-tools run dist",
     "compile": "antd-tools run compile",
     "cc": "antd-tools run compile && antd-tools run dist",
     "tsc": "tsc",
-    "start": "webpack-dev-server --config scripts/docs.config.js",
-    "build": "webpack --config scripts/build.config.js",
+    "start": "webpack-dev-server --progress --color --config scripts/docs.config.js",
+    "build": "webpack --progress --color --config scripts/build.config.js",
     "pub": "antd-tools run pub"
   },
   "repository": {
@@ -63,6 +63,7 @@
     "commander": "^2.19.0",
     "css-loader": "^1.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^4.0.0",
     "highlight.js": "^9.15.8",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
@@ -71,6 +72,7 @@
     "markd": "^1.2.0",
     "marked": "^0.6.1",
     "merge2": "^1.2.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "prismjs": "^1.15.0",
     "raw-loader": "^1.0.0",
@@ -83,12 +85,12 @@
     "through2": "^3.0.0",
     "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.0"
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.2.0",
+    "copy-webpack-plugin": "^5.0.3"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "copy-webpack-plugin": "^5.0.3",
+    "classnames": "^2.2.6",    
     "moment": "^2.24.0",
     "omit.js": "^1.0.0",
     "prop-types": "^15.7.2",

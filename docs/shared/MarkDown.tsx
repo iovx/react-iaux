@@ -48,8 +48,8 @@ class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
     if (typeof content === 'string') {
       this.setState({ content, loading: false });
     } else if (content instanceof Promise) {
-      content.then(text => {
-        this.setState({ content: text, loading: false });
+      content.then(mod => {
+        this.setState({ content: mod.default, loading: false });
       });
     } else if (typeof content === 'function') {
       this.setDoc(content());
@@ -57,7 +57,7 @@ class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
   }
 
   render() {
-    const {loading, content } = this.state;
+    const { loading, content } = this.state;
     return (
       <div className="markdown-body markdown">
         {loading && <div>Loading....</div>}
