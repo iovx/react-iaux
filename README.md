@@ -4,6 +4,12 @@
 
 ## FAQ
 
-### [2019年07月02日] 
-* 打包报 ReferenceError: document is not defined
+### 2019年07月07日 
+
+* 增加 Css压缩， 优化打包后的体积
+
+### 2019年07月02日 
+
+* 修复打包报错 ReferenceError: document is not defined
+
 [https://github.com/reactjs/react-rails/issues/319]https://github.com/reactjs/react-rails/issues/319
