@@ -2,9 +2,13 @@ import * as React from 'react';
 // import { Header, Panel } from 'react-iaux';
 import Header from '../es/header';
 import Panel from '../es/panel';
+
+import '../es/header/style';
+import '../es/panel/style';
+
 import { getDocsList } from './pages/intro/doc';
 import MarkDown from './shared/MarkDown';
-// import '../dist/react-iaux.css';
+import '../dist/react-iaux.css';
 import './app.less';
 
 const { Wrapper } = Panel;

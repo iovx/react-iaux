@@ -46,7 +46,32 @@ module.exports = {
         loader: 'raw-loader',
         exclude: /node_modules/,
       },
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+
+      {
+        test: /\.tsx?$/,
+        exclude: ['/node_modules/'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'react-iaux',
+                    libraryDirectory: 'es', // default: lib
+                    style: true,
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            loader: 'awesome-typescript-loader',
+          },
+        ],
+      },
+
       {
         test: /\.json$/,
         type: 'javascript/auto',
