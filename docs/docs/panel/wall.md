@@ -1,4 +1,4 @@
-```jsx
+```typescript jsx
 import * as React from 'react';
 import {WaterFall} from "react-iaux";
 import * as style from './Wall.less';

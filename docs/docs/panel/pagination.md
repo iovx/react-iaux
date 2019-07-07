@@ -1,3 +1,4 @@
+```typescript jsx
 import {ProgressBar} from 'react-iaux';
 
 const Test = ()=>{
@@ -5,5 +6,5 @@ const Test = ()=>{
         <ProgressBar tip='none' total={100} progress={77}/>
     )
 }
-
+```
 

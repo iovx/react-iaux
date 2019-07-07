@@ -1,3 +1,6 @@
+declare module "@" {
+  export * from 'docs/pages';
+}
 declare module '*.txt' {
   const content: string;
   export default content;

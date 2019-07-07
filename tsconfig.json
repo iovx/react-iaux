@@ -9,7 +9,8 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "react-iaux":["lib/*"]
+      "react-iaux":["lib/*"],
+      "@":["docs/pages/*"]
     }
   },
   "exclude": [

@@ -1,0 +1,46 @@
+@doc-theme-color: #28a688;
+.dc-header {
+  box-shadow: none !important;
+  border: 1px solid #e4e4e4 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background-color: #fff;
+  .dc-right-container {
+    display: flex;
+    .search {
+      position: relative;
+      margin: 5px 10px;
+      width: 330px;
+      .ws-input {
+        transition: all 100ms;
+      }
+      .ws-input-default {
+        border-color: transparent transparent #e5e5e5 transparent;
+        color: #5c5353;
+      }
+      .ws-input-focus {
+        border-color: transparent transparent @doc-theme-color transparent;
+      }
+      .ws-input-error {
+        border-color: transparent transparent #e44949 transparent;
+      }
+      .btn {
+        position: absolute;
+        right: 4px;
+        top: -4px;
+        cursor: pointer;
+        transition: all 100ms;
+        color:#bababa;
+      }
+      .ws-input-focus + .btn {
+        color: @doc-theme-color;
+        .iconfont {
+
+        }
+      }
+    }
+  }
+}

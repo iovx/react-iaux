@@ -1,3 +1,4 @@
+```typescript jsx
 import {List, Panel} from 'react-iaux';
 
 const {PicDesc: PicDescItem} = List;
@@ -65,3 +66,4 @@ const Test = ()=>{
        </Panel>
     )
 }
+```

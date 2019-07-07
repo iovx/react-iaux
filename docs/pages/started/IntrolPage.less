@@ -1,0 +1,53 @@
+.dc-intro-page {
+  display: flex;
+  &-menu {
+    min-width: 200px;
+    max-width: 300px;
+    padding: 0 10px;
+    cursor: default;
+    &-item {
+      padding: 10px;
+    }
+    &-group {
+       -webkit-user-select: none;
+       -moz-user-select: none;
+       -o-user-select: none;
+       -ms-user-select: none;
+      padding: 5px;
+      .iconfont {
+        display: inline-block;
+        margin-right: 3px;
+      }
+      &-title {
+        color: #333333;
+        margin-bottom: 2px;
+        &.dc-open {
+          .iconfont {
+            transform: rotate(90deg) translate(-4px, -5px);
+            transition: all 200ms;
+          }
+        }
+      }
+      &-body {
+        margin-left: 22px;
+      }
+      &-child-item-title {
+        color: #333333;
+        padding: 5px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+    }
+  }
+  &-main {
+    border-left: 1px solid #eeeded;
+    flex: 1;
+    max-width: 900px;
+    min-height: 600px;
+    padding: 0 10px;
+
+  }
+  &-tip {
+    max-width: 100px;
+  }
+}

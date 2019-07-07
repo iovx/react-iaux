@@ -1,3 +1,4 @@
+```typescript jsx
 import {Panel} from 'react-iaux';
 
 const Test = ()=>{
@@ -7,3 +8,4 @@ const Test = ()=>{
         </Panel>
     )
 }
+```

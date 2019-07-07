@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as marked from 'marked';
 import * as hljs from 'highlight.js';
-import { Loading } from 'components';
 
 require('highlight.js/styles/googlecode.css');
 
@@ -14,20 +13,23 @@ marked.setOptions({
   sanitize: false,
   smartLists: true,
   smartypants: false,
-  highlight: function(code) {
+  highlight: function (code) {
     return '<div class="hljs iw-code">' + hljs.highlightAuto(code).value + '</div>';
   },
 });
 
 type MC = string | Promise<any>;
 type IContent = MC | (() => MC);
+
 interface MarkDownProps {
   content?: IContent;
 }
+
 interface MarkDownState {
   content: string;
   loading: boolean;
 }
+
 class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
   constructor(props: MarkDownProps) {
     super(props);
@@ -36,8 +38,9 @@ class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
       loading: false,
     };
   }
+
   componentDidMount() {
-    const { content } = this.props;
+    const {content} = this.props;
     this.setState(() => {
       Loading: true;
     });
@@ -46,10 +49,10 @@ class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
 
   private setDoc(content: IContent) {
     if (typeof content === 'string') {
-      this.setState({ content, loading: false });
+      this.setState({content, loading: false});
     } else if (content instanceof Promise) {
       content.then(mod => {
-        this.setState({ content: mod.default, loading: false });
+        this.setState({content: mod.default ? mod.default : mod, loading: false});
       });
     } else if (typeof content === 'function') {
       this.setDoc(content());
@@ -57,11 +60,11 @@ class MarkDown extends React.Component<MarkDownProps, MarkDownState> {
   }
 
   render() {
-    const { loading, content } = this.state;
+    const {loading, content} = this.state;
     return (
       <div className="markdown-body markdown">
-        {loading && <div>Loading....</div>}
-        <div dangerouslySetInnerHTML={{ __html: marked(content, { renderer: markdownRender }) }} />
+        {loading ? <div>Loading....</div> :
+          <div dangerouslySetInnerHTML={{__html: marked(content || '', {renderer: markdownRender})}}/>}
       </div>
     );
   }

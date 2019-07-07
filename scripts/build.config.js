@@ -36,6 +36,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', 'json'],
     alias: {
+      '@':path.resolve(__dirname, '../pages'),
       'react-iaux': path.resolve(__dirname, '../es'),
     },
   },
@@ -46,7 +47,6 @@ module.exports = {
         loader: 'raw-loader',
         exclude: /node_modules/,
       },
-
       {
         test: /\.tsx?$/,
         exclude: ['/node_modules/'],
@@ -54,6 +54,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
+              comments: true,
               plugins: [
                 [
                   'import',
@@ -64,6 +65,14 @@ module.exports = {
                   },
                 ],
               ],
+              presets: [
+                [
+                  'env',
+                  {
+                    modules: false,
+                  },
+                ],
+              ],
             },
           },
           {
@@ -71,7 +80,6 @@ module.exports = {
           },
         ],
       },
-
       {
         test: /\.json$/,
         type: 'javascript/auto',
@@ -150,11 +158,9 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
-        // include:[path.resolve(__dirname, "../docs/assets")],
         exclude: /node_modules/,
         options: {
           limit: 15360,
-          // outputPath: path.resolve(__dirname,'../docs/build/dist/assets'),
           name: 'assets/[hash:8].[name].[ext]',
           fallback: 'file-loader',
         },
@@ -167,7 +173,7 @@ module.exports = {
     react: 'React',
     'react-dom': 'ReactDOM',
     'react-router': 'ReactRouter',
-    'react-router-dom': 'ReactRouterDOM',
+    // 'react-router-dom': 'ReactRouterDOM',
     moment: 'moment',
     marked: 'marked',
     'highlight.js': 'hljs',
