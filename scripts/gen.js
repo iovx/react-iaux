@@ -15,8 +15,7 @@ glob("../docs/**/*.md", function (err, list) {
     });
     tpl.push(`\treturn result;`);
     tpl.push(`}`);
-    fs.writeFileSync('../docs/docs/get.js', tpl.join('\n'));
-    fs.writeFileSync('../docs/docs/get.d.ts', `export function getDocsList():any;`);
+    fs.writeFileSync('../docs/docs/docs.ts', tpl.join('\n'));
   }
 });
 

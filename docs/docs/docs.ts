@@ -1,10 +1,11 @@
 import {loadMarkdown} from "../utils";
+
 export function getDocsList() {
 	const result = {};
 	result['dialog/dialog'] = loadMarkdown('dialog/dialog');
 	result['example'] = loadMarkdown('example');
 	result['getStarted'] = loadMarkdown('getStarted');
-	result['intro'] = loadMarkdown('intro');
+	result['http/intro'] = loadMarkdown('http/intro');
 	result['panel/form'] = loadMarkdown('panel/form');
 	result['panel/imageCard'] = loadMarkdown('panel/imageCard');
 	result['panel/loading'] = loadMarkdown('panel/loading');
