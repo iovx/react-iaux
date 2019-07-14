@@ -1,6 +1,6 @@
 {
   "name": "react-iaux",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -90,7 +90,7 @@
     "copy-webpack-plugin": "^5.0.3"
   },
   "dependencies": {
-    "classnames": "^2.2.6",    
+    "classnames": "^2.2.6",
     "moment": "^2.24.0",
     "omit.js": "^1.0.0",
     "prop-types": "^15.7.2",
