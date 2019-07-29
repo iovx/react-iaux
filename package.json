@@ -1,6 +1,6 @@
 {
   "name": "react-iaux",
-  "version": "1.1.1",
+  "version": "1.1.9",
   "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -61,6 +61,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "colorful": "^2.1.0",
     "commander": "^2.19.0",
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^1.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^4.0.0",
@@ -82,12 +83,12 @@
     "react-syntax-highlighter": "^10.1.3",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
+    "svg-sprite-loader": "^4.1.6",
     "through2": "^3.0.0",
     "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.2.0",
-    "copy-webpack-plugin": "^5.0.3"
+    "webpack-dev-server": "^3.2.0"
   },
   "dependencies": {
     "classnames": "^2.2.6",

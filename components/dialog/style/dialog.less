@@ -1,0 +1,43 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@dialogPrefix: ~"@{prefix}-dialog";
+.@{dialogPrefix} {
+  width: 650px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  z-index: 99997;
+  &-header {
+    display: flex;
+    padding: 5px 10px;
+    background-color: #39409b;
+    color: #fff;
+  }
+  &-title {
+    flex: 1;
+    line-height: 28px;
+  }
+  &-close-btn {
+    cursor: pointer;
+  }
+  &-body {
+    padding: 10px;
+    min-height: 240px;
+  }
+  &-footer {
+    padding: 10px;
+  }
+  &-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.28);
+  }
+}

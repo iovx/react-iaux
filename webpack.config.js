@@ -22,6 +22,7 @@ function externalMoment(config) {
     commonjs: 'react-iaux',
     amd: 'react-iaux',
   };
+
 }
 
 

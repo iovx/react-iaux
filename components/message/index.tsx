@@ -1,9 +1,16 @@
-import Message from './Message';
+import Toast from './Toast';
+import {ToastProps} from './Toast';
 import Notice from './Notice';
+import {NoticeProps} from './Notice';
+import HOCMessage from './HOCMessage';
+import {createToast} from './util';
+import {notice, toast} from "./message";
 
-export {NoticeProps} from './Notice';
-export {MessageProps} from './Message';
+export {NoticeProps, ToastProps};
 
-Message.Notice = Notice;
+const Message = {
+  toast, notice, Toast, Notice, HOCMessage, createToast
+};
+
 export default Message;
 

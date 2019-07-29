@@ -1,0 +1,71 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@noticePrefix: ~"@{prefix}-notice";
+
+.wx-mix-notice-xs(@type:primary,@color) {
+  &.ws-@{type} {
+    .wx-xs-header,
+    .wx-xs-content,
+    .wx-xs-header > .wx-xs-icon {
+      color: @color;
+    }
+  }
+}
+
+.@{noticePrefix} {
+  width: 377px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  overflow: auto;
+  z-index: 999999;
+  &-item {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.13);
+    &-header {
+      display: flex;
+    }
+    &-icon,
+    &-title {
+      display: inline-block;
+      padding-left: 5px;
+      line-height: 40px;
+      vertical-align: middle;
+    }
+    &-icon {
+      width: 40px;
+      height: 40px;
+      padding: 4px 5px;
+      svg,img {
+        width: 100%;
+        height: 100%;
+      }
+      .wx-iconfont {
+        font-size: 25px;
+      }
+    }
+    &-content {
+      margin: 5px 0 2px;
+      padding-left: 46px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 15px;
+      line-height: 25px;
+      &.wx-xs-text {
+        padding: 10px;
+      }
+    }
+  }
+  .wx-mix-notice-xs(primary, @wx-color-primary);
+  .wx-mix-notice-xs(error, @wx-color-error);
+  .wx-mix-notice-xs(success, @wx-color-success);
+  .wx-mix-notice-xs(warning, @wx-color-warning);
+  .wx-mix-notice-xs(info, @wx-color-info);
+}
+

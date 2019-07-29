@@ -1,3 +1,79 @@
-@import "message";
-@import "notification";
-@import "toast";
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@toastPrefix: ~"@{prefix}-toast";
+
+.@{toastPrefix} {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  &-enter {
+    opacity: 0.01;
+    transform: scale(0);
+  }
+
+  &-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 300ms ease-out;
+  }
+
+  &-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &-exit-active {
+    opacity: 0.01;
+    transform: translateY(-40%);
+    transition: all 300ms ease-out;
+  }
+
+  &-item {
+    display: flex;
+    right: 50%;
+    height: 46px;
+    padding: 0 10px;
+    margin: 10px 0;
+    min-width: 200px;
+    z-index: 10;
+    overflow: hidden;
+    line-height: 46px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .1);
+    &-icon {
+      display: inline-block;
+      vertical-align: middle;
+      width: 40px;
+      padding: 3px 5px 3px 3px;
+      line-height: normal;
+      svg, img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &-content {
+      padding: 0 5px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .wx-mix-message-xs(@type:primary,@color:@wx-color-primary,@bg:@wx-toast-bg) {
+    .@{prefix}-xs-@{type} {
+      background-color: @bg;
+      .@{prefix}-toast-item-content {
+        color: @color;
+      }
+    }
+  }
+  .wx-mix-message-xs(info, @wx-color-info);
+  .wx-mix-message-xs(success, @wx-color-success);
+  .wx-mix-message-xs(error, @wx-color-error);
+  .wx-mix-message-xs(primary, @wx-color-primary);
+  .wx-mix-message-xs(warning, @wx-color-warning);
+}
+

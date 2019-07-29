@@ -34,7 +34,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     onPageChange: PropTypes.func,
   };
   static defaultProps = {
-    page: 1,
+    page: -1,
     pageSize: 15,
     total: 0,
     hideOnSinglePage: true,
@@ -55,22 +55,22 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
   }
 
   componentDidMount() {
-    this.build();
+    this.build(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    const {page} = nextProps;
-    if (page !== this.props.page) {
+    const {page, total} = nextProps;
+    if (page !== this.props.page || total !== this.props.total) {
       this.setState({page}, () => {
-        this.build();
+        this.build(nextProps);
       });
     }
   }
 
-  private build() {
+  private build(props: PaginationProps) {
     const pages: number[] = [];
-    const {pageSize = 15} = this.props;
-    this.pageCount = Math.ceil(this.props.total / pageSize);
+    const {pageSize = 15} = props;
+    this.pageCount = Math.ceil(props.total / pageSize);
     if (this.pageCount <= 9) {
       for (let i = 2; i <= this.pageCount - 1; i++) {
         pages.push(i);
@@ -113,7 +113,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
         const {pageCount} = this;
         const {pageSize = 15, total} = this.props;
         const {onPageChange} = this.props;
-        this.build();
+        this.build(this.props);
         if (onPageChange) {
           onPageChange({page, pageCount, pageSize, total})
         }
@@ -133,37 +133,37 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     return (
       <ul className={clsName} onSelect={() => false}
           style={{display: (hideOnSinglePage && pageCount === 1) ? 'none' : 'block'}} {...props}>
-        <li className={prevCls} onClick={this.previous} >上一页</li >
-        <li className={firstItemCls} onClick={this.go(firstIndex)} >
+        <li className={prevCls} onClick={this.previous}>上一页</li>
+        <li className={firstItemCls} onClick={this.go(firstIndex)}>
           {firstIndex}
-        </li >
+        </li>
         {
           (pageCount > 9) && (page - 3) > firstIndex && (
-            <li className="vx-pagination-item" onClick={this.go(page - 5)} >
-              <span >...</span >
-            </li >
+            <li className="vx-pagination-item" onClick={this.go(page - 5)}>
+              <span>...</span>
+            </li>
           )
         }
         {
           pages.map(pageNum => {
             const cls = cx("vx-pagination-item", pageNum === page ? 'vx-pagination-current' : '')
             return (
-              <li className={cls} key={pageNum} onClick={this.go(pageNum)} >{pageNum}</li >
+              <li className={cls} key={pageNum} onClick={this.go(pageNum)}>{pageNum}</li>
             )
           })
         }
         {
           (pageCount > 9) && (page + 3) < pageCount && (
-            <li className="vx-pagination-item" onClick={this.go(page + 5)} >
-              <span >...</span >
-            </li >
+            <li className="vx-pagination-item" onClick={this.go(page + 5)}>
+              <span>...</span>
+            </li>
           )
         }
-        <li className={lastItemCls} onClick={this.go(pageCount)} >
+        <li className={lastItemCls} onClick={this.go(pageCount)}>
           {pageCount}
-        </li >
-        <li className={nextCls} onClick={this.next} >下一页</li >
-      </ul >
+        </li>
+        <li className={nextCls} onClick={this.next}>下一页</li>
+      </ul>
     )
   }
 }

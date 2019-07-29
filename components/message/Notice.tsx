@@ -1,51 +1,35 @@
-import * as React from 'react';
+import * as  React from 'react';
 import * as PropTypes from 'prop-types';
-import cx from 'classnames';
-import {tuple} from "../_utils/type";
+import {IData} from "./interface";
 
-const statusType = tuple('success', 'info', 'warning', 'error', 'default', 'primary', 'pure', 'loading');
 
-interface BaseProps {
-  status?: typeof statusType[number];
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  content?: React.ReactNode;
+export type NoticeProps = {
+  icon: string;
+  data: IData,
+  className: string;
 }
 
-export type NoticeProps = {} & BaseProps;
-
-
 class Notice extends React.Component<NoticeProps, any> {
-  static propTypes = {
-    status: PropTypes.oneOf(statusType),
-    icon: PropTypes.node,
-    title: PropTypes.string,
-    content: PropTypes.node,
-  };
 
-  static defaultProps = {
-    title: '你收到一条消息',
-    icon: <i className="wx-iconfont icon-info"/>,
-    content: null,
-    status: 'primary',
+  static propTypes = {
+    icon: PropTypes.any,
+    data: PropTypes.object,
   }
 
   render() {
-    const {status, icon, title, content} = this.props;
-    const wrapperCls = cx('wx-v2-notification', `ws-${status}`);
+    const {icon, data, className} = this.props;
     return (
-      <div>
-        <div className={wrapperCls}>
-          <div className="wx-xs-header">
-            <div className="wx-xs-icon">{icon}</div>
-            <div className="wx-xs-title">{title}~</div>
-          </div>
-          <div className="wx-xs-content wx-xs-text">{content || this.props.children}</div>
+      <div className={className}>
+        <div className='wx-v2-notice-item-header'>
+          <div className='wx-v2-notice-item-icon' dangerouslySetInnerHTML={{__html: icon}}/>
+          <div className='wx-v2-notice-item-title'>{data.title}</div>
+        </div>
+        <div className='wx-v2-notice-item-content'>
+          {data.content}
         </div>
       </div>
     );
   }
 }
-
 
 export default Notice;

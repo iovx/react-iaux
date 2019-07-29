@@ -1,82 +1,72 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import Portal from "../portal";
+import Portal from './Portal';
+import Close from './Close';
 
-export interface BaseProps {
-  className?: string;
-  headerClassName?: string;
-  bodyClassName?: string;
-  style?: React.CSSProperties;
+export type DialogProps = {
+  onClose?: () => void;
+  visible: boolean;
+  footer?: React.ReactNode;
+  header?: React.ReactNode;
+  title?: React.ReactNode;
   headerStyle?: React.CSSProperties;
   bodyStyle?: React.CSSProperties;
-}
+  footerStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
+  headerCls?: string;
+  bodyCls?: string;
+  footerCls?: string;
+  className?: string;
+} & React.HTMLAttributes<HTMLDivElement>
 
-export  type DialogProps = {
-  visible?: boolean;
-  title?: React.ReactNode;
-} & BaseProps;
+class Dialog extends React.Component<DialogProps, any> {
 
-export interface DialogState {
-  visible: boolean;
-}
+  static Portal: typeof Portal;
 
-class Dialog extends React.Component<DialogProps, DialogState> {
-  static defaultProps = {
-    visible: false,
-    title: "",
-  }
   static propTypes = {
-    visible: PropTypes.bool,
+    onClose: PropTypes.func,
   };
-  private portalRef: Portal|null;
 
   constructor(props) {
     super(props);
-    this.state = {
-      visible: false,
+    this.onClose = this.onClose.bind(this);
+  }
+
+  onClose() {
+    const {onClose} = this.props;
+    if (onClose) {
+      onClose();
     }
-    console.log(this.portalRef)
-  }
-
-  componentWillReceiveProps(nextProps: DialogProps) {
-    const {visible=false} = nextProps;
-    if (visible !== this.props.visible) {
-      this.setState({visible});
-    }
-  }
-
-  getPrefix() {
-    return 'wx-iv';
-  }
-
-  getClassName() {
-    const {className} = this.props;
-    const prefix = this.getPrefix();
-    return cx([
-      `${prefix}-dialog`,
-      className,
-    ]);
   }
 
   render() {
-    const {visible} = this.state;
-    const {title, headerClassName, headerStyle, bodyClassName, bodyStyle, children} = this.props;
-    const prefix = this.getPrefix();
-    const headerCls = cx([`${prefix}-header`], headerClassName);
-    const bodyCls = cx([`${prefix}-body`], bodyClassName);
-    if (visible) {
-      return (
-        <Portal ref={(ref) => this.portalRef = ref}>
-          <div className={this.getClassName()}>
-            <div className={headerCls} style={headerStyle}>{title}</div>
-            <div className={bodyCls} style={bodyStyle}>{children}</div>
+    const {visible, children, footer, header, title, headerStyle, bodyStyle, footerStyle, style, headerCls, bodyCls, footerCls, className, ...restProps} = this.props;
+    const wrapperCls = cx('wx-v2-dialog', className);
+    const headerClass = cx('wx-v2-dialog-header', headerCls);
+    const bodyClass = cx('wx-v2-dialog-body', bodyCls);
+    const footerClass = cx('wx-v2-dialog-footer', footerCls);
+    return (
+      <Portal visible={visible}>
+        <div className={wrapperCls} style={style} {...restProps}>
+          <div className={headerClass} style={headerStyle}>
+            <div className='wx-v2-dialog-title'>{header || title}</div>
+            <div className='wx-v2-dialog-close-btn' onClick={this.onClose}><Close/></div>
           </div>
+          <div className={bodyClass} style={bodyStyle}>
+            {children}
+          </div>
+          <div className={footerClass} style={footerStyle}>
+            {footer}
+          </div>
+        </div>
+        <Portal>
+          <div className='wx-v2-dialog-mask'/>
         </Portal>
-      );
-    }
-    return null;
+      </Portal>
+    );
   }
 }
+
 
 export default Dialog;
