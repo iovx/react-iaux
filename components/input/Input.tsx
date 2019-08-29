@@ -14,6 +14,10 @@ export declare interface InputProps extends React.HTMLAttributes<HTMLInputElemen
   type?: (typeof InputType)[number],
   value?: string,
   onChange?: (value: any) => void;
+  readonly?: boolean;
+  maxLength?: number;
+  disabled?:boolean;
+  autoFocus?:boolean;
 }
 
 
@@ -111,7 +115,10 @@ class Input extends React.Component<InputProps, InputState> {
     //   onChange(e as React.ChangeEvent<HTMLInputElement>);
     // }
     const {value} = e.target;
-    const {onChange} = this.props;
+    const {onChange, readonly} = this.props;
+    if (readonly) {
+      return;
+    }
     if (('value' in this.props)) {
       this.setState({value}, () => {
         if (onChange) {

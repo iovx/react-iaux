@@ -36,6 +36,7 @@ interface BaseProps {
   onDragOver?: React.DragEventHandler;
   onDragLeave?: React.DragEventHandler;
   activeClassName?: string;
+  accept?: string;
 }
 
 export type FileSelectorProps = {} & BaseProps & React.HTMLAttributes<HTMLElement>;

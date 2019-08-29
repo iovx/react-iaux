@@ -49,6 +49,7 @@ class App extends React.PureComponent<AppProps, {}> {
                 </Wrapper>
                 <Wrapper className="dc-intro-page-main">
                   <Route path="/getStarted" exact component={LazyHolder(IntroPage)}/>
+                  <Route path="/test" exact component={LazyHolder(IntroPage)}/>
                   <Route path="/component/:name" exact component={LazyHolder(ComponentDocs)}/>
                 </Wrapper>
                 <Wrapper className="dc-intro-page-tip"/>

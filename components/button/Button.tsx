@@ -15,6 +15,7 @@ interface BaseButtonProps {
   text?: React.ReactNode;
   children?: React.ReactNode;
   active?: boolean;
+  disabled?: boolean;
 }
 
 export type ButtonProps = {} & BaseButtonProps & React.HTMLAttributes<HTMLButtonElement>
@@ -24,8 +25,9 @@ class Button extends React.Component<ButtonProps, any> {
     status: 'default',
     text: null,
     icon: null,
-    size:'md',
-    active:false,
+    size: 'md',
+    active: false,
+    disabled: false,
   }
   static propTypes = {
     status: PropTypes.string,
@@ -34,11 +36,12 @@ class Button extends React.Component<ButtonProps, any> {
     text: PropTypes.node,
     size: PropTypes.string,
     active: PropTypes.bool,
+    disabled: PropTypes.bool,
   }
 
   render(): JSX.Element {
-    const {status, icon, size, active, className, children, text, ...extraProps} = this.props;
-    const wrapperCls = cx('wx-v2-button', 'ws-' + status, 'ws-' + size, active ? 'ws-at' : '', className);
+    const {status, icon, size, active, className, children, text, disabled, ...extraProps} = this.props;
+    const wrapperCls = cx('wx-v2-button', disabled ? 'ws-disabled' : cx('ws-' + status, 'ws-' + size, active ? 'ws-at' : ''), className);
     return (
       <button {...extraProps} className={wrapperCls}>
         <span>{icon}</span>

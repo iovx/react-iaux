@@ -18,7 +18,7 @@ interface BaseProps {
   rowClassName?: string;
   headClassName?: string;
   rowKey?: string;
-  rowProps: RowProps;
+  rowProps?: RowProps;
 }
 
 

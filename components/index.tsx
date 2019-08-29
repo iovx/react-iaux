@@ -29,4 +29,7 @@ export {default as Menu} from './menu';
 export {default as Dialog} from './dialog';
 export {default as Portal} from './portal';
 export {default as WaterFall} from './waterfall';
+export {default as CheckBox} from './checkBox';
+export {default as Radio} from './radio';
+export {default as AuthWrapper} from './authWrapper';
 export * from './utils';

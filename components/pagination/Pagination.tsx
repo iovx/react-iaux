@@ -132,7 +132,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     const lastItemCls = cx('vx-pagination-item', pageCount === page ? 'vx-pagination-current' : '');
     return (
       <ul className={clsName} onSelect={() => false}
-          style={{display: (hideOnSinglePage && pageCount === 1) ? 'none' : 'block'}} {...props}>
+          style={{display: (hideOnSinglePage && pageCount <= 1) ? 'none' : 'block'}} {...props}>
         <li className={prevCls} onClick={this.previous}>上一页</li>
         <li className={firstItemCls} onClick={this.go(firstIndex)}>
           {firstIndex}
