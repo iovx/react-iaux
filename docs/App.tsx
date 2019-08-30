@@ -6,6 +6,7 @@ import './app.less';
 import {Route, Router, Switch} from 'react-router';
 import {History} from 'history';
 import MenuList from "./pages/layout/menu/MenuList";
+import Test from './pages/test/Test';
 
 const {Wrapper} = Panel;
 
@@ -41,6 +42,9 @@ class App extends React.PureComponent<AppProps, {}> {
         <Router history={this.props.history}>
           <Switch>
             <Route path="/" exact component={LazyHolder(StartPage)}/>
+            <div style={{minHeight:400,paddingTop:60}}>
+              <Route path="/test" exact component={LazyHolder(Test)}/>
+            </div>
             <Wrapper className="dc-main">
               <Wrapper className="dc-intro-page">
                 <Wrapper className="dc-intro-page-tip"/>

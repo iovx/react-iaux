@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Radio from "./Radio";
 
 interface IRadioDataItem {
-  name: string;
+  name?: string;
   label?: string;
   value: string;
 }
@@ -30,13 +30,12 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
     value: PropTypes.string,
     defaultValue: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string,
       label: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     }))
   };
   static defaultProps = {
-    defaultChecked: false,
     defaultValue: [],
   }
 

@@ -64,9 +64,9 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
   }
 
   handleChange(e) {
-    e.preventDefault();
     e.stopPropagation();
     const {checked} = e.currentTarget;
+    console.log(checked);
     if (!('checked' in this.props)) {
       this.setState({checked}, () => {
         this.triggerChange();

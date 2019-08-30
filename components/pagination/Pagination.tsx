@@ -34,7 +34,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     onPageChange: PropTypes.func,
   };
   static defaultProps = {
-    page: -1,
+    page: 1,
     pageSize: 15,
     total: 0,
     hideOnSinglePage: true,

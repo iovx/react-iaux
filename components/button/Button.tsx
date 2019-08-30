@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import {tuple} from "../_utils/type";
+import { tuple } from '../_utils/type';
 
 const statusType = tuple('success', 'info', 'warning', 'error', 'default', 'primary', 'pure', 'loading');
 
@@ -28,7 +28,7 @@ class Button extends React.Component<ButtonProps, any> {
     size: 'md',
     active: false,
     disabled: false,
-  }
+  };
   static propTypes = {
     status: PropTypes.string,
     icon: PropTypes.node,
@@ -37,19 +37,26 @@ class Button extends React.Component<ButtonProps, any> {
     size: PropTypes.string,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-  }
+  };
+
+  handleClick = (e) => {
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e);
+    }
+  };
 
   render(): JSX.Element {
-    const {status, icon, size, active, className, children, text, disabled, ...extraProps} = this.props;
+    const { status, icon, size, active, className, children, text, disabled, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-button', disabled ? 'ws-disabled' : cx('ws-' + status, 'ws-' + size, active ? 'ws-at' : ''), className);
     return (
-      <button {...extraProps} className={wrapperCls}>
+      <button {...extraProps} className={wrapperCls} onClick={this.handleClick}>
         <span>{icon}</span>
         <span>
           {text || children}
         </span>
       </button>
-    )
+    );
   }
 }
 

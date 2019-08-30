@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as PropTypes from 'prop-types';
+import cx from 'classnames';
 
 interface BaseProps {
-
+  className?:string;
 }
 
 export type PortalProps = {
@@ -25,6 +26,9 @@ class Portal extends React.Component<PortalProps, {}> {
     }
   }
 
+  getPrefixCls(suffix?: string) {
+    return `wx-v2-portal${suffix ? '-' + suffix : ''}`;
+  }
   open(props = this.props) {
     this.setState({active: true});
     this.renderPortal(props);
@@ -44,7 +48,9 @@ class Portal extends React.Component<PortalProps, {}> {
 
   renderPortal(props) {
     if (!this.node) {
+      const cls = cx(this.getPrefixCls(), props.className);
       this.node = document.createElement('div');
+      this.node.className = cls;
       document.body.appendChild(this.node);
     } else {
 

@@ -2,7 +2,7 @@
 // This config is for building dist files
 const getWebpackConfig = require('antd-tools/lib/getWebpackConfig');
 
-const {webpack} = getWebpackConfig;
+const { webpack } = getWebpackConfig;
 
 function ignoreMomentLocale(webpackConfig) {
   delete webpackConfig.module.noParse;
@@ -22,6 +22,13 @@ function externalMoment(config) {
     commonjs: 'react-iaux',
     amd: 'react-iaux',
   };
+  config.module.rules.push({
+    test: /\.vx.svg/,
+    use: {
+      loader: 'svg-sprite-loader',
+      options: {},
+    },
+  });
 
 }
 
