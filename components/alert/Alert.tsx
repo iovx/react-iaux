@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import SvgInfo from './assets';
 
 export interface BaseProps {
@@ -53,11 +53,11 @@ class Alert extends React.PureComponent<AlertProps, AlertState> {
   }
 
   close() {
-    this.setState({ closed: true });
+    this.setState({closed: true});
   }
 
   handleClose() {
-    const { onClose, closable } = this.props;
+    const {onClose, closable} = this.props;
     if (closable && onClose) {
       const result = onClose();
       if (result instanceof Promise) {
@@ -75,17 +75,17 @@ class Alert extends React.PureComponent<AlertProps, AlertState> {
   }
 
   renderAlert() {
-    const { children, className, type, closeText, closable, onClose, ...extraProps } = this.props;
+    const {children, className, type = 'info', closeText, closable, onClose, ...extraProps} = this.props;
     const alertCls = cx(this.getPrefixCls(), this.getPrefixCls(type), className);
     const svgHtml = iconTypes[type] || iconTypes['info'];
     let canClose = closable || closeText;
     let closeInner = !closeText ? (
       <span className={this.getPrefixCls('close')} onClick={this.handleClose}
-            dangerouslySetInnerHTML={{ __html: SvgInfo.svgClose }} />
+            dangerouslySetInnerHTML={{__html: SvgInfo.svgClose}}/>
     ) : <span className={this.getPrefixCls('close')} onClick={this.handleClose}>{closeText}</span>;
     return (
       <div className={alertCls} {...extraProps}>
-        <span className={this.getPrefixCls('icon')} dangerouslySetInnerHTML={{ __html: svgHtml }} />
+        <span className={this.getPrefixCls('icon')} dangerouslySetInnerHTML={{__html: svgHtml}}/>
         <span className={this.getPrefixCls('content')}>{children}</span>
         {canClose && closeInner}
       </div>
@@ -93,8 +93,8 @@ class Alert extends React.PureComponent<AlertProps, AlertState> {
   }
 
   render() {
-    const { className } = this.props;
-    const { closed } = this.state;
+    const {className} = this.props;
+    const {closed} = this.state;
 
     return closed ? null : (
       <TransitionGroup className={className}>
