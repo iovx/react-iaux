@@ -1,6 +1,6 @@
 import * as React from 'react';
 import cx from 'classnames';
-import {execFunction, isFunction, isEmpty} from "../utils";
+import { execFunction, isFunction, isEmpty } from '../utils';
 
 export declare type ValidateResult = {
   error?: boolean;
@@ -16,20 +16,20 @@ const STATUS = {
   WARNING: 'warning',
   PRIMARY: 'primary',
   FOCUS: 'focus',
-}
+};
 const VALIDATE_SCALE = {
   EMPTY: 'empty',
   RULE: 'rule',
-}
+};
 const ERROR = {
   EMPTY: 'empty',
   RULE: 'rule',
-}
+};
 const RULE = {
   PATTERN: 'pattern',
   ASYNC_VALIDATE: 'asyncValidate',
   VALIDATE: 'validate',
-}
+};
 
 export type Rule = {
   pattern?: RegExp;
@@ -60,7 +60,7 @@ class FieldDecorator {
   }
 
   decorate(name: string, options: DecorateOption): (comp: any) => React.ReactElement {
-    const {label, force = false, initialValue, stopValidate = false, required, validating} = options;
+    const { label, force = false, initialValue, stopValidate = false, required, validating } = options;
     this.data[name] = {
       // 字段名
       name,
@@ -81,7 +81,7 @@ class FieldDecorator {
       validate: false,
       // 强制验证，即使已验证
       force,
-    }
+    };
     return (comp: React.ReactElement & React.ReactHTMLElement<any>) => {
       return (
         <FieldDecoratorItem
@@ -93,8 +93,8 @@ class FieldDecorator {
           options={options}
           comp={comp}
         />
-      )
-    }
+      );
+    };
   }
 
   getFieldsValue(): object {
@@ -120,11 +120,11 @@ class FieldDecorator {
     let err = false;
     for (const name of Object.keys(this.data)) {
       const item = this.data[name];
-      const {force, value, validate, error: validateError, isValidated} = item;
+      const { force, value, validate, error: validateError, isValidated } = item;
       values[name] = value;
       if (force || !isValidated) {
         const res = await this.refFields[name].triggerValidate();
-        const {error} = res;
+        const { error } = res;
         if (error) {
           errors[name] = res;
           err = true;
@@ -143,9 +143,9 @@ class FieldDecorator {
   }
 
   setFieldValue(name: string, value: any): FieldDecorator {
-    const {current: fieldRef} = this.refFields[name].fieldRef;
-    const e = {target: {value}};
-    fieldRef.onChange(e)
+    const { current: fieldRef } = this.refFields[name].fieldRef;
+    const e = { target: { value }, currentTarget: { value } };
+    fieldRef.onChange(e);
     return this;
   }
 }
@@ -186,11 +186,13 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     rules: [],
     message: '',
     label: null,
-  }
+  };
+  fieldProps: any;
+  focusValue: string;
 
   constructor(props: FieldDecoratorItemProps) {
     super(props);
-    const {name, refDecorator, onRef, options, comp} = props;
+    const { name, refDecorator, onRef, options, comp } = props;
     this.refDecorator = refDecorator;
     this.name = name;
     this.state = {
@@ -199,11 +201,11 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
       isValidating: false,
       isValidated: false,
       error: null,
-    }
+    };
     if (onRef) {
       onRef(this);
     }
-    const {initialValue} = options;
+    const { initialValue } = options;
     this.fieldRef = React.createRef();
     const fieldProps = {
       ref: this.fieldRef,
@@ -213,12 +215,16 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
         this.setValue(value);
       },
       onFocus: (e) => {
+        const { value } = e.currentTarget;
+        this.focusValue = value;
         this.onFocus(e);
       },
       onBlur: (e) => {
         this.onBlur(e);
-      }
+      },
     };
+    this.fieldProps = fieldProps;
+    this.comp = comp;
     this.fieldComp = React.cloneElement(comp, fieldProps, comp.children);
   }
 
@@ -228,38 +234,38 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
   fieldComp: React.ReactElement;
   comp: React.ReactElement;
   onFocus = (e) => {
-    const {comp: {onFocus}} = this.props;
-    this.setState({focused: true}, () => {
+    const { comp: { onFocus } } = this.props;
+    this.setState({ focused: true }, () => {
       if (onFocus) {
         onFocus(e);
       }
-    })
-  }
+    });
+  };
   onBlur = (e) => {
-    const {comp: {onBlur}} = this.props;
-    this.setState({focused: false}, () => {
+    const { value } = e.currentTarget;
+    const { comp: { onBlur } } = this.props;
+    this.setState({ focused: false }, () => {
+      if (this.state.isValidated && value === this.focusValue) {
+        return;
+      }
       this.triggerValidate(null, () => {
         if (onBlur) {
           onBlur(e);
         }
       }).then();
-    })
-  }
+    });
+  };
   setValue = (value: string | object): void => {
-    const {comp, name} = this.props;
+    const { name } = this.props;
     this.refDecorator.setValue(name, value);
-    const {onChange} = comp.props;
-    this.setState({value, isValidated: false}, () => {
+    this.setState({ value, isValidated: false }, () => {
       this.triggerValidate(VALIDATE_SCALE.EMPTY, () => {
-        this.setState({isValidated: false});
-        if (onChange) {
-          onChange(value);
-        }
+        this.setState({ isValidated: false });
       }).then(() => {
 
       });
-    })
-  }
+    });
+  };
   // 更新状态
   updateStatus = (nextState, callback): void => {
     this.setState(nextState, () => {
@@ -269,41 +275,41 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
       this.refDecorator.data[this.name].error = this.state.error;
       execFunction(callback);
     });
-  }
+  };
   // 验证
   validate = (value: any, rules: Rule[]): ValidateResult | Promise<ValidateResult> => {
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i];
-      const {pattern, validate, message} = rule;
+      const { pattern, validate, message } = rule;
       if (validate && isFunction(validate)) {
         const res = validate(value, this.refDecorator.data);
         if (res instanceof Promise) {
-          this.setState({isValidating: true});
+          this.setState({ isValidating: true });
           return res.then(info => {
-            this.setState({isValidating: false});
-            return {error: info, message, type: RULE.ASYNC_VALIDATE};
+            this.setState({ isValidating: false });
+            return { error: info, message, type: RULE.ASYNC_VALIDATE };
           });
         }
         if (!res) {
-          return {error: true, message, type: RULE.VALIDATE};
+          return { error: true, message, type: RULE.VALIDATE };
         }
       } else if (pattern instanceof RegExp) {
         if (!pattern.test(value)) {
-          return {error: true, message, type: RULE.PATTERN};
+          return { error: true, message, type: RULE.PATTERN };
         }
       }
     }
-    return {error: false, message: ''};
-  }
+    return { error: false, message: '' };
+  };
   // 触发验证
   triggerValidate = async (paramScales?: string | null, callback?: () => void): Promise<ValidateResult> => {
-    const {required, label, options} = this.props;
-    const {rules = [], message} = options;
-    const {value} = this.state;
-    const nextState: FieldDecoratorItemState = {isValidated: true};
+    const { required, label, options } = this.props;
+    const { rules = [], message } = options;
+    const { value } = this.state;
+    const nextState: FieldDecoratorItemState = { isValidated: true };
     let scales: any = paramScales || [];
     if (scales === null || !scales.length) {
-      scales = [VALIDATE_SCALE.EMPTY, VALIDATE_SCALE.RULE]
+      scales = [VALIDATE_SCALE.EMPTY, VALIDATE_SCALE.RULE];
     }
     // 空验证
     if (isEmpty(value)) {
@@ -311,7 +317,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
         nextState.status = STATUS.EMPTY;
         nextState.message = message || <div className='wx-v2-form-decorator-message-wrapper'>{label}不能为空</div>;
         nextState.validate = false;
-        nextState.error = {error: true, type: ERROR.EMPTY};
+        nextState.error = { error: true, type: ERROR.EMPTY };
         this.updateStatus(nextState, callback);
         return Promise.resolve(nextState.error);
       }
@@ -320,20 +326,20 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
       let info;
       let rule;
       if (res instanceof Promise) {
-        this.setState({isValidating: true});
+        this.setState({ isValidating: true });
         info = await res;
-        this.setState({isValidating: false});
-        rule = RULE.ASYNC_VALIDATE
+        this.setState({ isValidating: false });
+        rule = RULE.ASYNC_VALIDATE;
       } else {
         info = res;
-        rule = res.type
+        rule = res.type;
       }
-      const {error, message} = info;
+      const { error, message } = info;
       if (error) {
         nextState.status = STATUS.ERROR;
         nextState.validate = false;
         nextState.message = message || <div className='wx-v2-form-decorator-message-wrapper'>{label}输入有误</div>;
-        nextState.error = {error: true, type: ERROR.RULE, rule};
+        nextState.error = { error: true, type: ERROR.RULE, rule };
         this.updateStatus(nextState, callback);
         return Promise.resolve(nextState.error);
       }
@@ -343,21 +349,25 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
       message: null,
       validate: true,
       isValidated: true,
-      error: null
+      error: null,
     }, callback);
-    return Promise.resolve({error: false});
-  }
+    return Promise.resolve({ error: false });
+  };
 
   render(): JSX.Element {
-    const {validating} = this.props;
-    const {isValidating, focused, status, message} = this.state;
+    const { validating } = this.props;
+    const { isValidating, focused, status, message, value } = this.state;
     const statusCls = `ws-input-${focused ? 'focus' : status}`;
     const wrapperCls = cx('wx-v2-form-decorator-item', statusCls);
     const messageCls = cx('wx-v2-form-decorator-message', statusCls);
     const validateCls = cx('wx-v2-form-decorator-validate', statusCls);
     return (
       <div className='wx-v2-form-decorator'>
-        <div className={wrapperCls}>{this.fieldComp}</div>
+        <div className={wrapperCls}>
+          {
+            React.cloneElement(this.comp, { ...this.fieldProps, value, status })
+          }
+        </div>
         {isValidating ? <div className={validateCls}>{validating}</div> : null}
         {status === STATUS.ERROR || STATUS.EMPTY ? <div className={messageCls}>{message}</div> : null}
       </div>

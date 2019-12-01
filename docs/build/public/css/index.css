@@ -1,19 +1,19 @@
 html, body {
-    font-family: 'Microsoft JhengHei', 'Microsoft YaHei', Georgia, sans-serif;
     font-size: 14px;
 }
+
 .iw-code {
-    border:1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
 }
 
 .markdown-body table tr {
     background-color: #fff;
     border-top: 1px solid #c6cbd1;
 }
+
 .markdown-body table tr:nth-child(2n) {
     background-color: #fff;
 }
-
 
 /* markdown css */
 .markdown {
@@ -94,22 +94,22 @@ html, body {
     margin: 1em 0;
 }
 
-.markdown ul>li {
+.markdown ul > li {
     padding-left: 4px
 }
 
-.markdown ul>li:empty {
+.markdown ul > li:empty {
     display: none
 }
 
-.markdown ol>li {
+.markdown ol > li {
     list-style-type: decimal;
     margin-left: 20px;
     padding-left: 4px
 }
 
-.markdown ol>li>p,
-.markdown ul>li>p {
+.markdown ol > li > p,
+.markdown ul > li > p {
     margin: .2em 0
 }
 
@@ -122,7 +122,7 @@ html, body {
 }
 
 .markdown pre {
-    font-family:Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
     border-radius: 2px;
     padding: 0;
     line-height: 1.7;
@@ -130,7 +130,7 @@ html, body {
 }
 
 .markdown pre code {
-    font-family: 'courier new',Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    font-family: 'courier new', Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
     border: none;
     margin: 0;
     padding: 0;
@@ -160,12 +160,13 @@ html, body {
 .markdown table th {
     border: 1px solid #d4d4d4;
     padding: 8px 16px;
-    font-size:13px;
+    font-size: 13px;
 }
 
 .markdown table th {
     background: #f7f7f7
 }
+
 .markdown blockquote {
     font-size: 90%;
     color: #999;
@@ -220,8 +221,8 @@ html, body {
     display: inline-block
 }
 
-.markdown>br,
-.markdown>p>br {
+.markdown > br,
+.markdown > p > br {
     clear: both
 }
 
@@ -247,9 +248,11 @@ html, body {
     font-size: 12px;
     font-family: Lucida Console, Consolas, Menlo, Courier, monospace
 }
-.markdown-body .highlight pre, .markdown-body pre{
-    padding:0;
+
+.markdown-body .highlight pre, .markdown-body pre {
+    padding: 0;
 }
+
 .markdown-body .highlight pre,
 .markdown-body pre {
     padding: 0;

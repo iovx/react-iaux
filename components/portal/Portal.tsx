@@ -47,6 +47,9 @@ class Portal extends React.Component<PortalProps, {}> {
   }
 
   renderPortal(props) {
+    if (typeof  document === 'undefined') {
+      return null;
+    }
     if (!this.node) {
       const cls = cx(this.getPrefixCls(), props.className);
       this.node = document.createElement('div');

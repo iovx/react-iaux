@@ -12,7 +12,7 @@ export interface BaseProps extends IPos {
   onClose?(): void;
 }
 
-export type PopupProps = {} & BaseProps;
+export type PopupProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
 
 interface IPos {
   top?: number | string;
@@ -58,10 +58,19 @@ class Popup extends React.PureComponent<PopupProps, PopupState> {
   static defaultProps = {
     show: false,
   };
+  popupEleRef = React.createRef<HTMLDivElement>();
 
   constructor(props: PopupProps) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+
+  }
+
+  getPopupEle() {
+    return this.popupEleRef.current;
   }
 
   getPrefixCls(suffix?: string) {
@@ -78,7 +87,7 @@ class Popup extends React.PureComponent<PopupProps, PopupState> {
   }
 
   render() {
-    const { show, className, children, style: pStyle } = this.props;
+    const { show, className, children, style: pStyle, ...extraProps } = this.props;
     const style = {
       ...pStyle,
       ...getPositionStyle(this.props),
@@ -86,7 +95,12 @@ class Popup extends React.PureComponent<PopupProps, PopupState> {
     const cls = cx(this.getPrefixCls(), { [this.getPrefixCls('hide')]: !show }, className);
     return (
       <Portal>
-        <div className={cls} style={style}>
+        <div
+          {...extraProps}
+          className={cls}
+          style={style}
+          ref={this.popupEleRef}
+        >
           {children}
         </div>
       </Portal>

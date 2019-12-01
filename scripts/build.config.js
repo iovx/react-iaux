@@ -26,7 +26,7 @@ module.exports = {
   },
   mode: 'production',
   optimization: {
-    minimize: true,
+    minimize: false,
     splitChunks: {
       name: 'vendor',
       chunks: 'all',
@@ -49,36 +49,40 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        exclude: ['/node_modules/'],
+        exclude: /node_modules|\.d\.ts/,
         use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              comments: true,
-              plugins: [
-                [
-                  'import',
-                  {
-                    libraryName: 'react-iaux',
-                    libraryDirectory: 'es', // default: lib
-                    style: true,
-                  },
-                ],
-              ],
-              presets: [
-                [
-                  'env',
-                  {
-                    modules: false,
-                  },
-                ],
-              ],
-            },
-          },
+          // {
+          //   loader: 'babel-loader',
+          //   options: {
+          //     comments: true,
+          //     plugins: [
+          //       [
+          //         'import',
+          //         {
+          //           libraryName: 'react-iaux',
+          //           libraryDirectory: 'es', // default: lib
+          //           style: true,
+          //         },
+          //       ],
+          //     ],
+          //     presets: [
+          //       [
+          //         'env',
+          //         {
+          //           modules: false,
+          //         },
+          //       ],
+          //     ],
+          //   },
+          // },
           {
             loader: 'awesome-typescript-loader',
           },
         ],
+      },
+      {
+        test: /\.d\.ts$/,
+        loader: "ignore-loader"
       },
       {
         test: /\.json$/,
@@ -206,13 +210,13 @@ module.exports = {
     }),
     lessExtractTextWebpackPlugin,
     cssExtractTextWebpackPlugin,
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.min\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-      },
-      canPrint: true,
-    }),
+    // new OptimizeCssAssetsPlugin({
+    //   assetNameRegExp: /\.min\.css$/g,
+    //   cssProcessor: require('cssnano'),
+    //   cssProcessorPluginOptions: {
+    //     preset: ['default', { discardComments: { removeAll: true } }],
+    //   },
+    //   canPrint: true,
+    // }),
   ],
 };

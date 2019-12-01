@@ -17,7 +17,7 @@ class Portal extends React.PureComponent<PortalProps, any> {
   };
 
   renderPortal() {
-    const {visible, children} = this.props;
+    const { visible, children } = this.props;
     return (
       <React.Fragment>
         {visible && children}
@@ -26,7 +26,10 @@ class Portal extends React.PureComponent<PortalProps, any> {
   }
 
   render() {
-    return ReactDOM.createPortal(this.renderPortal(), document.body);
+    if (typeof  document !== 'undefined') {
+      return ReactDOM.createPortal(this.renderPortal(), document.body);
+    }
+    return null;
   }
 }
 

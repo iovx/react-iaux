@@ -4,30 +4,45 @@
 @inputPrefix: ~"@{prefix}-input";
 
 .@{inputPrefix} {
-  border: 1px solid;
-  width:100%;
-  padding:0 6px;
-  height:34px;
+  border: 1px solid @wx-v2-input-default-border;
+  width: 100%;
+  padding: 0 8px;
+  height: 34px;
   vertical-align: middle;
+  &:focus {
+    border-color: @wxSuccessColor;
+  }
+  &:disabled {
+    background-color: #fff;
+  }
 }
-.ws-input-default {
-  border-color: @wx-v2-input-default-border;
-}
+
 .ws-input-success {
   border-color: @wxSuccessColor;
 }
+
 .ws-input-error {
   border-color: @wxErrorColor;
 }
+
 .ws-input-empty {
   border-color: @wxErrorColor;
 }
+
 .ws-input-warning {
   border-color: @wxWarningColor;
 }
+
 .ws-input-primary {
   border-color: @wxPrimaryColor;
 }
+
 .ws-input-focus {
   border-color: @themeColor;
+}
+
+.ws-input-disabled {
+  cursor: not-allowed;
+  background-color: #fafafa;
+  color: #8c8c8c;
 }

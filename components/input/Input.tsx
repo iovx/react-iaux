@@ -2,22 +2,22 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import omit from 'omit.js';
-import {tuple} from "../_utils/type";
+import { tuple } from '../_utils/type';
 
 const InputStatus = tuple('error', 'success', 'default', 'warning', 'primary', 'focus');
 
-const InputType = tuple('text', 'password');
+type InputType = 'text' | 'password';
 
 
 export declare interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
-  status?: (typeof InputStatus)[number],
-  type?: (typeof InputType)[number],
+  status?: (typeof InputStatus)[number]
+  type?: InputType;
   value?: string,
   onChange?: (value: any) => void;
   readonly?: boolean;
   maxLength?: number;
-  disabled?:boolean;
-  autoFocus?:boolean;
+  disabled?: boolean;
+  autoFocus?: boolean;
 }
 
 
@@ -30,7 +30,7 @@ class Input extends React.Component<InputProps, InputState> {
   static defaultProps = {
     status: 'default',
     type: 'text',
-  }
+  };
   static propTypes = {
     type: PropTypes.string,
     status: PropTypes.oneOf(InputStatus),
@@ -39,111 +39,59 @@ class Input extends React.Component<InputProps, InputState> {
 
   constructor(props: InputProps) {
     super(props);
-    const {status, value, defaultValue} = props;
-    const initValue = typeof value === 'undefined' ? defaultValue : value;
+    const { value, defaultValue } = props;
     this.state = {
-      status,
-      value: initValue,
-    }
+      value: value || defaultValue || '',
+    };
   }
 
-  componentWillReceiveProps(nextProps: InputProps): void {
-    const {status, value} = nextProps;
-    if (this.state.status !== status) {
-      this.setState({status});
+  static getDerivedStateFromProps(props: InputProps) {
+    if ('value' in props) {
+      return {
+        value: props.value,
+      };
     }
-    if (this.state.value !== value) {
-      this.setState({value});
-    }
-  }
-
-  getInputClassName(prefixCls: string) {
-    const {status} = this.props;
-    return cx(prefixCls, {
-      [`${prefixCls}-default`]: status === 'default',
-    });
+    return null;
   }
 
   saveInput = (node: HTMLInputElement) => {
     this.input = node;
   };
-
-  onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
-    const {onFocus} = this.props;
-    e.persist();
-    let event = e;
-    this.setState({status: 'focus'}, () => {
-      if (onFocus) {
-        event = Object.create(e);
-        event.persist();
-        // event.target = this.input;
-        // event.currentTarget = this.input;
-        // const originalInputValue = this.input.value;
-        // this.input.value = '';
-        onFocus(event as React.FocusEvent<HTMLInputElement>);
-        // reset input value
-        // this.input.value = originalInputValue;
-      }
-    })
-  }
-  onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
-    const {status, onBlur} = this.props;
-    this.setState({status}, () => {
-      e.persist();
-      let event = e;
-      if (onBlur) {
-        event = Object.create(e);
-        event.persist();
-        // event.target = this.input;
-        // event.currentTarget = this.input;
-        // const originalInputValue = this.input.value;
-        // this.input.value = '';
-        onBlur(event as React.FocusEvent<HTMLInputElement>);
-        // reset input value
-        // this.input.value = originalInputValue;
-      }
-    })
-  }
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.persist();
-    // const {value} = e.target;
-    // if (!('value' in this.props)) {
-    //   this.setState({value})
-    // }
-    // const {onChange} = this.props;
-    // if (onChange) {
-    //   onChange(e as React.ChangeEvent<HTMLInputElement>);
-    // }
-    const {value} = e.target;
-    const {onChange, readonly} = this.props;
+    const { value } = e.currentTarget;
+    const { readonly } = this.props;
     if (readonly) {
       return;
     }
-    if (('value' in this.props)) {
-      this.setState({value}, () => {
-        if (onChange) {
-          onChange(value);
-        }
-      })
-    } else {
-      if (onChange) {
-        onChange(value);
-      }
+    if ('value' in this.props) {
+      this.triggerChange(value);
+      return;
+    }
+    this.setState({ value }, () => {
+      this.triggerChange(value);
+    });
+  };
+
+  triggerChange(value) {
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(value);
     }
   }
 
   render(): JSX.Element {
-    const {status} = this.state;
-    const {type} = this.props;
+    const { type, className, status, disabled } = this.props;
     const extraProps = omit(this.props, ['value', 'defaultValue', 'onChange', 'type', 'status']);
-    const clsName = cx('wx-v2-input', `ws-input-${status}`);
+    const clsName = cx({
+      'wx-v2-input': true,
+      [`ws-input-${status}`]: !disabled,
+      [`ws-input-disabled`]: disabled,
+    }, className);
     return (
       <input
         {...extraProps}
         className={clsName}
         value={this.state.value}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
         type={type}
         onChange={this.onChange}
         ref={this.saveInput}

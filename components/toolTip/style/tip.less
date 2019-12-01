@@ -1,0 +1,21 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@tipPrefix: ~"@{prefix}-tool-tip";
+/**提示信息 -start**/
+.@{tipPrefix} {
+  &-content {
+    display: inline-block;
+    min-width: 60px;
+    max-width: 400px;
+    border: 1px solid #333;
+    background-color: #333 !important;
+    border-radius: 3px;
+    color: #fff;
+  }
+  &:after {
+    display: inline-block !important;
+    border: 1px solid #333;
+    background-color: #333;
+  }
+}

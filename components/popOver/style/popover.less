@@ -1,0 +1,123 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@tipPrefix: ~"@{prefix}-popover";
+/**提示信息 -start**/
+.@{tipPrefix} {
+  min-width: 60px;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
+  &-content {
+    background-color: #fff;
+    display: inline-block;
+    padding: 10px;
+  }
+  &-wrapper {
+    display: inline-block;
+  }
+  &:after {
+    display: none;
+    position: absolute;
+    content: ' ';
+    height: 8px;
+    width: 8px;
+    //border: 1px solid #e4e4e4;
+    //background-color: #fff;
+    z-index: -1;
+    //transform: rotate(45deg);
+    //left: 20%;
+    //bottom: -6px;
+  }
+  &:before {
+    position: absolute;
+    content: ' ';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: -10px;
+  }
+  &-bl:after {
+    transform: rotate(45deg);
+    left: 20%;
+    bottom: -5px;
+
+    z-index: -1;
+  }
+  &-br:after {
+    transform: rotate(45deg);
+    right: 20%;
+    bottom: -5px;
+
+    z-index: -1;
+  }
+  &-bl:before,
+  &-br:before {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: -10px;
+  }
+
+  &-tl:after {
+    transform: rotate(45deg);
+    left: 20%;
+    top: -5px;
+    z-index: -1;
+  }
+  &-tr:after {
+    transform: rotate(45deg);
+    right: 20%;
+    top: -5px;
+    z-index: -1;
+  }
+  &-tl:before,
+  &-tr:before {
+    left: 0;
+    top: -10px;
+    right: 0;
+    bottom: 0;
+  }
+
+  &-lt:after {
+    transform: rotate(45deg) translateX(-50%);
+    left: 0;
+    top: 20%;
+
+    z-index: -1;
+  }
+  &-lb:after {
+    transform: rotate(45deg) translateX(-50%);
+    left: 0;
+    bottom: 20%;
+
+    z-index: -1;
+  }
+  &-lt:before,
+  &-lb:before {
+    left: -10px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  &-rt:after {
+    transform: rotate(45deg) translateX(50%);
+    right: 0;
+    top: 20%;
+    z-index: -1;
+  }
+  &-rb:after {
+    transform: rotate(45deg) translateX(50%);
+    right: 0;
+    bottom: 20%;
+    z-index: -1;
+  }
+  &-rt:before,
+  &-rb:before {
+    left: 0;
+    right: -10px;
+    top: 0;
+    bottom: 0;
+  }
+}

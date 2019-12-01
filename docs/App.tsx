@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {Footer, Panel} from 'react-iaux';
-import {Link} from 'react-router-dom';
+import { Footer, Panel } from 'react-iaux';
+import { Link } from 'react-router-dom';
 import HeaderLayout from './pages/layout/header';
 import './app.less';
-import {Route, Router, Switch} from 'react-router';
-import {History} from 'history';
-import MenuList from "./pages/layout/menu/MenuList";
+import { Route, Router, Switch } from 'react-router';
+import { History } from 'history';
+import MenuList from './pages/layout/menu/MenuList';
 import Test from './pages/test/Test';
 
-const {Wrapper} = Panel;
+const { Wrapper } = Panel;
 
 const StartPage = React.lazy(() =>
   import(/* webpackChunkName:'page.intro */ './pages/started/StartPage'),
@@ -38,14 +38,14 @@ class App extends React.PureComponent<AppProps, {}> {
   render() {
     return (
       <Wrapper className="dc-root">
-        <HeaderLayout />
+        <HeaderLayout/>
         <Router history={this.props.history}>
           <Switch>
             <Route path="/" exact component={LazyHolder(StartPage)}/>
-            <div style={{minHeight:400,paddingTop:60}}>
+            <div style={{ minHeight: 400, paddingTop: 60 }}>
               <Route path="/test" exact component={LazyHolder(Test)}/>
             </div>
-            <Wrapper className="dc-main">
+            <Wrapper style={{ display: 'none' }} className="dc-main">
               <Wrapper className="dc-intro-page">
                 <Wrapper className="dc-intro-page-tip"/>
                 <Wrapper className="dc-intro-page-menu">

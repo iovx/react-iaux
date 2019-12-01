@@ -3,8 +3,9 @@ import * as ReactDOM from 'react-dom';
 import {Route, Router, Switch} from 'react-router';
 import {createBrowserHistory} from 'history';
 import App from './App';
+import Test2 from './pages/test/Test2';
 
-import '../dist/react-iaux.css';
+// import '../dist/react-iaux.css';
 
 const history = createBrowserHistory();
 
@@ -12,6 +13,7 @@ function RouteConfig() {
   return (
     <Router history={history}>
       <Switch>
+        <Route path="/test2" component={Test2}/>
         <Route path="/" component={App}/>
       </Switch>
     </Router>

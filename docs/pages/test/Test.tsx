@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import CheckBox from '../../../components/checkBox';
 import '../../../components/checkBox/style';
 import Radio from '../../../components/radio';
@@ -11,12 +10,16 @@ import Popup from '../../../components/popup';
 import '../../../components/popup/style';
 import Button from '../../../components/button/Button';
 import '../../../components/button/style';
+import Tab from '../../../components/tab';
+import '../../../components/tab/style';
 
 export interface BaseProps {
 
 }
 
 export type TestProps = {} & BaseProps;
+
+const { Panel: TabPanel } = Tab;
 
 
 class Test extends React.PureComponent<TestProps, {}> {
@@ -42,12 +45,12 @@ class Test extends React.PureComponent<TestProps, {}> {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: 20 }}>
         <div>是否开启配置:</div>
-        <CheckBox defaultChecked label='是否开启配置' />
+        <CheckBox defaultChecked label='是否开启配置'/>
         <div>实现方式:</div>
-        <Radio defaultChecked label='实现方式' />
-        <Radio disabled label='自定义' />
+        <Radio defaultChecked label='实现方式'/>
+        <Radio disabled label='自定义'/>
         <div>请选出你熟悉的语言:</div>
         <CheckBox.Group
           data={[
@@ -114,27 +117,34 @@ class Test extends React.PureComponent<TestProps, {}> {
             },
           ]}
         />
-        <Alert closable onClose={this.handleClose}>
-          原来一个也不能少！
-        </Alert>
-        <Alert type='success'>
-          原来一个也不能少！
-        </Alert>
-        <div>
-          <Button onClick={this.handleClick}>显示</Button>
-          <Button onClick={this.handleCloseClick} status='error'>关闭</Button>
-          <Popup top={this.state.top} left={this.state.left} show={this.state.showPop}>
-            <Alert type='warning'>
+        <Tab>
+          <TabPanel title='测试一'>
+            <Alert closable onClose={this.handleClose}>
               原来一个也不能少！
             </Alert>
-            <Alert type='error'>
+            <Alert type='success'>
               原来一个也不能少！
             </Alert>
-          </Popup>
-        </div>
-        <div>
-          <Pagination total={100} />
-        </div>
+          </TabPanel>
+          <TabPanel title='测试二'>
+            <div>
+              <Button onClick={this.handleClick}>显示</Button>
+              <Button onClick={this.handleCloseClick} status='error'>关闭</Button>
+              <Popup top={this.state.top} left={this.state.left} show={this.state.showPop}>
+                <Alert type='warning'>
+                  原来一个也不能少！
+                </Alert>
+                <Alert type='error'>
+                  原来一个也不能少！
+                </Alert>
+              </Popup>
+            </div>
+            <div>
+              <Pagination total={100}/>
+            </div>
+          </TabPanel>
+        </Tab>
+
       </div>
     );
   }

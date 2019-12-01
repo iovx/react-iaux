@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import FallItem from "./FallItem";
-import {getOffset} from "../utils/dom";
+import FallItem from './FallItem';
+import { getOffset } from '../utils/dom';
 
 
 interface BaseProps {
@@ -51,7 +51,7 @@ export function waterFall(items: DataItem[], width: number, columns: number, gap
       // 2- 确定第一行
       items[i].top = 0;
       items[i].left = (width + gap) * i;
-      const newItem: DataItem = {...items[i]}
+      const newItem: DataItem = { ...items[i] };
       arr.push(newItem);
     } else {
       // 其他行
@@ -79,8 +79,8 @@ export function waterFall(items: DataItem[], width: number, columns: number, gap
 export function getWindowSize() {
   return {
     width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-    height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-  }
+    height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+  };
 }
 
 // scrollTop兼容性处理
@@ -94,7 +94,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
   static defaultProps = {
     response: true,
     gap: 7,
-  }
+  };
   static propTypes = {
     gap: PropTypes.number,
     itemWidth: PropTypes.number,
@@ -120,14 +120,17 @@ class WaterFall extends React.Component<WaterFallProps, any> {
       height: 0,
       page: 1,
       pageSize: 30,
-    }
+    };
   }
 
   componentDidMount() {
     const width = this.wrapper.clientWidth;
-    this.setState({width}, () => {
+    this.setState({ width }, () => {
       this.loadImage(this.state.page).then(null);
     });
+    if (typeof  window === 'undefined') {
+      return null;
+    }
     if (this.props.response) {
       window.addEventListener('resize', this.resizeHandler);
     }
@@ -135,6 +138,9 @@ class WaterFall extends React.Component<WaterFallProps, any> {
   }
 
   componentWillUnmount() {
+    if (typeof  window === 'undefined') {
+      return null;
+    }
     if (this.props.response) {
       window.removeEventListener('resize', this.resizeHandler);
     }
@@ -142,12 +148,12 @@ class WaterFall extends React.Component<WaterFallProps, any> {
   }
 
   getConfig = () => {
-    const {itemWidth, cols, gap = 7} = this.props;
+    const { itemWidth, cols, gap = 7 } = this.props;
     const result = {
       width: 0,
       cols: 3,
       gap,
-    }
+    };
     result.gap = gap;
     if (itemWidth && cols) {
       result.width = itemWidth;
@@ -163,22 +169,22 @@ class WaterFall extends React.Component<WaterFallProps, any> {
       result.cols = Math.max(Math.floor(this.state.width / (300 + 2 * gap)), 1);
     }
     return result;
-  }
+  };
   loadImage = (page, pageSize = 30) => {
     const config = this.getConfig();
-    this.setState({isLoading: true});
-    const {loader, onLoadOver} = this.props;
+    this.setState({ isLoading: true });
+    const { loader, onLoadOver } = this.props;
     return loader(page, pageSize).then(response => {
-      const {list, total} = response;
+      const { list, total } = response;
       if (this.state.dataList.length >= total) {
-        this.setState({isEnd: true}, () => {
+        this.setState({ isEnd: true }, () => {
           if (onLoadOver) {
             onLoadOver();
           }
         });
       }
       const width = config.width;
-      const {dataList} = this.state;
+      const { dataList } = this.state;
       const newList = list.map(item => ({
         ...item,
         url: item.url,
@@ -191,49 +197,49 @@ class WaterFall extends React.Component<WaterFallProps, any> {
         left: 0,
         top: 0,
       }));
-      const nextDataList = dataList.concat(newList).map(item => ({...item, top: 0, left: 0}));
+      const nextDataList = dataList.concat(newList).map(item => ({ ...item, top: 0, left: 0 }));
       waterFall(nextDataList, width, config.cols, config.gap);
-      this.setState({dataList: nextDataList}, () => {
-        this.setState({isLoading: false})
+      this.setState({ dataList: nextDataList }, () => {
+        this.setState({ isLoading: false });
       });
     });
-  }
+  };
   loadNext = (items) => {
     if (getWindowSize().height + getScrollTop() >= items[items.length - 1].top + getOffset(this.wrapper).top) {
-      this.setState({page: this.state.page + 1}, () => {
+      this.setState({ page: this.state.page + 1 }, () => {
         this.loadImage(this.state.page).then(null);
-      })
+      });
     }
-  }
+  };
   resizeHandler = () => {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      this.setState({width: this.wrapper.clientWidth}, () => {
+      this.setState({ width: this.wrapper.clientWidth }, () => {
         const config = this.getConfig();
         const nextDataList = [...this.state.dataList].map(item => ({
           ...item,
           left: 0,
           top: 0,
           width: config.width,
-          height: config.width / item.width * item.height
-        }))
+          height: config.width / item.width * item.height,
+        }));
         waterFall(nextDataList, config.width, config.cols, config.gap);
-        this.setState({dataList: nextDataList})
-      })
+        this.setState({ dataList: nextDataList });
+      });
     }, 100);
-  }
+  };
   scrollHandler = () => {
-    const {isEnd, isLoading, dataList} = this.state;
+    const { isEnd, isLoading, dataList } = this.state;
     if (!isEnd && !isLoading) {
       this.loadNext(dataList);
     }
-  }
+  };
   renderFallItem = (data: DataItem) => {
-    const {content, contentCls, contentStyle, holder} = this.props;
-    const {width, height, url, top, left, title, description} = data;
+    const { content, contentCls, contentStyle, holder } = this.props;
+    const { width, height, url, top, left, title, description } = data;
     return (
       <FallItem
-        style={{top, left}}
+        style={{ top, left }}
         key={url}
         width={width}
         height={height}
@@ -247,19 +253,19 @@ class WaterFall extends React.Component<WaterFallProps, any> {
       >
         {typeof content === 'function' ? content(data) : content}
       </FallItem>
-    )
-  }
+    );
+  };
 
   render() {
-    const {className, style, cols, itemWidth, gap, content, holder, contentCls, contentStyle, loader, onLoadOver, response, ...extraProps} = this.props;
-    const clsName = cx("wx-v2-waterfall", className);
+    const { className, style, cols, itemWidth, gap, content, holder, contentCls, contentStyle, loader, onLoadOver, response, ...extraProps } = this.props;
+    const clsName = cx('wx-v2-waterfall', className);
     const wrapperStyle: React.CSSProperties = {
       ...style,
-    }
-    const {dataList} = this.state;
+    };
+    const { dataList } = this.state;
     const len = dataList.length;
     if (len > 0) {
-      const last = dataList[len - 1]
+      const last = dataList[len - 1];
       wrapperStyle.height = last.top + last.height;
     }
     return (
@@ -267,7 +273,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
         className={clsName}
         style={wrapperStyle}
         ref={(ref) => {
-          this.wrapper = ref as HTMLDivElement
+          this.wrapper = ref as HTMLDivElement;
         }}
         {...extraProps}
       >

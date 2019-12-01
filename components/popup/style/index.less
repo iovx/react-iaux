@@ -5,13 +5,14 @@
 .@{popup-prefix} {
   box-sizing: border-box;
   position: absolute;
-  background: #fff;
-  border:1px solid #279b7e;
   z-index: 999;
   &-content {
     position: absolute;
   }
   &-hide {
+    left: -10000px;
+    top: -10000px;
+    opacity: 0;
     display: none;
   }
 }

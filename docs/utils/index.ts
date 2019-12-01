@@ -3,5 +3,5 @@ export function loadMarkdown(name){
   if(name.toLowerCase().indexOf('.md') === -1){
     path = name+'.md';
   }
-  return () => import(/* webpackChunkName:'doc.examp.'  */ `../docs/${path}`);
+  return () => import(/* webpackChunkName:'doc.example.'  */ `../docs/${path}`);
 }
