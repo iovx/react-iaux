@@ -2,33 +2,50 @@
 @import "../../styles/index";
 
 @alert-prefix: ~'@{prefix}-alert';
-
 .@{alert-prefix} {
   display: flex;
-  padding: 10px;
-  margin: 10px;
+  margin: 0;
+  padding: 5px;
   color: #424242;
   border-radius: 2px;
   position: relative;
   &-success {
     background-color: #f6ffed;
     border: 1px solid #b7eb8f;
+    color: #279b7e;
+    > svg {
+      fill: #279b7e;
+    }
   }
   &-info {
     background-color: #e6f7ff;
     border: 1px solid #91d5ff;
+    color: #1c7098;
+    > svg {
+      fill: #1c7098;
+    }
   }
   &-warning {
     background-color: #fffbe6;
     border: 1px solid #ffe58f;
+    color: #dc7931;
+    > svg {
+      fill: #dc7931;
+    }
   }
   &-error {
     background-color: #fff1f0;
     border: 1px solid #ffa39e;
+    color: #e43d3d;
+    > svg {
+      fill: #e43d3d;
+    }
   }
   &-icon > svg {
-    width: 25px;
+    width: 21px;
     height: 25px;
+    vertical-align: middle;
+
   }
   &-content {
     line-height: 27px;

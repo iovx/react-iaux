@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import TabPanel, { TabPanelProps } from './TabPanel';
+import { Omit } from '../_utils/type';
 
 interface BaseProps {
 
@@ -14,7 +15,12 @@ export type TabProps = {
   activeIndex?: number;
   defaultActiveIndex?: number;
   children: React.ReactElement<TabPanelProps>[],
-} & BaseProps;
+  tabCtrl?: boolean;
+  bodyClassName?: string;
+  headerClassName?: string;
+  headerStyle?: React.CSSProperties;
+  bodyStyle?: React.CSSProperties;
+} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
 
 export interface TabState {
   activeKey: string;
@@ -29,7 +35,9 @@ class Tab extends React.Component<TabProps, TabState> {
     activeIndex: PropTypes.number,
     defaultActiveIndex: PropTypes.number,
   };
-  static defaultProps = {};
+  static defaultProps = {
+    tabCtrl: true,
+  };
   static Panel: typeof TabPanel;
 
   constructor(props: TabProps) {
@@ -54,7 +62,10 @@ class Tab extends React.Component<TabProps, TabState> {
     return null;
   }
 
-  handleTabClick = (key: string | number | null, index: number) => {
+  handleTabClick = (key: string | number | null, index: number, disabled: boolean) => {
+    if (disabled) {
+      return;
+    }
     if ('activeKey' in this.props || 'activeIndex' in this.props) {
       this.triggerChange();
     } else {
@@ -70,11 +81,33 @@ class Tab extends React.Component<TabProps, TabState> {
     }
   };
 
+  getExtraProps() {
+    const {
+      activeKey,
+      defaultActiveKey,
+      onChange,
+      activeIndex,
+      defaultActiveIndex,
+      children,
+      className,
+      tabCtrl,
+      headerStyle,
+      headerClassName,
+      bodyStyle,
+      bodyClassName,
+      ...extraProps
+    } = this.props;
+    return extraProps;
+  }
+
   render() {
-    const { children } = this.props;
+    const { children, tabCtrl, className, bodyClassName, headerClassName, bodyStyle, headerStyle } = this.props;
     const { activeIndex, activeKey } = this.state;
     const tabButtons: React.ReactElement[] = [];
     const tabPanels: React.ReactElement[] = [];
+    const wrapperCls = cx('wx-v2-tab', className);
+    const headerCls = cx('wx-v2-tab-header', headerClassName);
+    const bodyCls = cx('wx-v2-tab-body', bodyClassName);
     React.Children.forEach<React.ReactElement<TabPanelProps>>(children, (child, index) => {
       if (child.type === TabPanel) {
         const { key } = child;
@@ -90,36 +123,33 @@ class Tab extends React.Component<TabProps, TabState> {
         } else {
           active = activeIndex === index;
         }
-        const tabCls = cx({
-          'wx-v2-tab-title': true,
-          'wx-v2-tab-active': active,
-        });
-        tabButtons.push(
-          <div
-            key={key || `${index}`}
-            className={tabCls}
-            onClick={() => this.handleTabClick(key, index)}
-          >
-            {child.props.title}
-          </div>,
-        );
-        const tabPanelCls = cx({
-          'wx-v2-tab-panel': true,
-          'wx-v2-tab-active': active,
-        });
-        tabPanels.push(
-          <div className={tabPanelCls} key={child.key || `${index}`}>
-            {child}
-          </div>,
-        );
+        if (tabCtrl) {
+          const tabCls = cx({
+            'wx-v2-tab-title': true,
+            'wx-v2-tab-active': active,
+            'wx-v2-tab-disabled': child.props.disabled,
+          });
+          tabButtons.push(
+            <div
+              key={key || `${index}`}
+              className={tabCls}
+              onClick={() => this.handleTabClick(key, index, child.props.disabled)}
+            >
+              {child.props.title}
+            </div>,
+          );
+        }
+        tabPanels.push(React.cloneElement(child, {
+          active,
+        }));
       }
     });
     return (
-      <div className='wx-v2-tab'>
-        <div className='wx-v2-tab-header'>
+      <div className={wrapperCls} {...this.getExtraProps()}>
+        <div className={headerCls} style={headerStyle}>
           {tabButtons}
         </div>
-        <div className="wx-v2-tab-body">
+        <div className={bodyCls} style={bodyStyle}>
           <div className="wx-v2-tab-content">
             {tabPanels}
           </div>

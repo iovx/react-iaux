@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import RadioGroup from "./RadioGroup";
+import RadioGroup from './RadioGroup';
+import { Omit } from '../_utils/type';
 
 interface BaseProps {
   checked?: boolean;
@@ -9,11 +10,12 @@ interface BaseProps {
   disabled?: boolean;
   label?: string;
   value?: string;
+  unCheckedValue?: string;
 
-  onChange?(e: RadioState): void;
+  onChange?(value: string, checked: boolean): void;
 }
 
-export type RadioProps = {} & BaseProps & React.HTMLAttributes<HTMLInputElement>;
+export type RadioProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface RadioState {
   checked: boolean;
@@ -30,8 +32,8 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
   };
   static defaultProps = {
     defaultChecked: false,
-    value: "",
-  }
+    value: '',
+  };
   static Group: typeof RadioGroup;
 
   constructor(props: RadioProps) {
@@ -39,13 +41,13 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
     this.state = {
       defaultChecked: props.checked || false,
       checked: props.checked || props.defaultChecked || false,
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps: RadioProps, prevState: RadioState) {
     if ('checked' in nextProps && nextProps.checked !== prevState.checked) {
-      return {checked: nextProps.checked};
+      return { checked: nextProps.checked };
     }
     return null;
   }
@@ -54,33 +56,33 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
     return `wx-v2-radio${suffix ? '-' + suffix : ''}`;
   }
 
-  triggerChange() {
-    const {onChange} = this.props;
+  triggerChange(checked: boolean) {
+    const { onChange, value, unCheckedValue } = this.props;
     if (onChange) {
-      onChange({...this.state});
+      onChange(checked ? value : unCheckedValue, checked);
     }
   }
 
   handleChange(e) {
     e.stopPropagation();
-    const {checked} = e.currentTarget;
+    const { checked } = e.currentTarget;
     if (!('checked' in this.props)) {
-      this.setState({checked}, () => {
-        this.triggerChange();
+      this.setState({ checked }, () => {
+        this.triggerChange(checked);
       });
     } else {
-      this.triggerChange();
+      this.triggerChange(checked);
     }
   }
 
   getExtraProps() {
-    const {value, checked, className, defaultChecked, label, children, ...extraProps} = this.props;
+    const { value, checked, className, defaultChecked, label, onChange, children, ...extraProps } = this.props;
     return extraProps;
   }
 
   render() {
-    const {value, className, label, children, disabled} = this.props;
-    const {checked} = this.state;
+    const { value, className, label, children, disabled } = this.props;
+    const { checked } = this.state;
     const checkBoxCls = cx(this.getPrefixCls(), checked ? this.getPrefixCls('checked') : '', disabled ? this.getPrefixCls('disabled') : '', className);
     return (
       <label className="wx-v2-radio-wrapper">

@@ -10,9 +10,14 @@
   }
   &-label {
     display: flex;
-    width: 48px;
+    width: 80px;
     justify-content: flex-end;
     line-height: 32px;
+    color: #333232;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
     &-text {
 
     }
@@ -23,7 +28,8 @@
         color: @wxErrorColor;
         font-size: 12px;
         position: relative;
-        top: -3px;
+        top: -4px;
+        left: -2px;
       }
 
     }

@@ -11,6 +11,7 @@ export type OptionProps = {
   style?: React.CSSProperties;
   children?: React.ReactText;
   selected?: boolean;
+  disabled?: boolean;
   onClick?(): void;
 } & BaseProps;
 
@@ -25,9 +26,10 @@ class Option extends React.Component<OptionProps, any> {
   };
 
   render() {
-    const { children, className, style, onClick, selected } = this.props;
+    const { children, className, style, disabled, onClick, selected } = this.props;
     const wrapperCls = cx('wx-v2-select-option', className, {
       'wx-v2-select-option-selected': selected,
+      'wx-v2-select-option-disabled': disabled,
     });
     return (
       <div className={wrapperCls} style={style} onClick={onClick}>

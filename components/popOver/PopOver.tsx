@@ -100,7 +100,9 @@ class PopOver extends React.Component<PopOverProps, PopOverState> {
     const style = getComputedStyle(this.wrappedEleRef.current);
     const w = style.width;
     const h = style.height;
-    let left = this.left, top = this.top;
+    let { top, left } = getOffset(this.wrappedEleRef.current);
+    this.left = left;
+    this.top = top;
     const padding = 10;
     switch (dir) {
       case 'tl':

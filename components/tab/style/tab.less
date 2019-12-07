@@ -13,11 +13,11 @@
   &-body {
     border: 1px solid #e9e9e9;
     min-height: 100px;
-    max-height: 600px;
     overflow: auto;
+    max-height: inherit;
     border-radius: 1px;
     padding: 10px;
-    background: #f9f9f9;
+    background: #fff;
   }
   &-content {
     position: relative;
@@ -28,6 +28,8 @@
     border: 1px solid #eee;
     border-bottom: none;
     cursor: pointer;
+    color: #8d8c8c;
+    font-size: 12px;
     &:first-child {
       border-radius: 2px 0 0 0;
     }
@@ -36,11 +38,15 @@
     }
   }
   &-title&-active {
-    background: #087ffe;
     color: #fff;
-    border-color: #087ffe;
+    background: #279b7e;
+    border-color: #279b7e;
     overflow: hidden;
     cursor: default;
+  }
+  &-title&-disabled {
+    color: rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
   }
   &-panel {
     //position: absolute;
@@ -50,5 +56,9 @@
   }
   &-panel&-active {
     display: block;
+  }
+
+  &-title + &-title {
+    border-left: 0 none;
   }
 }

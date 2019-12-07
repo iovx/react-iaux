@@ -13,11 +13,12 @@ interface BaseProps {
   data: ICheckBoxDataItem[];
   defaultValue?: string | string[];
   value?: string | string[];
+  disabled?: boolean;
 
-  onChange?(e: CheckBoxGroupState): void;
+  onChange?(value: string[]): void;
 }
 
-export type CheckBoxGroupProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
+export type CheckBoxGroupProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface CheckBoxGroupState {
   value: any[],
@@ -61,41 +62,39 @@ class CheckBoxGroup extends React.PureComponent<CheckBoxGroupProps, CheckBoxGrou
     return `wx-v2-checkbox-group${suffix ? '-' + suffix : ''}`;
   }
 
-  triggerChange() {
+  triggerChange(value: string[]) {
     const { onChange } = this.props;
     if (onChange) {
-      onChange({ ...this.state });
+      onChange(value);
     }
   }
 
   handleChange(item: ICheckBoxDataItem) {
-    return (e) => {
-      const { checked } = e;
+    return (value: string, checked: boolean) => {
+      const prevValue = this.state.value;
+      let nextValue;
+      if (!checked) {
+        nextValue = prevValue.filter(vl => vl !== item.value);
+      } else {
+        nextValue = prevValue.concat([item.value]);
+      }
       if (!('value' in this.props)) {
-        this.setState((prevState: CheckBoxGroupState) => {
-          let nextValue;
-          if (checked) {
-            nextValue = prevState.value.filter(vl => vl !== item.value);
-          } else {
-            nextValue = prevState.value.concat([item.value]);
-          }
-          return { value: nextValue };
-        }, () => {
-          this.triggerChange();
+        this.setState({ value: nextValue }, () => {
+          this.triggerChange(this.state.value);
         });
       } else {
-        this.triggerChange();
+        this.triggerChange(nextValue);
       }
     };
   }
 
   getExtraProps() {
-    const { value, className, defaultValue, data, ...extraProps } = this.props;
+    const { value, className, defaultValue, onChange, data, ...extraProps } = this.props;
     return extraProps;
   }
 
   render() {
-    const { className, data } = this.props;
+    const { className, data, disabled } = this.props;
     const { value } = this.state;
     const checkBoxGroupCls = cx(this.getPrefixCls(), className);
     return (
@@ -105,6 +104,7 @@ class CheckBoxGroup extends React.PureComponent<CheckBoxGroupProps, CheckBoxGrou
             const isChecked = value.indexOf(item.value) !== -1;
             return (
               <CheckBox
+                disabled={disabled}
                 key={item.value}
                 checked={isChecked}
                 label={item.label}

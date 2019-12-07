@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames' ;
-import Font from "./Font";
+import Font from './Font';
+import Svg from './Svg';
 
 interface BaseProps {
   iconClassName?: string;
@@ -17,6 +18,7 @@ export type IconProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
 
 class Icon extends React.Component<IconProps, any> {
   static Font: typeof Font;
+  static Svg: typeof Svg;
   static propTypes = {
     iconClassName: PropTypes.string,
     contentStyle: PropTypes.object,
@@ -27,15 +29,15 @@ class Icon extends React.Component<IconProps, any> {
   };
 
   render() {
-    const {className: pcn, iconClassName = '', iconStyle, contentStyle, icon = '', text, children, font, ...props} = this.props;
+    const { className: pcn, iconClassName = '', iconStyle, contentStyle, icon = '', text, children, font, ...props } = this.props;
     const fontClass = cx(font || 'iconfont', icon, iconClassName);
     const valueText = children || text;
     return (
       <div className={pcn} {...props}>
-        <i className={fontClass} style={iconStyle}/>
+        <i className={fontClass} style={iconStyle} />
         {valueText ? <span style={contentStyle}>{valueText}</span> : ''}
       </div>
-    )
+    );
   }
 }
 

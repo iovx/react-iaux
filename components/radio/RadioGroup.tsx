@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import Radio from "./Radio";
+import Radio from './Radio';
 
 interface IRadioDataItem {
   name?: string;
@@ -13,8 +13,9 @@ interface BaseProps {
   data: IRadioDataItem[];
   defaultValue?: string;
   value?: string;
+  disabled?: boolean;
 
-  onChange?(e: RadioGroupState): void;
+  onChange?(value: string): void;
 }
 
 export type RadioGroupProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement> ;
@@ -33,11 +34,11 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
       name: PropTypes.string,
       label: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-    }))
+    })),
   };
   static defaultProps = {
     defaultValue: [],
-  }
+  };
 
   constructor(props: RadioGroupProps) {
     super(props);
@@ -45,13 +46,13 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
     this.state = {
       data: [],
       value: props.value || defaultValue || '',
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps: RadioGroupProps, prevState: RadioGroupState) {
     if (('value' in nextProps) && nextProps.value !== prevState.value) {
-      return {value: nextProps.value};
+      return { value: nextProps.value };
     }
     return null;
   }
@@ -60,33 +61,33 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
     return `wx-v2-radio-group${suffix ? '-' + suffix : ''}`;
   }
 
-  triggerChange() {
-    const {onChange} = this.props;
+  triggerChange(value: string) {
+    const { onChange } = this.props;
     if (onChange) {
-      onChange({...this.state});
+      onChange(value);
     }
   }
 
   handleChange(item: IRadioDataItem) {
-    return (e) => {
+    return () => {
       if (!('value' in this.props)) {
-        this.setState({value: item.value}, () => {
-          this.triggerChange();
+        this.setState({ value: item.value }, () => {
+          this.triggerChange(item.value);
         });
       } else {
-        this.triggerChange();
+        this.triggerChange(item.value);
       }
-    }
+    };
   }
 
   getExtraProps() {
-    const {value, className, defaultValue, data, ...extraProps} = this.props;
+    const { value, className, defaultValue, onChange, disabled, data, ...extraProps } = this.props;
     return extraProps;
   }
 
   render() {
-    const {className, data} = this.props;
-    const {value} = this.state;
+    const { className, data, disabled } = this.props;
+    const { value } = this.state;
     const checkBoxGroupCls = cx(this.getPrefixCls(), className);
     return (
       <div className={checkBoxGroupCls} {...this.getExtraProps()}>
@@ -95,13 +96,14 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
             const isChecked = value === item.value;
             return (
               <Radio
+                disabled={disabled}
                 key={item.value}
                 checked={isChecked}
                 label={item.label}
                 value={item.value}
                 onChange={this.handleChange(item)}
               />
-            )
+            );
           })
         }
       </div>

@@ -3,7 +3,14 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import { tuple } from '../_utils/type';
 
-const statusType = tuple('success', 'info', 'warning', 'error', 'default', 'primary', 'pure', 'loading');
+const statusType = tuple('success', 'info', 'warning', 'error', 'default', 'primary', 'pure',
+  'loading',
+  'info-pure',
+  'success-pure',
+  'warning-pure',
+  'error-pure',
+  'primary-pure',
+);
 
 const sizeType = tuple('sm', 'md', 'lg', 'res');
 

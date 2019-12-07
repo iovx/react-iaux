@@ -11,6 +11,7 @@ import '../../../components/button/style';
 import Input from '../../../components/input/Input';
 import '../../../components/input/style';
 import '../../../components/form/style';
+import '../../../components/upload/style';
 import IndexPage from '../form';
 
 const { Option } = Select;
@@ -43,8 +44,8 @@ class Test2 extends React.Component<Test2Props, any> {
         <ToolTip title={title}>
           <span className='tip-test'>test2</span>
         </ToolTip>
-        <hr/>
-        <Select value={this.state.value} multiple={false} onChange={this.handleChange.bind(this)}>
+        <hr />
+        <Select disabled value={this.state.value} multiple={false} onChange={this.handleChange.bind(this)}>
           <Option key='1'>一个也不能少1</Option>
           <Option key='2'>一个也不能少2</Option>
           <Option key='3'>一个也不能少3</Option>
@@ -53,23 +54,27 @@ class Test2 extends React.Component<Test2Props, any> {
           <Option key='6'>一个也不能少6</Option>
           <Option key='7'>一个也不能少7</Option>
         </Select>
-        <hr/>
+        <hr />
         <PopOver content={<div style={{ width: 400, height: 200 }}>wind</div>}>
-          <Button>出现</Button>
+          <Button status='success-pure'>出现</Button>
         </PopOver>
         <PopOver trigger='hover' content={<div style={{ width: 400, height: 200 }}>wind</div>}>
           <Button>出现2</Button>
         </PopOver>
-        <hr/>
+        <hr />
         <div>
-          <Input status='error' value='李克勤' onChange={this.handleInputChange} placeholder='一个也不能少'/>
-          <hr/>
-          <Input status='warning' defaultValue='李克勤' onChange={this.handleInputChange} placeholder='一个也不能少'/>
-          <hr/>
-          <Input status='success' defaultValue='李克勤' disabled onChange={this.handleInputChange} placeholder='一个也不能少'/>
+          <Input status='error' value='李克勤' onChange={this.handleInputChange} placeholder='一个也不能少' />
+          <hr />
+          <Input status='warning' defaultValue='李克勤' onChange={this.handleInputChange} placeholder='一个也不能少' />
+          <hr />
+          <Input status='success' defaultValue='李克勤' disabled onChange={this.handleInputChange} placeholder='一个也不能少' />
         </div>
-        <hr/>
-        <IndexPage/>
+        <hr />
+        <IndexPage />
+        <hr />
+        <div>
+
+        </div>
       </div>
     );
   }

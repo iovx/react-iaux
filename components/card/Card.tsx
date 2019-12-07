@@ -1,12 +1,18 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import ImageCard from "./ImageCard";
+import cx from 'classnames';
+import ImageCard from './ImageCard';
 
 declare interface BaseProps {
-  title: React.ReactNode,
+  header: React.ReactNode,
 }
 
-export type CardProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
+export type CardProps = {
+  headerStyle?: React.CSSProperties;
+  bodyStyle?: React.CSSProperties;
+  headerClassName?: string;
+  bodyClassName?: string;
+} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
 
 class Card extends React.PureComponent<CardProps, {}> {
   static ImageCard: typeof ImageCard;
@@ -15,11 +21,14 @@ class Card extends React.PureComponent<CardProps, {}> {
   };
 
   render() {
-    const {title, children, ...extraProps} = this.props;
+    const { header, children, className, headerStyle, bodyStyle, headerClassName, bodyClassName, ...extraProps } = this.props;
+    const wrapperCls = cx('wx-v2-card', className);
+    const headerCls = cx('wx-v2-card-header', headerClassName);
+    const bodyCls = cx('wx-v2-card-body', bodyClassName);
     return (
-      <div {...extraProps}>
-        <div>{title}</div>
-        <div>{children}</div>
+      <div className={wrapperCls} {...extraProps}>
+        <div style={headerStyle} className={headerCls}>{header}</div>
+        <div style={bodyStyle} className={bodyCls}>{children}</div>
       </div>
     );
   }

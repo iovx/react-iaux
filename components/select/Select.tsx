@@ -5,6 +5,7 @@ import Popup from '../popup/Popup';
 import { getOffset, getRestBounds } from '../utils/dom';
 import Option, { OptionProps } from './Option';
 import { svgArrow, svgClose } from './assets';
+import { Omit } from '../_utils/type';
 
 
 interface BaseProps {
@@ -22,7 +23,8 @@ export type SelectProps = {
   children?: React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[];
   onChange?(value: string | string[]): void;
   multiple?: boolean;
-} & BaseProps;
+  disabled?: boolean;
+} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
 
 export interface SelectState {
   isMouseIn: boolean;
@@ -119,10 +121,13 @@ class Select extends React.Component<SelectProps, SelectState> {
     const popHeight = popStyle.height;
     const style = getComputedStyle(this.wrappedEleRef.current as HTMLDivElement);
     const h = style.height;
-    let left = this.left, top = this.top;
+    let { top, left } = getOffset(this.wrappedEleRef.current as HTMLDivElement);
+    this.top = top;
+    this.left = left;
+    // let left = this.left, top = this.top;
     const padding = 4;
     if (dir) {
-      top = this.top + parseInt(h|| '0') + padding;
+      top = this.top + parseInt(h || '0') + padding;
     } else {
       top = this.top - parseInt(popHeight || '0') - padding;
     }
@@ -137,13 +142,20 @@ class Select extends React.Component<SelectProps, SelectState> {
     return bottom > top;
   }
 
-  handleMouseEnter = () => {
-
+  handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { onMouseEnter } = this.props;
+    if (onMouseEnter) {
+      onMouseEnter(e);
+    }
   };
-  handleMouseLeave = () => {
+  handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({ isMouseIn: false });
+    const { onMouseLeave } = this.props;
+    if (onMouseLeave) {
+      onMouseLeave(e);
+    }
   };
-  handleClick = () => {
+  handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (this.state.isMouseIn) {
       this.setState({
         isMouseIn: false,
@@ -157,6 +169,10 @@ class Select extends React.Component<SelectProps, SelectState> {
         left,
       }));
     });
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e);
+    }
   };
   handlePopMouseEnter = () => {
     this.setState({ isInPop: true });
@@ -166,8 +182,12 @@ class Select extends React.Component<SelectProps, SelectState> {
   };
   handleOptionClick = (dataItem: ISelectOptionData) => {
     const { value } = this.state;
-    const { multiple } = this.props;
+    const { multiple, disabled } = this.props;
     const isInControl = 'value' in this.props;
+    if (disabled) {
+      this.setState({ isInPop: false });
+      return;
+    }
     if (multiple) {
       const mulValue = value as string[];
       const nextValue = (value.indexOf(dataItem.value) > -1) ? mulValue.filter(item => item !== dataItem.value) : (mulValue.concat([dataItem.value]));
@@ -206,8 +226,13 @@ class Select extends React.Component<SelectProps, SelectState> {
     }
   }
 
+  getExtraProps() {
+    const { value, disabled, defaultValue, className, onClick, onMouseEnter, onMouseLeave, onChange, multiple, ...extraProps } = this.props;
+    return extraProps;
+  }
+
   render() {
-    const { children, multiple } = this.props;
+    const { children, multiple, disabled } = this.props;
     const { isMouseIn, top, left, isInPop, dir, width, value } = this.state;
     const wrapperCls = cx('wx-v2-select-option-wrapper', 'wx-v2-select-option-wrapper-' + (dir ? 'bt' : 'tp'));
     const options: React.ReactElement[] = [];
@@ -216,6 +241,7 @@ class Select extends React.Component<SelectProps, SelectState> {
     const selectCls = cx({
       'wx-v2-select': true,
       'wx-v2-select-open': open,
+      'wx-v2-select-disabled': disabled,
     });
     React.Children.forEach<React.ReactElement<OptionProps>>(children as (React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[]), child => {
       const dataItem: ISelectOptionData = {
@@ -223,6 +249,7 @@ class Select extends React.Component<SelectProps, SelectState> {
         text: `${child.props.children}`,
       };
       options.push(React.cloneElement(child, {
+        disabled,
         style: { width },
         onClick: () => this.handleOptionClick(dataItem),
         selected: (multiple && (this.state.value as string[]).indexOf(dataItem.value) > -1),
@@ -244,6 +271,7 @@ class Select extends React.Component<SelectProps, SelectState> {
           {options}
         </Popup>
         <div
+          {...this.getExtraProps()}
           className={selectCls}
           ref={this.wrappedEleRef}
           onClick={this.handleClick}

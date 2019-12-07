@@ -6,21 +6,24 @@
 /**直接按钮**/
 .@{buttonPrefix} {
   display: inline-block;
-  padding: 7px 20px;
+  padding: 0 20px;
+  height: 34px;
+  line-height: 34px;
   text-align: center;
   color: #fff;
   cursor: pointer;
+  font-size: 0.9em;
   .wx-mix-radius(2px);
   border: 1px solid transparent;
 
   &.ws-sm {
-    padding: 6px 16px;
+    padding: 0 16px;
   }
   &.ws-md {
-    padding: 10px 25px;
+    padding: 0 25px;
   }
   &.ws-lg {
-    padding: 15px 30px;
+    padding: 0 30px;
   }
   &.ws-res {
     width: 100%;
@@ -64,10 +67,63 @@
     }
   }
   &.ws-primary {
-    background-color: @wx-button-color-primary;
+    border-color: @wx-button-color-success;
+    background-color: #fff;
+    color: @wx-button-color-success;
     &.ws-at,
     &:hover {
-      background-color: @wx-button-color-primary-hover;
+      border-color: @wx-button-color-success;
+      color: #28a688;
+    }
+  }
+  &.ws-pure {
+    background: #fff;
+    color: #8e8e8e;
+    border: 1px solid #dfdfdf;
+    &.ws-at,
+    &:hover {
+      border-color: #28a688;
+      color: #28a688;
+    }
+  }
+  &.ws-error-pure {
+    background: #fff;
+    color: #8e8e8e;
+    border: 1px solid #dfdfdf;
+    &.ws-at,
+    &:hover {
+      border-color: @wx-button-color-error;
+      color: @wx-button-color-error;
+    }
+  }
+  &.ws-warning-pure {
+    background: #fff;
+    color: #8e8e8e;
+    border: 1px solid #dfdfdf;
+    &.ws-at,
+    &:hover {
+      border-color: @wx-button-color-warning;
+      color: @wx-button-color-warning;
+    }
+  }
+  &.ws-success-pure {
+    background: #fff;
+    color: #8e8e8e;
+    border: 1px solid #dfdfdf;
+    &.ws-at,
+    &:hover {
+      border-color: @wx-button-color-success;
+      color: @wx-button-color-success;
+    }
+  }
+  &.ws-info-pure {
+    background: #fff;
+    color: #8e8e8e;
+    border: 1px solid #dfdfdf;
+    &.ws-at,
+    &:hover {
+      border-color: @wx-button-color-info;
+      color: @wx-button-color-info;
     }
   }
   &.ws-disabled {

@@ -12,6 +12,10 @@ import Button from '../../../components/button/Button';
 import '../../../components/button/style';
 import Tab from '../../../components/tab';
 import '../../../components/tab/style';
+import CollapsePanel from '../../../components/collapse/CollapsePanel';
+import '../../../components/collapse/style';
+import '../../../components/card/style';
+import '../../../components/pagination/style';
 
 export interface BaseProps {
 
@@ -43,86 +47,109 @@ class Test extends React.PureComponent<TestProps, {}> {
     this.setState({ showPop: false });
   };
 
+  handleCheckBoxChange = (e) => {
+    console.log(e);
+  };
+  handleRadioChange = (e) => {
+    console.log(e);
+  };
+
   render() {
     return (
       <div style={{ padding: 20 }}>
-        <div>是否开启配置:</div>
-        <CheckBox defaultChecked label='是否开启配置'/>
-        <div>实现方式:</div>
-        <Radio defaultChecked label='实现方式'/>
-        <Radio disabled label='自定义'/>
-        <div>请选出你熟悉的语言:</div>
-        <CheckBox.Group
-          data={[
-            {
-              name: 'name',
-              value: 'JavaScript',
-              label: 'JavaScript',
-            },
-            {
-              name: 'name',
-              value: 'PHP',
-              label: 'PHP',
-            },
-            {
-              name: 'name',
-              value: 'Java',
-              label: 'Java',
-            },
-            {
-              name: 'name',
-              value: 'Python',
-              label: 'Python',
-            },
-          ]}
-        />
-        <div>请选出你从事的语言:</div>
-        <Radio.Group
-          defaultValue={'PHP'}
-          data={[
-            {
-              name: 'name',
-              value: 'JavaScript',
-              label: 'JavaScript',
-            },
-            {
-              name: 'name',
-              value: 'PHP',
-              label: 'PHP',
-            },
-            {
-              name: 'name',
-              value: 'Java',
-              label: 'Java',
-            },
-            {
-              name: 'name',
-              value: 'Python',
-              label: 'Python',
-            },
-          ]}
-        />
-        <div style={{ lineHeight: '34px', color: '#666' }}>你今天带饭了吗？</div>
-        <Radio.Group
-          data={[
-            {
-              name: 'rice',
-              value: '1',
-              label: '带了',
-            },
-            {
-              name: 'rice',
-              value: '0',
-              label: '没带',
-            },
-          ]}
-        />
-        <Tab>
-          <TabPanel title='测试一'>
-            <Alert closable onClose={this.handleClose}>
+        <CollapsePanel header={<div className='collapse-panel-holder'>收起</div>} body={
+          <div>
+            <div>是否开启配置:</div>
+            <CheckBox defaultChecked label='是否开启配置'/>
+            <div>实现方式:</div>
+            <Radio defaultChecked label='实现方式'/>
+            <Radio disabled label='自定义'/>
+          </div>
+        }/>
+        <CollapsePanel header={<div className='collapse-panel-holder'>收起2</div>} body={
+          <div>
+            <div>请选出你熟悉的语言:</div>
+            <CheckBox.Group
+              onChange={this.handleCheckBoxChange}
+              data={[
+                {
+                  name: 'name',
+                  value: 'JavaScript',
+                  label: 'JavaScript',
+                },
+                {
+                  name: 'name',
+                  value: 'PHP',
+                  label: 'PHP',
+                },
+                {
+                  name: 'name',
+                  value: 'Java',
+                  label: 'Java',
+                },
+                {
+                  name: 'name',
+                  value: 'Python',
+                  label: 'Python',
+                },
+              ]}
+            />
+            <div>请选出你从事的语言:</div>
+            <Radio.Group
+              onChange={this.handleRadioChange}
+              defaultValue={'PHP'}
+              data={[
+                {
+                  name: 'name',
+                  value: 'JavaScript',
+                  label: 'JavaScript',
+                },
+                {
+                  name: 'name',
+                  value: 'PHP',
+                  label: 'PHP',
+                },
+                {
+                  name: 'name',
+                  value: 'Java',
+                  label: 'Java',
+                },
+                {
+                  name: 'name',
+                  value: 'Python',
+                  label: 'Python',
+                },
+              ]}
+            />
+            <div style={{ lineHeight: '34px', color: '#666' }}>你今天带饭了吗？</div>
+            <Radio.Group
+              data={[
+                {
+                  name: 'rice',
+                  value: '1',
+                  label: '带了',
+                },
+                {
+                  name: 'rice',
+                  value: '0',
+                  label: '没带',
+                },
+              ]}
+            />
+          </div>
+        }/>
+        <Tab style={{ marginTop: 10 }}>
+          <TabPanel title='测试一' className='alert-test2'>
+            <Alert closable onClose={this.handleClose} className='alert'>
               原来一个也不能少！
             </Alert>
-            <Alert type='success'>
+            <Alert type='success' className='alert'>
+              原来一个也不能少！
+            </Alert>
+            <Alert type='error' className='alert'>
+              原来一个也不能少！
+            </Alert>
+            <Alert type='warning' className='alert'>
               原来一个也不能少！
             </Alert>
           </TabPanel>
@@ -144,7 +171,6 @@ class Test extends React.PureComponent<TestProps, {}> {
             </div>
           </TabPanel>
         </Tab>
-
       </div>
     );
   }

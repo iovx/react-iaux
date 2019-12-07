@@ -3,27 +3,38 @@
 
 @dialogPrefix: ~"@{prefix}-dialog";
 .@{dialogPrefix} {
+  transform: translateX(-50%);
+  left: 50%;
+  top: 200px;
   width: 650px;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
   z-index: 99997;
+  background: #fff;
+  box-shadow: 0 0 16px rgba(0, 0, 0, .12);
   &-header {
     display: flex;
-    padding: 5px 10px;
-    background-color: #39409b;
+    background-color: #275c9b;
     color: #fff;
+    padding: 6px 10px;
+    font-size: 15px;
+    vertical-align: middle;
   }
   &-title {
     flex: 1;
-    line-height: 28px;
   }
   &-close-btn {
     cursor: pointer;
+    line-height: 22px;
+    position: relative;
+    top: 2px;
+    > svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+      vertical-align: middle;
+    }
   }
   &-body {
     padding: 10px;
@@ -39,5 +50,41 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.28);
+  }
+}
+
+&-create-panel {
+  width: 400px;
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 200px;
+  z-index: 999;
+  background: #fff;
+  box-shadow: 0 0 16px #e7e7e8;
+  border: 1px solid #f4f4f4;
+  border-radius: 3px;
+  overflow: hidden;
+  &-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 998;
+    background-color: rgba(60, 95, 197, 0.06);
+  }
+  &-head {
+    padding: 6px 10px;
+    background: #1e8ee5;
+    color: #fff;
+    font-size: 15px;
+  }
+  &-close {
+    cursor: pointer;
+    float: right;
+  }
+  &-body {
+    padding: 20px;
   }
 }

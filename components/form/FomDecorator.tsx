@@ -48,9 +48,18 @@ export interface DecorateOption {
   message?: React.ReactNode;
 }
 
+export interface IDecorateData extends DecorateOption {
+  name: string;
+  status: string;
+  isValidated: boolean;
+  validate: boolean;
+  value: any;
+  error?: object | null;
+}
+
 class FieldDecorator {
   static FieldDecoratorItem: typeof FieldDecoratorItem;
-  public data: object = {};
+  public data: { [index: string]: IDecorateData } = {};
   // private errors: object | null = null;
   validateStopWhenError: boolean = false;
   refFields: object = {};
@@ -92,6 +101,7 @@ class FieldDecorator {
           name={name}
           options={options}
           comp={comp}
+          validating={validating}
         />
       );
     };
@@ -120,7 +130,7 @@ class FieldDecorator {
     let err = false;
     for (const name of Object.keys(this.data)) {
       const item = this.data[name];
-      const { force, value, validate, error: validateError, isValidated } = item;
+      const { force, value, validate, error: validateError, isValidated, stopValidate } = item;
       values[name] = value;
       if (force || !isValidated) {
         const res = await this.refFields[name].triggerValidate();
@@ -132,6 +142,9 @@ class FieldDecorator {
       } else if (!validate) {
         err = true;
         errors[name] = validateError;
+      }
+      if (err && stopValidate) {
+        break;
       }
     }
     return execFunction(callback, null, err ? errors : null, values);
@@ -214,14 +227,14 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
       onChange: (value) => {
         this.setValue(value);
       },
-      onFocus: (e) => {
-        const { value } = e.currentTarget;
-        this.focusValue = value;
-        this.onFocus(e);
-      },
-      onBlur: (e) => {
-        this.onBlur(e);
-      },
+      // onFocus: (e) => {
+      //   const { value } = e.currentTarget;
+      //   this.focusValue = value;
+      //   this.onFocus(e);
+      // },
+      // onBlur: (e) => {
+      //   this.onBlur(e);
+      // },
     };
     this.fieldProps = fieldProps;
     this.comp = comp;
@@ -259,7 +272,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     const { name } = this.props;
     this.refDecorator.setValue(name, value);
     this.setState({ value, isValidated: false }, () => {
-      this.triggerValidate(VALIDATE_SCALE.EMPTY, () => {
+      this.triggerValidate([VALIDATE_SCALE.EMPTY, VALIDATE_SCALE.RULE], () => {
         this.setState({ isValidated: false });
       }).then(() => {
 
@@ -302,7 +315,7 @@ class FieldDecoratorItem extends React.Component<FieldDecoratorItemProps, FieldD
     return { error: false, message: '' };
   };
   // 触发验证
-  triggerValidate = async (paramScales?: string | null, callback?: () => void): Promise<ValidateResult> => {
+  triggerValidate = async (paramScales?: string|string[] | null, callback?: () => void): Promise<ValidateResult> => {
     const { required, label, options } = this.props;
     const { rules = [], message } = options;
     const { value } = this.state;

@@ -9,10 +9,16 @@
   }
 }
 
+.@{tipPrefix}-disabled {
+  cursor: not-allowed;
+  color: #8c8c8c;
+}
+
 .@{tipPrefix} {
   border: 1px solid #dfdfdf;
+  background-color: #fff;
   min-height: 34px;
-  line-height: 34px;
+  line-height: 32px;
   border-radius: 2px;
   outline: none;
   display: flex;
@@ -75,6 +81,10 @@
     color: #585858;
     font-size: 13px;
     user-select: none;
+    &-disabled {
+      cursor: not-allowed;
+      color: #8c8c8c;
+    }
     &:last-child {
       border-bottom: none;
     }

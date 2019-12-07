@@ -1,2 +1,60 @@
 @import "../../styles/themes/default";
 @import "../../styles/index";
+@import "../../icon/style/index";
+
+@upload-prefix: ~"@{prefix}-upload";
+
+.@{upload-prefix} {
+  @theme-upload-list-border-color: #dfdfdf;
+  &-list {
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid @theme-upload-list-border-color;
+    &-item {
+      display: flex;
+      color: #535353;
+      font-size: 0.9em;
+      &-num {
+        width: 50px;
+        text-align: center;
+      }
+      &-name {
+        width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+      &-status {
+        width: 100px;
+      }
+      &-size {
+        width: 120px;
+      }
+      &-time {
+        width: 140px;
+        flex: 1;
+      }
+      &-action {
+        width: 80px;
+        text-align: center;
+        > span {
+          cursor: pointer;
+          > svg {
+            fill: #ff3a4b;
+          }
+        }
+      }
+      > div {
+        &:first-child {
+          border-left: none;
+        }
+        padding: 8px 10px;
+        border-left: 1px solid @theme-upload-list-border-color;
+      }
+    }
+    &-item + &-item {
+      border-top: 1px solid @theme-upload-list-border-color;
+    }
+  }
+}

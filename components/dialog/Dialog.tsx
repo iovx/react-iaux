@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import Portal from './Portal';
-import Close from './Close';
+import { svgClose } from './assets';
 
 export type DialogProps = {
   onClose?: () => void;
@@ -34,14 +34,14 @@ class Dialog extends React.Component<DialogProps, any> {
   }
 
   onClose() {
-    const {onClose} = this.props;
+    const { onClose } = this.props;
     if (onClose) {
       onClose();
     }
   }
 
   render() {
-    const {visible, children, footer, header, title, headerStyle, bodyStyle, footerStyle, style, headerCls, bodyCls, footerCls, className, ...restProps} = this.props;
+    const { visible, children, footer, header, title, headerStyle, bodyStyle, footerStyle, style, headerCls, bodyCls, footerCls, className, ...restProps } = this.props;
     const wrapperCls = cx('wx-v2-dialog', className);
     const headerClass = cx('wx-v2-dialog-header', headerCls);
     const bodyClass = cx('wx-v2-dialog-body', bodyCls);
@@ -51,7 +51,7 @@ class Dialog extends React.Component<DialogProps, any> {
         <div className={wrapperCls} style={style} {...restProps}>
           <div className={headerClass} style={headerStyle}>
             <div className='wx-v2-dialog-title'>{header || title}</div>
-            <div className='wx-v2-dialog-close-btn' onClick={this.onClose}><Close/></div>
+            <div className='wx-v2-dialog-close-btn' onClick={this.onClose} dangerouslySetInnerHTML={{ __html: svgClose }}/>
           </div>
           <div className={bodyClass} style={bodyStyle}>
             {children}

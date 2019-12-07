@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import cx from 'classnames'
+import cx from 'classnames';
 
 interface BaseImageCardProps {
   alt?: string;
@@ -16,23 +16,23 @@ interface BaseImageCardProps {
 export type ImageCardProps = {} & BaseImageCardProps & React.HTMLAttributes<HTMLDivElement>;
 
 class ImageCard extends React.Component<ImageCardProps, any> {
-  static defaultProps = {}
+  static defaultProps = {};
   static propTypes = {
     imageStyle: PropTypes.object,
     imageClassName: PropTypes.string,
     titleStyle: PropTypes.object,
     titleClassName: PropTypes.string,
     alt: PropTypes.string,
-  }
+  };
 
   render() {
-    const {className, imageStyle, imageClassName, alt, titleStyle, titleClassName, picUrl, title, ...extraProps} = this.props;
-    const clsName = cx('wx-v2-card ws-hr', className)
+    const { className, imageStyle, imageClassName, alt, titleStyle, titleClassName, picUrl, title, ...extraProps } = this.props;
+    const clsName = cx('wx-v2-card ws-image ws-hr', className);
     const imageCls = cx(imageClassName);
-    const titleCls = cx('wx-v2-card-title', titleClassName)
+    const titleCls = cx('wx-v2-card-image-title', titleClassName);
     return (
       <div className={clsName} {...extraProps}>
-        <div className='wx-v2-card-image'>
+        <div className='wx-v2-card-image'  {...extraProps}>
           <img src={picUrl} style={imageStyle}
                className={imageCls} alt={alt}/>
         </div>
