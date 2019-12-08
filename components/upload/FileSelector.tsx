@@ -13,7 +13,7 @@ interface BaseProps {
   selectOnly?: boolean;
   dragOnly?: boolean;
   maxLength?: number;
-  selectText?: React.ReactElement;
+  selectText?: React.ReactElement<any>;
   dropText?: React.ReactNode;
   onFileChange?: (fileList: FileNode[]) => void;
   onDragEnter?: React.DragEventHandler;
@@ -27,9 +27,9 @@ interface BaseProps {
 export type FileSelectorProps = {} & BaseProps & React.HTMLAttributes<HTMLElement>;
 
 export interface FileSelectorState {
-  dropOver?: boolean;
-  isFocused?: boolean;
-  fileList?: FileNode[],
+  dropOver: boolean;
+  isFocused: boolean;
+  fileList: FileNode[],
 }
 
 class FileSelector extends React.Component<FileSelectorProps, FileSelectorState> {
@@ -64,7 +64,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
   state = {
     dropOver: false,
     isFocused: false,
-    fileList: [],
+    fileList: [] as FileNode[],
   };
 
   constructor(props: FileSelectorProps) {
@@ -85,7 +85,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     const { files } = e.target;
     this.onChange(files);
   };
-  onChange = (files) => {
+  onChange = (files: File[]) => {
     const { fileList } = this.state;
     const { multiple, repeat, override, maxLength } = this.props;
     if (multiple && override || !multiple) {
@@ -94,7 +94,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (repeat || (!repeat && !this.isFileSelected(file))) {
-        if (!('maxLength' in this.props) || fileList.length < maxLength) {
+        if (!('maxLength' in this.props) || fileList.length < (maxLength as number)) {
           const packedFile = this.packFile(file, { status: FileState.SELECTED, id: file.name });
           fileList.push(packedFile);
         }
@@ -144,7 +144,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     });
   };
   onDrop = (e: React.DragEvent) => {
-    const { onDrop } = this.props;
+    const { onDrop, multiple } = this.props;
     e.stopPropagation();
     e.preventDefault();
     const dataTransfer = e.dataTransfer;
@@ -154,7 +154,14 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
         onDrop(e);
       }
       if (files.length) {
-        this.onChange(!this.props.multiple ? [files[0]] : files);
+        const fileArr: File[] = [];
+        for (let i = 0; i < files.length; i++) {
+          const item = files.item(i);
+          if (item) {
+            fileArr.push(item);
+          }
+        }
+        this.onChange(!multiple ? [files[0]] : fileArr);
       }
     });
     return true;
@@ -176,7 +183,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     const nextFileList = this.state.fileList.filter(item => item.id !== file.id);
     this.setState(() => ({
       fileList: nextFileList,
-    }), () => this.onChange(nextFileList));
+    }), () => this.onChange(nextFileList.map(item => item.file)));
   };
 
   render() {
@@ -226,11 +233,10 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
           // onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
           onDragEnd={this.onDragLeave}
-
         >
-          {dropOver ? dropText : React.cloneElement(selectText, {
+          {dropOver ? dropText : (selectText && React.cloneElement(selectText, {
             disabled,
-          })}
+          }))}
         </div>
       </div>
     );

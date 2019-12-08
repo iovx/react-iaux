@@ -3,16 +3,14 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import omit from 'omit.js';
 import { Omit, tuple } from '../_utils/type';
-import Area from './Area';
 
 const InputStatus = tuple('error', 'success', 'default', 'warning', 'primary', 'focus');
 
-type InputType = 'text' | 'password';
+interface BaseProps extends Omit<React.HTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+}
 
-
-export interface InputProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+export type AreaProps = {
   status?: (typeof InputStatus)[number]
-  type?: InputType;
   value?: string,
   defaultValue?: string;
   onChange?: (value: any) => void;
@@ -20,26 +18,20 @@ export interface InputProps extends Omit<React.HTMLAttributes<HTMLInputElement>,
   maxLength?: number;
   disabled?: boolean;
   autoFocus?: boolean;
-}
+  resize?: boolean;
+} & BaseProps;
 
 
-export type  InputState = {
-  status?: (typeof InputStatus)[number];
-  value?: string | string[];
-}
-
-class Input extends React.Component<InputProps, InputState> {
+class Area extends React.Component<AreaProps, any> {
   static defaultProps = {
     status: 'default',
-    type: 'text',
   };
   static propTypes = {
-    type: PropTypes.string,
     status: PropTypes.oneOf(InputStatus),
   };
-  static Area: typeof Area;
+  input: HTMLInputElement;
 
-  constructor(props: InputProps) {
+  constructor(props: AreaProps) {
     super(props);
     const { value, defaultValue } = props;
     this.state = {
@@ -47,7 +39,7 @@ class Input extends React.Component<InputProps, InputState> {
     };
   }
 
-  static getDerivedStateFromProps(props: InputProps) {
+  static getDerivedStateFromProps(props: AreaProps) {
     if ('value' in props) {
       return {
         value: props.value,
@@ -56,7 +48,7 @@ class Input extends React.Component<InputProps, InputState> {
     return null;
   }
 
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.currentTarget;
     const { readonly } = this.props;
     if (readonly) {
@@ -79,23 +71,27 @@ class Input extends React.Component<InputProps, InputState> {
   }
 
   render() {
-    const { type, className, status, disabled } = this.props;
-    const extraProps = omit(this.props, ['value', 'defaultValue', 'onChange', 'type', 'status']);
+    const { className, resize, status, style, disabled } = this.props;
+    const extraProps = omit(this.props, ['value', 'defaultValue', 'onChange', 'status']);
     const clsName = cx({
-      'wx-v2-input': true,
+      'wx-v2-text-area': true,
       [`ws-input-${status}`]: !disabled,
       [`ws-input-disabled`]: disabled,
     }, className);
+    const areaStyle: React.CSSProperties = {
+      resize: resize ? 'vertical' : 'none',
+      ...style,
+    };
     return (
-      <input
+      <textarea
         {...extraProps}
+        style={areaStyle}
         className={clsName}
         value={this.state.value}
-        type={type}
         onChange={this.onChange}
       />
     );
   }
 }
 
-export default Input;
+export default Area;

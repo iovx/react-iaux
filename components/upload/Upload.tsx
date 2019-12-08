@@ -25,9 +25,14 @@ interface BaseProps {
   onChange?(fileList: FileNode[]): void;
 }
 
+export interface IUploadListProps {
+
+}
+
 export type UploadProps = {
   value?: FileNode[];
   defaultValue?: FileNode[];
+  children?: React.ReactElement<IUploadListProps>;
 } & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface UploadState {
@@ -85,13 +90,15 @@ class Upload extends React.Component<UploadProps, UploadState> {
     }
   };
 
-  triggerChange(fileList) {
+  triggerChange(fileList: FileNode[]) {
     const { onChange } = this.props;
-    onChange([...fileList]);
+    if (onChange) {
+      onChange([...fileList]);
+    }
   }
 
   render() {
-    const { onChange, className, value, defaultValue, ...extraProps } = this.props;
+    const { onChange, className, showList, children, disabled, value, defaultValue, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-upload', className);
     return (
       <div className={wrapperCls}>
@@ -100,10 +107,18 @@ class Upload extends React.Component<UploadProps, UploadState> {
           onFileChange={this.handleChange}
           {...extraProps}
         />
-        <UploadList
-          onDelete={this.handleDelete}
-          data={this.state.value}
-        />
+        {showList ? (
+          <UploadList
+            onDelete={this.handleDelete}
+            data={this.state.value}
+            disabled={disabled}
+          />) : (
+          children && React.cloneElement(React.Children.only(children), {
+            onDelete: this.handleDelete,
+            data: this.state.value,
+            disabled,
+          })
+        )}
       </div>
     );
   }

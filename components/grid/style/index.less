@@ -1,0 +1,21 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@grid-prefix: ~"@{prefix}-grid";
+@theme-grid-gutter: 0px;
+.@{grid-prefix} {
+  display: inline-block;
+  padding: 10px;
+  &-row {
+    display: flex;
+  }
+  .row + .row {
+    margin-top: @theme-grid-gutter;
+  }
+  &-col {
+
+  }
+  &-col + &-col {
+    margin-left: @theme-grid-gutter;
+  }
+}

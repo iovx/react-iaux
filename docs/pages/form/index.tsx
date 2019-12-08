@@ -19,6 +19,7 @@ import Upload from '../../../components/upload/Upload';
 const FormItem = Form.Item;
 
 const { Option } = Select;
+const { Area: TextArea } = Input;
 
 interface TestProps extends FormProps {
 
@@ -193,10 +194,21 @@ class IndexPage extends React.Component<TestProps, any> {
                 ],
               })(
                 <Upload
-                  disabled
                   multiple
                   maxLength={4}
                 />,
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FormItem className='formItem'>
+              {fieldDecorator.decorate('remark', {
+                label: '备注',
+                required: true,
+              })(
+                <TextArea placeholder='请输入备注信息' />,
               )}
             </FormItem>
           </Col>

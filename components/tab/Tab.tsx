@@ -133,7 +133,7 @@ class Tab extends React.Component<TabProps, TabState> {
             <div
               key={key || `${index}`}
               className={tabCls}
-              onClick={() => this.handleTabClick(key, index, child.props.disabled)}
+              onClick={() => this.handleTabClick(key, index, child.props.disabled || false)}
             >
               {child.props.title}
             </div>,

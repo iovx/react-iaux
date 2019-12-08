@@ -1,0 +1,31 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@theme-field-item-value-border-color: #dfdfdf;
+@theme-field-item-value-color: #323030;
+@theme-field-item-label-color: #494545;
+@theme-field-item-height: 34px;
+@theme-field-item-value-weight: 300;
+
+@layout-field-view-prefix: ~"@{prefix}-layout-field-item-view";
+.@{layout-field-view-prefix} {
+  display: flex;
+  &-label {
+    color: @theme-field-item-label-color;
+    text-align: right;
+    line-height: @theme-field-item-height;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &-value {
+    flex: 1;
+    border: 1px solid @theme-field-item-value-border-color;
+    padding: 0 5px;
+    margin-left: 6px;
+    line-height: @theme-field-item-height;
+    border-radius: 1px;
+    color: @theme-field-item-value-color;
+    font-weight: @theme-field-item-value-weight;
+  }
+}

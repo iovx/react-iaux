@@ -3,9 +3,11 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import Portal from './Portal';
 import { svgClose } from './assets';
+import AuthWrapper from '../authWrapper/AuthWrapper';
 
 export type DialogProps = {
   onClose?: () => void;
+  mask?: boolean;
   visible: boolean;
   footer?: React.ReactNode;
   header?: React.ReactNode;
@@ -41,7 +43,7 @@ class Dialog extends React.Component<DialogProps, any> {
   }
 
   render() {
-    const { visible, children, footer, header, title, headerStyle, bodyStyle, footerStyle, style, headerCls, bodyCls, footerCls, className, ...restProps } = this.props;
+    const { visible, mask, children, footer, header, title, headerStyle, bodyStyle, footerStyle, style, headerCls, bodyCls, footerCls, className, ...restProps } = this.props;
     const wrapperCls = cx('wx-v2-dialog', className);
     const headerClass = cx('wx-v2-dialog-header', headerCls);
     const bodyClass = cx('wx-v2-dialog-body', bodyCls);
@@ -49,19 +51,24 @@ class Dialog extends React.Component<DialogProps, any> {
     return (
       <Portal visible={visible}>
         <div className={wrapperCls} style={style} {...restProps}>
-          <div className={headerClass} style={headerStyle}>
-            <div className='wx-v2-dialog-title'>{header || title}</div>
-            <div className='wx-v2-dialog-close-btn' onClick={this.onClose} dangerouslySetInnerHTML={{ __html: svgClose }}/>
-          </div>
+          <AuthWrapper access={!!(header || title)}>
+            <div className={headerClass} style={headerStyle}>
+              <div className='wx-v2-dialog-title'>{header || title}</div>
+              <div className='wx-v2-dialog-close-btn' onClick={this.onClose}
+                   dangerouslySetInnerHTML={{ __html: svgClose }} />
+            </div>
+          </AuthWrapper>
           <div className={bodyClass} style={bodyStyle}>
             {children}
           </div>
-          <div className={footerClass} style={footerStyle}>
-            {footer}
-          </div>
+          <AuthWrapper access={!!(footer)}>
+            <div className={footerClass} style={footerStyle}>
+              {footer}
+            </div>
+          </AuthWrapper>
         </div>
-        <Portal>
-          <div className='wx-v2-dialog-mask'/>
+        <Portal visible={mask}>
+          <div className='wx-v2-dialog-mask' />
         </Portal>
       </Portal>
     );

@@ -7,19 +7,27 @@
 .@{headerPrefix} {
   display: flex;
   justify-content: space-between;
-  line-height: 45px;
-  padding: 5px;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  color: @wx-header-color;
+  line-height: 60px;
+  padding: 0 10px;
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  overflow: hidden;
   &-left {
 
   }
   &-logo {
-    font-size: 19px;
-    padding: 0 10px
+    padding: 0 10px;
+    display: inline-block;
+    cursor: default;
+    margin-right: 8px;
+    > svg {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      top: -2px;
+    }
   }
+
   &-right {
     margin-right: 10px;
   }

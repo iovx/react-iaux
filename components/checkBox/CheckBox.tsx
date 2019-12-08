@@ -61,7 +61,7 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
   triggerChange(checked: boolean) {
     const { onChange, value, unCheckedValue } = this.props;
     if (onChange) {
-      onChange(checked ? value : unCheckedValue, checked);
+      onChange((checked ? value : unCheckedValue)||'', checked);
     }
   }
 

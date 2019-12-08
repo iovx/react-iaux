@@ -11,6 +11,14 @@
     overflow: hidden;
     margin-top: 10px;
     border: 1px solid @theme-upload-list-border-color;
+    &-item&-item-disabled &-item-action {
+      > span {
+        cursor: not-allowed;
+        > svg {
+          fill: #c2bdbd;
+        }
+      }
+    }
     &-item {
       display: flex;
       color: #535353;

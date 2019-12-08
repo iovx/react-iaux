@@ -1,0 +1,21 @@
+@import "../../styles/themes/default";
+@import "../../styles/index";
+
+@image-grid-prefix: ~"@{prefix}-image-grid";
+@theme-image-grid-size: 100px;
+.@{image-grid-prefix} {
+  &-item {
+    width: @theme-image-grid-size;
+    height: @theme-image-grid-size;
+    border: 1px solid #fff;
+    overflow: hidden;
+    > img {
+      width: 100%;
+      height: 100%;
+      transition: all 1s ease;
+    }
+    &:hover img {
+      transform: scale(1.2);
+    }
+  }
+}

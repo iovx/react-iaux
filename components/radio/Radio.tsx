@@ -33,6 +33,7 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
   static defaultProps = {
     defaultChecked: false,
     value: '',
+    unCheckedValue: '',
   };
   static Group: typeof RadioGroup;
 
@@ -59,7 +60,7 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
   triggerChange(checked: boolean) {
     const { onChange, value, unCheckedValue } = this.props;
     if (onChange) {
-      onChange(checked ? value : unCheckedValue, checked);
+      onChange((checked ? value : unCheckedValue) || '', checked);
     }
   }
 
@@ -95,7 +96,7 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
             checked={checked}
             onChange={this.handleChange}
           />
-          <span className="wx-v2-radio-inner"/>
+          <span className="wx-v2-radio-inner" />
         </span>
         <span>{label || children}</span>
       </label>

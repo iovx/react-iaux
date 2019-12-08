@@ -35,6 +35,7 @@ function getStateText(status: number) {
 export type UploadListProps = {
   data: FileNode[];
   onDelete?(file: FileNode): void;
+  disabled?: boolean;
 } & BaseProps & React.HTMLAttributes<HTMLDivElement>;
 
 
@@ -47,17 +48,19 @@ class UploadList extends React.Component<UploadListProps, any> {
   };
   handleDeleteClick = (item: FileNode) => {
     return () => {
-      const { onDelete } = this.props;
-      if (typeof onDelete === 'function') {
+      const { onDelete, disabled } = this.props;
+      if (!disabled && typeof onDelete === 'function') {
         onDelete({ ...item });
       }
     };
   };
 
   render() {
-    const { data, className, itemClassName, ...extraProps } = this.props;
+    const { data, className, itemClassName, disabled, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-upload-list', className);
-    const itemCls = cx('wx-v2-upload-list-item', itemClassName);
+    const itemCls = cx('wx-v2-upload-list-item', {
+      'wx-v2-upload-list-item-disabled': disabled,
+    }, itemClassName);
     if (!data.length) {
       return null;
     }

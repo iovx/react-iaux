@@ -34,7 +34,34 @@
 
 @fullWrapperPrefix: ~"@{prefix}-wrapper-full";
 .@{fullWrapperPrefix} {
-  &-content {
+  &-close {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    background-color: #474747;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+    line-height: 36px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.33);
+    transition: all .6s ease;
+    .wx-v2-svg-icon > svg {
+      fill: #fff;
+      width: 25px;
+      height: 25px;
+    }
+    &-hide {
+      top: -100px;
+    }
+  }
+  &-header {
+    cursor: default;
+  }
+  &-body {
     background: #fff;
     overflow: auto;
   }

@@ -8,11 +8,13 @@ import PopOver from '../../../components/popOver';
 import '../../../components/popOver/style';
 import Button from '../../../components/button/Button';
 import '../../../components/button/style';
+import '../../../components/panel/style';
 import Input from '../../../components/input/Input';
 import '../../../components/input/style';
 import '../../../components/form/style';
 import '../../../components/upload/style';
 import IndexPage from '../form';
+import FullScreen from '../../../components/panel/FullScreen';
 
 const { Option } = Select;
 
@@ -70,10 +72,11 @@ class Test2 extends React.Component<Test2Props, any> {
           <Input status='success' defaultValue='李克勤' disabled onChange={this.handleInputChange} placeholder='一个也不能少' />
         </div>
         <hr />
-        <IndexPage />
+        <FullScreen>
+          <IndexPage />
+        </FullScreen>
         <hr />
         <div>
-
         </div>
       </div>
     );

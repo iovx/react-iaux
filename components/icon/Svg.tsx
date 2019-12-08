@@ -38,7 +38,7 @@ class Svg extends React.Component<SvgProps, any> {
   render() {
     const { content, className, type, ...extraProps } = this.props;
     const cls = cx('wx-v2-svg-icon', className);
-    let inner = content || svgMap[type];
+    let inner = content || (type && svgMap[type]);
     return (
       <span
         {...extraProps}
