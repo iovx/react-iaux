@@ -12,6 +12,7 @@ import '../../../components/grid/style';
 import '../../../components/layout/style';
 import '../../../components/header/style';
 import '../../../components/footer/style';
+import '../../../components/message/style';
 import Card from '../../../components/card/Card';
 import ImageCard from '../../../components/card/ImageCard';
 import Dialog from '../../../components/dialog/Dialog';
@@ -24,6 +25,7 @@ import HeaderRight from '../../../components/header/HeaderRight';
 import { Nav } from '../../../components';
 import NavItem from '../../../components/nav/NavItem';
 import Footer from '../../../components/footer/Footer';
+import Message from '../../../components/message';
 
 
 const dataConfig = {
@@ -232,6 +234,8 @@ const group = {
   ],
 };
 
+const { notice: toast } = Message;
+
 interface BaseProps {
 
 }
@@ -244,6 +248,13 @@ class Test2 extends React.Component<Test2Props, any> {
     show: false,
   };
 
+  handleToast = () => {
+    toast.success('wind');
+    toast.error('wind');
+    toast.warning('wind');
+    toast.info('wind');
+    toast.primary('wind', '原来一个也不能少，李克勤');
+  };
 
   render() {
     const title = '能共你沿途来爬天梯,黑夜亦亮丽，于山头同盟洪海中发誓,留住你旁人如何话过不可一世,问我亦无愧,有你可拆破这天际';
@@ -286,6 +297,9 @@ class Test2 extends React.Component<Test2Props, any> {
           </div>
           <div>
             <Layout fields={fields} layout={group.md} />
+          </div>
+          <div>
+            <Button onClick={this.handleToast}>Toast</Button>
           </div>
         </div>
         <Footer>

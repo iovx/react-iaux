@@ -4,3 +4,10 @@ export interface IData {
 
   [index: string]: any;
 }
+
+
+export type IInfoType = 'success' | 'info' | 'warning' | 'primary' | 'error' | 'type';
+
+
+
+

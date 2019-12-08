@@ -20,14 +20,13 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  overflow: auto;
   z-index: 999999;
   &-item {
     margin: 10px 0;
     padding: 10px;
     border-radius: 2px;
     background-color: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.07);
     &-header {
       display: flex;
     }
@@ -37,12 +36,13 @@
       padding-left: 5px;
       line-height: 40px;
       vertical-align: middle;
+      color: #727272
     }
     &-icon {
       width: 40px;
       height: 40px;
-      padding: 4px 5px;
-      svg,img {
+      padding: 7px 3px;
+      svg, img {
         width: 100%;
         height: 100%;
       }
@@ -57,6 +57,7 @@
       word-wrap: break-word;
       font-size: 15px;
       line-height: 25px;
+      color: #626262;
       &.wx-xs-text {
         padding: 10px;
       }
@@ -67,5 +68,35 @@
   .wx-mix-notice-xs(success, @wx-color-success);
   .wx-mix-notice-xs(warning, @wx-color-warning);
   .wx-mix-notice-xs(info, @wx-color-info);
+}
+
+.wx-v2-xs-success {
+  .wx-v2-notice-item-icon > svg {
+    fill: @wxSuccessColor;
+  }
+}
+
+.wx-v2-xs-error {
+  .wx-v2-notice-item-icon > svg {
+    fill: @wxErrorColor;
+  }
+}
+
+.wx-v2-xs-warning {
+  .wx-v2-notice-item-icon > svg {
+    fill: @wxWarningColor;
+  }
+}
+
+.wx-v2-xs-primary {
+  .wx-v2-notice-item-icon > svg {
+    fill: @wxPrimaryColor;
+  }
+}
+
+.wx-v2-xs-primary {
+  .wx-v2-notice-item-icon > svg {
+    fill: @wx-color-info;
+  }
 }
 
