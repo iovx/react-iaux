@@ -1,6 +1,6 @@
 {
   "name": "react-iaux",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -116,7 +116,8 @@ class Select extends React.Component<SelectProps, SelectState> {
   };
 
   getOffset() {
-    const { dir } = this.state;
+    this.width = parseInt(getComputedStyle(this.wrappedEleRef.current as HTMLDivElement).width || '0');
+    const dir = this.getProperDir();
     const popStyle = getComputedStyle((this.popupEleRef.current)!.getPopupEle() as HTMLDivElement);
     const popHeight = popStyle.height;
     const style = getComputedStyle(this.wrappedEleRef.current as HTMLDivElement);
@@ -134,6 +135,8 @@ class Select extends React.Component<SelectProps, SelectState> {
     return {
       left,
       top,
+      dir,
+      width: this.width,
     };
   }
 
@@ -163,9 +166,11 @@ class Select extends React.Component<SelectProps, SelectState> {
       return;
     }
     this.setState({ isMouseIn: true }, () => {
-      const { left, top } = this.getOffset();
+      const { dir, left, width, top } = this.getOffset();
       this.setState(() => ({
+        dir,
         top,
+        width,
         left,
       }));
     });
@@ -287,7 +292,7 @@ class Select extends React.Component<SelectProps, SelectState> {
                     <div
                       className='wx-v2-select-text-tag-close'
                       onClick={(e) => this.handleUnSelect(e, it)}
-                      dangerouslySetInnerHTML={{ __html: svgClose }}/>
+                      dangerouslySetInnerHTML={{ __html: svgClose }} />
                   </div>
                 );
               })
@@ -297,7 +302,7 @@ class Select extends React.Component<SelectProps, SelectState> {
               </div>
             )
           }
-          <div className='wx-v2-select-arrow' dangerouslySetInnerHTML={{ __html: svgArrow }}/>
+          <div className='wx-v2-select-arrow' dangerouslySetInnerHTML={{ __html: svgArrow }} />
         </div>
       </React.Fragment>
     );
