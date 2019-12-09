@@ -234,7 +234,7 @@ const group = {
   ],
 };
 
-const { notice: toast } = Message;
+const { toast } = Message;
 
 interface BaseProps {
 

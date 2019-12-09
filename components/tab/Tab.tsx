@@ -11,10 +11,10 @@ interface BaseProps {
 export type TabProps = {
   activeKey?: string;
   defaultActiveKey?: string;
-  onChange?(key: string, index: number): void;
+  onChange?(key: string | null | number, index: number): void;
   activeIndex?: number;
   defaultActiveIndex?: number;
-  children: React.ReactElement<TabPanelProps>[],
+  children: React.ReactElement<TabPanelProps> | React.ReactElement<TabPanelProps>[],
   tabCtrl?: boolean;
   bodyClassName?: string;
   headerClassName?: string;
@@ -67,17 +67,18 @@ class Tab extends React.Component<TabProps, TabState> {
       return;
     }
     if ('activeKey' in this.props || 'activeIndex' in this.props) {
-      this.triggerChange();
+      this.triggerChange(key, index);
     } else {
-      this.setState({ activeIndex: index, activeKey: `${key}` }, this.triggerChange);
+      this.setState({ activeIndex: index, activeKey: `${key}` }, () => {
+        this.triggerChange(this.state.activeKey, this.state.activeIndex);
+      });
     }
   };
 
-  triggerChange = () => {
+  triggerChange = (key: string | number | null, index: number) => {
     const { onChange } = this.props;
-    const { activeKey, activeIndex } = this.state;
     if (onChange) {
-      onChange(activeKey, activeIndex);
+      onChange(key, index);
     }
   };
 
