@@ -1,24 +1,24 @@
-export default (function () {
+export default (function() {
 
-  return function (entry) {
-    var listeners = {};
+  return function(entry) {
+    const listeners: { [index: string]: Function[] } = {};
 
     if (/MSIE 8/.test(navigator.userAgent)) {
       // window.attachEvent('storage', function () {
       //   // TODO: ie8 support
       // });
     } else {
-      window.addEventListener('storage', function (e: StorageEvent) {
+      window.addEventListener('storage', function(e: StorageEvent) {
         if (e.newValue !== null && e.key !== null && /^channel\.(.+)/.test(e.key)) {
           broadcast(RegExp.$1, e.newValue);
         }
       });
     }
 
-    function broadcast(channelName, str) {
+    function broadcast(channelName: string, str: string) {
       if (channelName in listeners) {
-        var value = JSON.parse(str);
-        for (var i = 0, arr = listeners[channelName], L = arr.length; i < L; i++) {
+        const value = JSON.parse(str);
+        for (let i = 0, arr = listeners[channelName], L = arr.length; i < L; i++) {
           try {
             arr[i](value);
           } catch (e) {
@@ -38,11 +38,10 @@ export default (function () {
        *            要发布的数据
        * @returns this
        */
-      post: function (name, value) {
-        console.log(value);
-        entry["channel." + name] = JSON.stringify(value);
-        setTimeout(function () {
-          entry.removeItem("channel." + name);
+      post: function(name: string, value: any) {
+        entry['channel.' + name] = JSON.stringify(value);
+        setTimeout(function() {
+          entry.removeItem('channel.' + name);
         }, 0);
         return this;
       },
@@ -55,7 +54,7 @@ export default (function () {
        *            回调函数
        * @returns this
        */
-      on: function (name, callback) {
+      on: function(name: string, callback: Function) {
         if (name in listeners) {
           listeners[name].push(callback);
         } else {
@@ -72,13 +71,13 @@ export default (function () {
        *            回调函数，如果为空，则取消所有监听函数
        * @returns this
        */
-      off: function (name, callback) {
-        var arr = listeners[name];
+      off: function(name: string, callback: Function) {
+        const arr = listeners[name];
         if (arr) {
           if (!callback) {
             delete listeners[name];
           } else {
-            var i = arr.length;
+            let i = arr.length;
             while (i--) {
               if (arr[i] === callback) {
                 arr.splice(i, 1);
@@ -87,7 +86,7 @@ export default (function () {
           }
         }
         return this;
-      }
+      },
     };
   }(localStorage);
 });
