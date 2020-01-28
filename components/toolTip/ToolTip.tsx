@@ -32,7 +32,7 @@ class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
       <PopOver
         contentClassName={contentCls}
         wrapperClassName={wrapperCls}
-        content={title}
+        content={<span>{title}</span>}
         trigger='hover'>
         {children}
       </PopOver>

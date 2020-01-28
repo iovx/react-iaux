@@ -14,7 +14,7 @@ export declare type FormWidgetState = any
 export interface IFromPropsRef {
   fieldDecorator: FieldDecorator;
   getFieldsValue: object;
-  validateFields: (callback: (error: object, values: object) => void) => any;
+  validateFields: (callback: (error: object, values: any) => void) => any;
 }
 
 export interface FormProps {
@@ -29,7 +29,7 @@ export declare type FormState = any
 export default class Form extends React.Component<FormProps, FormState> {
   static Item: typeof FormItem;
   static Decorator: typeof FieldDecorator;
-  static create = (WrappedForm: React.ComponentClass<React.ComponentProps<any> & { form: IFromPropsRef }>) => {
+  static create = function <T = {}>(WrappedForm: React.ComponentClass<React.ComponentProps<any> & { form: IFromPropsRef }>) {
     const fieldDecorator = new FieldDecorator();
     const form: IFromPropsRef = {
       fieldDecorator,
@@ -40,14 +40,12 @@ export default class Form extends React.Component<FormProps, FormState> {
         return fieldDecorator.validateFields(callback);
       },
     };
-    return class FormWidget extends React.Component<FormWidgetProps, FormWidgetState> {
+    return class FormWidget extends React.Component<FormWidgetProps & T, FormWidgetState> {
       render() {
         const { className, ...extraProps } = this.props;
         const clsName = cx('wx-v2-form', className);
         return (
-          <div className={clsName} {...extraProps}>
-            <WrappedForm form={form} />
-          </div>
+          <WrappedForm className={clsName} {...extraProps} form={form} />
         );
       }
     };

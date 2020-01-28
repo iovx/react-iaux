@@ -29,15 +29,22 @@ class Test2 extends React.Component<Test2Props, any> {
   state = {
     value: ['1', '2', '4'],
   };
+  popRef: React.RefObject<PopOver> = React.createRef();
 
-  handleChange(value:string) {
+  handleChange(value: string) {
     console.log('change', value);
     this.setState({ value });
   }
 
-  handleInputChange(value:string) {
+  handleInputChange(value: string) {
     console.log(value);
   }
+
+  closePop = () => {
+    if (this.popRef.current) {
+      this.popRef.current.hide();
+    }
+  };
 
   render() {
     const title = '能共你沿途来爬天梯,黑夜亦亮丽，于山头同盟洪海中发誓,留住你旁人如何话过不可一世,问我亦无愧,有你可拆破这天际';
@@ -63,7 +70,10 @@ class Test2 extends React.Component<Test2Props, any> {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div></div>
           <div>
-            <PopOver trigger='hover' dir='tr' content={<div style={{ width: 400, height: 200 }}>wind</div>}>
+            <PopOver trigger='hover' dir='tr' ref={this.popRef} content={<div style={{ width: 400, height: 200 }}>
+              <div>一个也不能少</div>
+              <Button status={'pure'} style={{ padding: '0 10px' }} onClick={this.closePop}>关闭</Button>
+            </div>}>
               <Button style={{ padding: '0 10px' }}>出现2</Button>
             </PopOver>
           </div>
@@ -78,7 +88,7 @@ class Test2 extends React.Component<Test2Props, any> {
         </div>
         <hr />
         <FullScreen>
-          <IndexPage />
+          <IndexPage from={'wind'} />
         </FullScreen>
         <hr />
         <div>

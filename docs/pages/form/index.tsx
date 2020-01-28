@@ -22,7 +22,7 @@ const { Option } = Select;
 const { Area: TextArea } = Input;
 
 interface TestProps extends FormProps {
-
+  from: string;
 }
 
 class IndexPage extends React.Component<TestProps, any> {
@@ -232,8 +232,18 @@ class IndexPage extends React.Component<TestProps, any> {
   };
 
   render() {
+    console.log(this.props);
     return this.renderForm();
   }
 }
 
-export default Form.create(IndexPage);
+const S = Form.create<TestProps>(IndexPage);
+
+const A = () => {
+  return (
+    <div>
+      <S from={'baidu'} />
+    </div>
+  );
+};
+export default Form.create<TestProps>(IndexPage);

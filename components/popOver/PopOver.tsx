@@ -15,7 +15,7 @@ export type PopOverProps = {
   className?: string;
   contentClassName?: string;
   wrapperClassName?: string;
-  content: React.ReactNode;
+  content: React.ReactElement;
   dir?: ITipPos;
   trigger?: 'click' | 'hover';
 } & BaseProps;
@@ -170,6 +170,10 @@ class PopOver extends React.Component<PopOverProps, PopOverState> {
     });
   }
 
+  hide() {
+    this.setState({ isMouseIn: false, isInPop: false });
+  }
+
   handleClick = () => {
     const { isMouseIn } = this.state;
     const { trigger } = this.props;
@@ -216,7 +220,7 @@ class PopOver extends React.Component<PopOverProps, PopOverState> {
           onMouseLeave={this.handlePopMouseLeave}
         >
           <span className={contentCls}>
-            {content}
+            {React.cloneElement(content, {})}
           </span>
         </Popup>
         <div
