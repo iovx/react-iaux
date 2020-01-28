@@ -63,7 +63,7 @@ class Area extends React.Component<AreaProps, any> {
     });
   };
 
-  triggerChange(value) {
+  triggerChange(value: string) {
     const { onChange } = this.props;
     if (onChange) {
       onChange(value);

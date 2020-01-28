@@ -31,12 +31,10 @@ class Alert extends React.PureComponent<AlertProps, AlertState> {
     type: PropTypes.string,
     closable: PropTypes.bool,
     onClose: PropTypes.func,
-    closeText: null,
   };
   static defaultProps = {
     type: 'info',
     closable: false,
-    closeText: null,
   };
   private transitionTime: number = 3000;
 

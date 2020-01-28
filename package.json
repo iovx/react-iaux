@@ -1,6 +1,6 @@
 {
   "name": "react-iaux",
-  "version": "1.1.26",
+  "version": "1.1.27",
   "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -92,6 +92,7 @@
     "webpack-dev-server": "^3.2.0"
   },
   "dependencies": {
+    "@types/react-transition-group": "^4.2.3",
     "classnames": "^2.2.6",
     "filesize": "^6.0.1",
     "moment": "^2.24.0",

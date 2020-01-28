@@ -8,43 +8,47 @@ interface BaseProps {
 export type FileImageProps = {} & BaseProps & React.HTMLAttributes<HTMLImageElement>;
 
 
-class FileImage extends React.Component<FileImageProps, any> {
+export interface FileImageState {
+  src: any;
+}
+
+class FileImage extends React.Component<FileImageProps, FileImageState> {
   static propTypes = {
     src: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(File)]),
   };
   state = {
-    src: null,
-  }
+    src: null as any,
+  };
 
   componentWillMount() {
-    const {src} = this.props;
+    const { src } = this.props;
     this.loadSrc(src);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: FileImageProps) {
     if (this.props.src !== nextProps.src) {
       this.loadSrc(nextProps.src);
     }
   }
 
-  loadSrc = (src) => {
+  loadSrc = (src: any) => {
     if (src) {
       if (src instanceof File) {
         if (src.type.indexOf('image') === 0) {
           const reader = new FileReader();
           reader.onload = () => {
-            this.setState({src: reader.result});
-          }
+            this.setState({ src: reader.result });
+          };
           reader.readAsDataURL(src);
         }
       } else {
-        this.setState({src});
+        this.setState({ src });
       }
     }
-  }
+  };
 
   render() {
-    const {src, ...extraProps} = this.props;
+    const { src, ...extraProps } = this.props;
     return (
       <img src={this.state.src || ''} {...extraProps} />
     );

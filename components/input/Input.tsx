@@ -71,7 +71,7 @@ class Input extends React.Component<InputProps, InputState> {
     });
   };
 
-  triggerChange(value) {
+  triggerChange(value: string) {
     const { onChange } = this.props;
     if (onChange) {
       onChange(value);

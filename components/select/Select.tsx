@@ -224,7 +224,7 @@ class Select extends React.Component<SelectProps, SelectState> {
     this.handleOptionClick(dataItem);
   };
 
-  triggerChange(value) {
+  triggerChange(value: string | string[]) {
     const { onChange } = this.props;
     if (onChange) {
       onChange(value);

@@ -3,18 +3,23 @@ import * as ReactDOM from 'react-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Notice from './Notice';
 import HOCNoticeWrapper from './wrapper';
+import { IHOCToastDataItem } from './HOCMessage';
 
 interface BaseProps {
-  getView: (notice) => React.ReactNode;
+  getView: (notice: IHOCToastDataItem) => React.ReactNode;
 }
 
 export type NotificationProps = {} & BaseProps;
 
-class Notification extends React.Component<NotificationProps, any> {
+export interface NotificationState {
+  notices: IHOCToastDataItem[];
+}
+
+class Notification extends React.Component<NotificationProps, NotificationState> {
   static growId = 0;
   readonly transitionTime: number;
 
-  constructor(props) {
+  constructor(props: NotificationProps) {
     super(props);
     this.transitionTime = 300;
     this.state = { notices: [] };
@@ -26,10 +31,10 @@ class Notification extends React.Component<NotificationProps, any> {
     return `notice-${new Date().getTime()}-${++Notification.growId}-${notices.length}`;
   }
 
-  addNotice(notice) {
+  addNotice(notice: any) {
     const { notices } = this.state;
     notice.uniqueId = this.getUniqueId();
-    if (notices.every(item => item.uniqueId !== notice.uniqueId)) {
+    if (notices.every((item: any) => item.uniqueId !== notice.uniqueId)) {
       if (notice.length > 0 && notices[notice.length - 1].type === 'loading') {
         notices.push(notice);
         setTimeout(() => {
@@ -50,21 +55,21 @@ class Notification extends React.Component<NotificationProps, any> {
     };
   }
 
-  getView = (notice) => {
+  getView = (notice: IHOCToastDataItem) => {
     const { getView } = this.props;
     if (getView) {
       return getView(notice);
     }
     const HocNotice = HOCNoticeWrapper(Notice, notice);
     return (
-      <HocNotice/>
+      <HocNotice />
     );
   };
 
-  removeNotice(uniqueId) {
+  removeNotice(uniqueId: string) {
     const { notices } = this.state;
     this.setState({
-      notices: notices.filter((notice) => {
+      notices: notices.filter((notice: IHOCToastDataItem) => {
         if (notice.uniqueId === uniqueId) {
           if (notice.onClose) setTimeout(notice.onClose, this.transitionTime);
           return false;
@@ -94,7 +99,7 @@ class Notification extends React.Component<NotificationProps, any> {
   }
 }
 
-function createNotification(props?) {
+function createNotification(props?: any) {
   if (typeof  document === 'undefined') {
     return null;
   }
@@ -103,7 +108,7 @@ function createNotification(props?) {
   const ref = React.createRef();
   ReactDOM.render(<Notification ref={ref} {...props} />, div);
   return {
-    addNotice(notice) {
+    addNotice(notice: IHOCToastDataItem) {
       return (ref.current as Notification).addNotice(notice);
     },
     destroy() {

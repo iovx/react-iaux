@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {WaterFall} from "react-iaux";
+import { WaterFall } from 'react-iaux';
 import * as style from './Wall.less';
 
 const styles = style as any;
@@ -12,18 +12,18 @@ class Wall extends React.Component {
 
   onLoadOver = () => {
     // alert('onLoadOver')
-  }
-  onClick = (data) => {
+  };
+  onClick = (data: any) => {
     return () => {
-      const {src} = data;
-      window.open(src,'_blank');
-    }
-  }
-  loader = (page, pageSize) => {
+      const { src } = data;
+      window.open(src, '_blank');
+    };
+  };
+  loader = (page: number, pageSize: number) => {
     return fetch(`${url}?page=${page}&pageSize=${pageSize}`).then(response => response.json()).then(response => {
-      const {data: {list, total}} = response;
-      const dataList = list.map(item => {
-        const {hash, title, description, id, width, height} = item;
+      const { data: { list, total } } = response;
+      const dataList = list.map((item: any) => {
+        const { hash, title, description, id, width, height } = item;
         return {
           id,
           url: `${imgUrl}${hash}`,
@@ -32,19 +32,19 @@ class Wall extends React.Component {
           description,
           width,
           height,
-        }
-      })
-      return {list:dataList, total};
+        };
+      });
+      return { list: dataList, total };
     });
-  }
-  content = (data) => {
+  };
+  content = (data: any) => {
     return (
       <div className={styles.card} onClick={this.onClick(data)}>
         <div> 李克勤</div>
         <div> 一个也不能少</div>
       </div>
-    )
-  }
+    );
+  };
 
   render() {
     return (

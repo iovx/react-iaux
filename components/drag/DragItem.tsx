@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import cx from 'classnames'
+import cx from 'classnames';
 
 interface BaseProps {
   text?: React.ReactNode;
@@ -15,34 +15,32 @@ export type DragItemProps = {} & BaseProps & React.HTMLAttributes<HTMLElement>;
 
 class DragItem extends React.Component<DragItemProps, any> {
   static propTypes = {};
-  static defaultProps = {
-    text: null,
+  static defaultProps: Partial<DragItemProps> = {
     locked: false,
-    data: null,
-  }
-  handleDrag = (ev) => {
+  };
+  handleDrag = (ev: React.DragEvent<HTMLDivElement>) => {
     ev.preventDefault();
     ev.stopPropagation();
     return true;
-  }
-  handleDragStart = (data) => {
-    const {onDragStart} = this.props;
-    return (ev) => {
+  };
+  handleDragStart = (data: any) => {
+    const { onDragStart } = this.props;
+    return (ev: React.DragEvent<HTMLDivElement>) => {
       ev.stopPropagation();
-      ev.dropEffect = 'copy';
+      ev.dataTransfer.dropEffect = 'copy';
       if (onDragStart) {
         onDragStart(data);
       }
       if (data) {
-        ev.dataTransfer.setData("data", JSON.stringify(data));
+        ev.dataTransfer.setData('data', JSON.stringify(data));
       }
       return true;
-    }
-  }
+    };
+  };
 
   render() {
-    const {text, locked, data, className, style, lockedClassName, ...props} = this.props;
-    const myProps: any = {style, ...props}
+    const { text, locked, data, className, style, lockedClassName, ...props } = this.props;
+    const myProps: any = { style, ...props };
     if (!('locked' in this.props) || !locked) {
       myProps.className = cx('wx-drag-item', className);
       if (this.props.draggable || !('draggable' in this.props)) {
@@ -57,7 +55,7 @@ class DragItem extends React.Component<DragItemProps, any> {
       <div {...myProps}>
         <div>{this.props.children || text}</div>
       </div>
-    )
+    );
   }
 
 }
@@ -67,6 +65,6 @@ DragItem.propTypes = {
   locked: PropTypes.bool,
   data: PropTypes.object,
   lockedClassName: PropTypes.string,
-}
+};
 
 export default DragItem;

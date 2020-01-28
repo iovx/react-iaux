@@ -33,6 +33,7 @@ export type UploadProps = {
   value?: FileNode[];
   defaultValue?: FileNode[];
   children?: React.ReactElement<IUploadListProps>;
+
 } & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface UploadState {
@@ -42,9 +43,8 @@ export interface UploadState {
 class Upload extends React.Component<UploadProps, UploadState> {
   static FileImage: typeof FileImage;
   static FileSelector: typeof FileSelector;
-  static defaultProps = {
+  static defaultProps: Partial<UploadProps> = {
     selectText: <Button status='pure'>选择文件</Button>,
-    defaultFileList: [],
     onChange: noop,
     showList: true,
     selectOnly: true,

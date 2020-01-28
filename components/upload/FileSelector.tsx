@@ -72,7 +72,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     this.uniqueId = `wx-v2-upload-files-${Date.now()}-${Math.floor(Math.random() * 999999999 + 1000000)}`;
   }
 
-  isFileSelected = (file) => {
+  isFileSelected = (file: File) => {
     const { fileList } = this.state;
     return fileList.findIndex(({ name, lastModified, size }) => file.size === size && name === file.name && lastModified === file.lastModified) !== -1;
   };
@@ -81,9 +81,19 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
     const { status, id } = props;
     return { id, file, name, size, lastModified, status };
   };
-  onFileChange = (e) => {
+  onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
-    this.onChange(files);
+    if (!files) {
+      return;
+    }
+    const fileList: File[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files.item(i);
+      if (file) {
+        fileList.push(file);
+      }
+    }
+    this.onChange(fileList);
   };
   onChange = (files: File[]) => {
     const { fileList } = this.state;
@@ -143,7 +153,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
       }
     });
   };
-  onDrop = (e: React.DragEvent) => {
+  onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const { onDrop, multiple } = this.props;
     e.stopPropagation();
     e.preventDefault();
@@ -172,7 +182,7 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
   onFocus = () => {
     this.setState({ isFocused: true });
   };
-  onKeyUp = (e) => {
+  onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (this.state.isFocused) {
       if (e.keyCode === 13) {
         this.onFileSelected();

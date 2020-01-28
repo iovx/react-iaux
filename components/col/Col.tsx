@@ -10,6 +10,7 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
 export type ColProps = {
   span?: number;
   offset?: number;
+  gutter?: number;
 } & BaseProps;
 
 
@@ -18,10 +19,12 @@ class Col extends React.Component<ColProps, any> {
     className: PropTypes.string,
     span: PropTypes.number,
     offset: PropTypes.number,
+    gutter: PropTypes.number,
   };
   static defaultProps = {
     span: 24,
     offset: 0,
+    gutter: 0,
   };
 
 

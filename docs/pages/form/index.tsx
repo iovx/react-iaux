@@ -63,6 +63,10 @@ class IndexPage extends React.Component<TestProps, any> {
                 rules: [
                   {
                     message: '输入的年龄无效',
+                    pattern: /^\d{1,3}$/,
+                  },
+                  {
+                    message: '输入的年龄无效',
                     validate(value) {
                       return new Promise((resolve) => {
                         setTimeout(() => {
@@ -126,7 +130,7 @@ class IndexPage extends React.Component<TestProps, any> {
             <FormItem className='formItem'>
               {fieldDecorator.decorate('programLanguage', {
                 label: '语言',
-                required: true,
+                required: false,
               })(
                 <CheckBox.Group
                   disabled

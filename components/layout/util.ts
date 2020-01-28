@@ -4,7 +4,10 @@
  * @param id
  * @returns {number | * }
  */
-export function getFieldById(fields, id) {
+import { IField } from './interface';
+import { MapType } from '../_utils/type';
+
+export function getFieldById(fields: IField[], id: string | number) {
   return fields.find(item => item.id === id);
 }
 
@@ -13,8 +16,8 @@ export function getFieldById(fields, id) {
  * @param list
  * @param key
  */
-export function listToMap(list, key) {
-  const result = {};
+export function listToMap(list: any[], key: string | number) {
+  const result: MapType<any> = {};
   list.forEach(item => {
     const itemKey = item[key];
     if (itemKey) {

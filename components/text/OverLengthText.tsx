@@ -14,8 +14,11 @@ export type OverLengthTextProps = {
   btnStyle?: React.CSSProperties;
 } & BaseProps;
 
+export interface OverLengthTextState {
+  open: boolean;
+}
 
-class OverLengthText extends React.Component<OverLengthTextProps, any> {
+class OverLengthText extends React.Component<OverLengthTextProps, OverLengthTextState> {
   static propTypes = {
     content: PropTypes.string,
   };

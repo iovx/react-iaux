@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import FixedMark from "./FixedMark";
-import FixedLine from "./FixedLine";
-import {LINE_POS, MARK_POS, RESIZE_TYPE} from "./constant";
-import {tuple} from "../_utils/type";
+import FixedMark from './FixedMark';
+import FixedLine from './FixedLine';
+import { LINE_POS, MARK_POS, RESIZE_TYPE } from './constant';
+import { MapType, tuple } from '../_utils/type';
 
-function getShowStyle(shouldShow) {
-  return shouldShow ? {} : {display: 'none'};
+function getShowStyle(shouldShow: boolean) {
+  return shouldShow ? {} : { display: 'none' };
 }
 
 const TriggerType = tuple('click', 'focus');
@@ -27,13 +27,13 @@ interface BaseProps {
 export type ResizeCellProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
 
 export interface ResizeCellState {
-  isEnter?: boolean,
+  isEnter: boolean,
   isMarkMouseDown?: boolean,
   isLineMouseDown?: boolean,
-  isFocused?: boolean,
+  isFocused: boolean,
   startPos: { x: number, y: number },
-  width?: number,
-  height?: number,
+  width: number,
+  height: number,
 }
 
 class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
@@ -42,9 +42,9 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
   static MarkPos = MARK_POS;
   static defaultProps = {
     type: RESIZE_TYPE.CLICK,
-  }
+  };
   static propTypes = {
-    type: PropTypes.oneOf(TriggerType)
+    type: PropTypes.oneOf(TriggerType),
   };
   private cell: HTMLElement;
   private activeLine: HTMLElement;
@@ -52,26 +52,26 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
   private activeMark: HTMLElement;
   private activeMarkId: any;
 
-  constructor(props) {
+  constructor(props: ResizeCellProps) {
     super(props);
     this.state = {
       isEnter: false,
       isMarkMouseDown: false,
       isLineMouseDown: false,
       isFocused: false,
-      startPos: {x: 0, y: 0},
+      startPos: { x: 0, y: 0 },
       width: 0,
       height: 0,
-    }
+    };
   }
 
 
   componentWillMount() {
-    const {style} = this.props;
-    let {width, height} = this.state;
+    const { style } = this.props;
+    let { width, height } = this.state;
     if (style) {
-      const styleWidth = parseFloat(style.width as string)
-      const styleHeight = parseFloat(style.width as string)
+      const styleWidth = parseFloat(style.width as string);
+      const styleHeight = parseFloat(style.width as string);
       width = isNaN(styleWidth) ? width : styleWidth;
       height = isNaN(styleWidth) ? height : styleHeight;
       this.initSize(width, height);
@@ -79,18 +79,19 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
   }
 
   componentDidMount() {
-    const {clientWidth: width, clientHeight: height} = this.cell;
+    const { clientWidth: width, clientHeight: height } = this.cell;
     this.initSize(width, height);
   }
 
-  shouldComponentUpdate(nextState){
+  shouldComponentUpdate(nextState: any) {
     if (this.state.width === nextState.width || this.state.height === nextState.height) {
       return false;
     }
     return true;
   }
-  initSize = (width, height) => {
-    const initStyle: { width?, height? } = {};
+
+  initSize = (width: number, height: number) => {
+    const initStyle: MapType<number> = {};
     let changed = false;
     if (width) {
       initStyle.width = width;
@@ -101,30 +102,30 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
       changed = true;
     }
     if (changed) {
-      this.setState(initStyle);
+      this.setState(initStyle as Pick<ResizeCellState, 'width' | 'height'>);
     }
-  }
+  };
   onEnter = (e: React.MouseEvent) => {
-    const {onEnter} = this.props;
-    this.setState({isEnter: true}, () => {
+    const { onEnter } = this.props;
+    this.setState({ isEnter: true }, () => {
       if (onEnter) {
         onEnter(e);
       }
     });
-  }
-  onMouseLeave = (e) => {
-    const {onMouseLeave} = this.props;
-    this.setState({isEnter: false}, () => {
+  };
+  onMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { onMouseLeave } = this.props;
+    this.setState({ isEnter: false }, () => {
       if (onMouseLeave) {
         onMouseLeave(e);
       }
     });
-  }
-  onMouseMove = (e) => {
-    const {onMouseMove} = this.props;
-    const {isLineMouseDown, isMarkMouseDown, startPos: {x: startX, y: startY}} = this.state;
-    const {pageX, pageY} = e;
-    let {height = 0, width = 0} = this.state;
+  };
+  onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { onMouseMove } = this.props;
+    const { isLineMouseDown, isMarkMouseDown, startPos: { x: startX, y: startY } } = this.state;
+    const { pageX, pageY } = e;
+    let { height = 0, width = 0 } = this.state;
     const nextStartX = pageX;
     const nextStartY = pageY;
     let changed = true;
@@ -186,7 +187,7 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
     }
     if (isMouseDown) {
       if (window && window.getSelection && window.getSelection()) {
-          window.getSelection()!.removeAllRanges();
+        window.getSelection()!.removeAllRanges();
       } else {
         if (document.getSelection() !== null) {
           document.getSelection()!.empty();
@@ -194,104 +195,104 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
       }
       if (changed) {
         // console.log(pageX, startX, width, this.activeLineId,this.activeMarkId);
-        this.setState({width, height, startPos: {x: nextStartX, y: nextStartY}});
+        this.setState({ width, height, startPos: { x: nextStartX, y: nextStartY } });
       }
     }
     if (onMouseMove) {
       onMouseMove(e);
     }
-  }
-  onClick = (e) => {
-    const {onClick, type} = this.props;
+  };
+  onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { onClick, type } = this.props;
     if (type === RESIZE_TYPE.CLICK) {
-      this.setState({isFocused: true});
+      this.setState({ isFocused: true });
     }
     if (onClick) {
       onClick(e);
     }
-  }
+  };
   onFocus = (e: React.FocusEvent<HTMLDivElement>) => {
-    const {onFocus} = this.props;
-    this.setState({isFocused: true}, () => {
+    const { onFocus } = this.props;
+    this.setState({ isFocused: true }, () => {
       if (onFocus) {
         onFocus(e);
       }
-    })
-  }
+    });
+  };
   onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    const {onBlur} = this.props;
-    this.setState({isFocused: false}, () => {
+    const { onBlur } = this.props;
+    this.setState({ isFocused: false }, () => {
       if (onBlur) {
         onBlur(e);
       }
-    })
-  }
+    });
+  };
 
-  onMarkPointerDown = (markPos) => {
+  onMarkPointerDown = (markPos: string) => {
     return (e: React.PointerEvent) => {
       e.persist();
       e.stopPropagation();
       this.activeMarkId = markPos;
-      const {pageX: x, pageY: y} = e;
+      const { pageX: x, pageY: y } = e;
       this.activeMark = e.currentTarget as HTMLElement;
       if (this.activeMark !== null) {
         this.activeMark.setPointerCapture(e.pointerId);
-        this.setState({isMarkMouseDown: true, startPos: {x, y}});
+        this.setState({ isMarkMouseDown: true, startPos: { x, y } });
       }
-    }
-  }
+    };
+  };
   onMarkPointerUp = (e: React.PointerEvent) => {
     e.persist();
     e.stopPropagation();
-    this.setState({isMarkMouseDown: false}, () => {
+    this.setState({ isMarkMouseDown: false }, () => {
       if (this.activeMark) {
         this.activeMark.releasePointerCapture(e.pointerId);
       }
     });
-  }
+  };
   onMarkPointerLeave = (e: React.PointerEvent) => {
-    const {onMarkPointerLeave} = this.props;
+    const { onMarkPointerLeave } = this.props;
     if (onMarkPointerLeave) {
       onMarkPointerLeave(e);
     }
-  }
-  onLineMouseDown = (linePos) => {
+  };
+  onLineMouseDown = (linePos: string) => {
     return (e: React.PointerEvent) => {
       e.persist();
       e.stopPropagation();
       this.activeLineId = linePos;
-      const {onLinePointerDown} = this.props;
-      const {pageX: x, pageY: y} = e;
+      const { onLinePointerDown } = this.props;
+      const { pageX: x, pageY: y } = e;
       this.activeLine = e.currentTarget as HTMLDivElement;
       this.activeLine.setPointerCapture(e.pointerId);
-      this.setState({isLineMouseDown: true, startPos: {x, y}}, () => {
+      this.setState({ isLineMouseDown: true, startPos: { x, y } }, () => {
         if (onLinePointerDown) {
           onLinePointerDown(e);
         }
       });
-    }
-  }
+    };
+  };
   onLinePointerLeave = (e: React.PointerEvent) => {
-    const {onLinePointerLeave} = this.props;
+    const { onLinePointerLeave } = this.props;
     if (onLinePointerLeave) {
       onLinePointerLeave(e);
     }
-  }
+  };
   onLinePointerUp = (e: React.PointerEvent) => {
     e.persist();
     e.stopPropagation();
-    const {onLinePointerUp} = this.props;
-    this.setState({isLineMouseDown: false}, () => {
+    const { onLinePointerUp } = this.props;
+    this.setState({ isLineMouseDown: false }, () => {
       this.activeLine.releasePointerCapture(e.pointerId);
       if (onLinePointerUp) {
         onLinePointerUp(e);
       }
     });
-  }
+  };
 
   render() {
-    const {isEnter, isFocused, width, height} = this.state;
-    const {className, style, type, ...extraProps} = this.props;
+    const { isEnter, isFocused, width, height } = this.state;
+    const { className, style, type, ...extraProps } = this.props;
     const clsName = cx('wx-v2-resize-cell', isEnter ? 'wx-v2-resize-cell-active' : '', className);
     const wrapperStyle: React.CSSProperties = {
       ...style,

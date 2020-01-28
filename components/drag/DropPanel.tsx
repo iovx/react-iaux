@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import cx from 'classnames'
+import cx from 'classnames';
 
 interface BaseProps {
   onDrop?: (data: any, e: React.DragEvent) => void;
@@ -19,45 +19,41 @@ class DropPanel extends React.Component<DropPanelProps, any> {
     activeStyle: PropTypes.object,
     activeClassName: PropTypes.string,
   };
-  static defaultProps = {
-    onDrop: null,
-    onDragLeave: null,
-    onDragOver: null,
-    activeStyle: null,
+  static defaultProps: Partial<DropPanelProps> = {
     activeClassName: '',
-  }
+  };
   state = {
     active: false,
-  }
+  };
   onDrop = () => {
-    const {onDrop} = this.props;
+    const { onDrop } = this.props;
     return (e: React.DragEvent) => {
       e.preventDefault();
       e.persist();
       const data = JSON.parse(e.dataTransfer.getData('data'));
-      this.setState({active: false}, () => {
+      this.setState({ active: false }, () => {
         if (onDrop) {
           onDrop(data, e);
         }
       });
-    }
-  }
+    };
+  };
   onDragOver = () => {
-    return ev => {
+    return (ev: React.DragEvent<HTMLDivElement>) => {
       ev.preventDefault();
-      this.setState({active: true});
+      this.setState({ active: true });
     };
   };
   onDragLeave = () => {
-    return ev => {
+    return (ev: React.DragEvent<HTMLDivElement>) => {
       ev.preventDefault();
-      this.setState({active: false});
+      this.setState({ active: false });
     };
   };
 
   render() {
-    const {active} = this.state;
-    const {className, activeClassName, onDrop, onDragLeave, onDragOver, style, activeStyle, ...extraProps} = this.props;
+    const { active } = this.state;
+    const { className, activeClassName, onDrop, onDragLeave, onDragOver, style, activeStyle, ...extraProps } = this.props;
     const wrapperCls = cx('wx-drop-wrapper', active ? activeClassName : className);
     return (
       <div

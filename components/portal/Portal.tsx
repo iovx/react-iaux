@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 
 interface BaseProps {
-  className?:string;
+  className?: string;
 }
 
 export type PortalProps = {
@@ -19,20 +19,21 @@ class Portal extends React.Component<PortalProps, {}> {
 
   private node: HTMLElement | null;
 
-  constructor(props) {
+  constructor(props: PortalProps) {
     super(props);
     this.state = {
       active: false,
-    }
+    };
   }
 
   getPrefixCls(suffix?: string) {
     return `wx-v2-portal${suffix ? '-' + suffix : ''}`;
   }
+
   open(props = this.props) {
-    this.setState({active: true});
+    this.setState({ active: true });
     this.renderPortal(props);
-    const {onOpen} = this.props;
+    const { onOpen } = this.props;
     if (onOpen) {
       onOpen(this.node);
     }
@@ -46,7 +47,7 @@ class Portal extends React.Component<PortalProps, {}> {
     this.node = null;
   }
 
-  renderPortal(props) {
+  renderPortal(props: React.ComponentProps<any> & PortalProps) {
     if (typeof  document === 'undefined') {
       return null;
     }
@@ -58,9 +59,9 @@ class Portal extends React.Component<PortalProps, {}> {
     } else {
 
     }
-    let {children} = props;
+    let { children } = props;
     if (typeof children === 'function') {
-      children = React.cloneElement(children, {closePortal: this.close})
+      children = React.cloneElement(children, { closePortal: this.close });
     }
     return ReactDOM.createPortal(children, this.node);
   }

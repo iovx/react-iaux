@@ -32,13 +32,13 @@ class Layout extends React.Component<LayoutProps, any> {
   };
   fieldMap: MapType<IField>;
 
-  constructor(props) {
+  constructor(props: LayoutProps) {
     super(props);
     const { fields } = this.props;
     this.fieldMap = listToMap(fields, 'id');
   }
 
-  getFieldById(id) {
+  getFieldById(id: string | number) {
     return this.fieldMap[id];
   }
 
@@ -48,10 +48,10 @@ class Layout extends React.Component<LayoutProps, any> {
    * @param {*} screen 屏幕规格
    * @param {*} inner 内部迭代，为上次输出
    */
-  renderLayout(item, screen, inner) {
+  renderLayout(item: any, screen: string, inner: any) {
     const { children } = item;
     if (children) {
-      inner = children.map(childItem => {
+      inner = children.map((childItem: any) => {
         return this.renderLayout(childItem, screen, inner);
       });
     }
@@ -64,7 +64,7 @@ class Layout extends React.Component<LayoutProps, any> {
    * @param {*} screen 屏幕规格
    * @param {*} inner 内部迭代，为上次输出
    */
-  renderLayoutItem(item, screen, inner) {
+  renderLayoutItem(item: IField, screen: string, inner: any) {
     const { type, span, offset, fieldId, id } = item;
     const key = `${id}`;
     const { rowStyle, rowClassName, colClassName, colStyle } = this.props;
@@ -92,10 +92,11 @@ class Layout extends React.Component<LayoutProps, any> {
         return this.renderField(field);
       }
       default:
+        return null;
     }
   }
 
-  renderField(field) {
+  renderField(field: IField) {
     const { label, id, value } = field;
     const width = field.width || this.props.width;
     return <FieldItem width={width} key={id} label={label} value={`${value}`} />;
@@ -108,7 +109,7 @@ class Layout extends React.Component<LayoutProps, any> {
       <div className={wrapperCls} {...extraProps}>
         {
           layout.map(layoutItem => {
-            return this.renderLayout(layoutItem, screen, null);
+            return this.renderLayout(layoutItem, 'md', null);
           })
         }
       </div>

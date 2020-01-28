@@ -45,7 +45,7 @@ class UploadList extends React.Component<UploadListProps, any> {
   static propTypes = {
     data: PropTypes.array,
   };
-  static defaultProps = {
+  static defaultProps: Partial<UploadListProps> = {
     data: [],
   };
   handleDeleteClick = (item: FileNode) => {

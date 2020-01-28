@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import FieldDecorator from "./FomDecorator";
+import FieldDecorator from './FomDecorator';
 
 export interface FormItemProps {
   required?: boolean;
@@ -22,16 +22,16 @@ export default class FormItem extends React.Component<FormItemProps, FormItemSta
   static defaultProps = {
     required: false,
     colon: ':',
-  }
+  };
   static propTypes = {
     label: PropTypes.node,
     required: PropTypes.bool,
     colon: PropTypes.string,
-  }
+  };
 
   constructor(props: FormItemProps) {
     super(props);
-    const {children} = this.props;
+    const { children } = this.props;
     const onlyChild = React.Children.only(children) as any;
     this.childInstanceOfDecoratorItem = false;
     if (onlyChild && onlyChild.type === FieldDecorator.FieldDecoratorItem) {
@@ -43,36 +43,36 @@ export default class FormItem extends React.Component<FormItemProps, FormItemSta
   state = {
     label: '',
     required: false,
-  }
+  };
 
   componentWillMount() {
-    const {children} = this.props;
-    let {required, label} = this.props;
+    const { children } = this.props;
+    let { required, label } = this.props;
     const onlyChild = React.Children.only(children) as React.ReactElement;
     if (this.childInstanceOfDecoratorItem) {
       required = onlyChild.props.required;
       label = onlyChild.props.label || label;
     }
-    this.setState({required, label});
+    this.setState({ required, label });
   }
 
   componentWillReceiveProps(nextProps: FormItemProps) {
-    let {required, label} = nextProps;
-    const {children} = nextProps;
+    let { required, label } = nextProps;
+    const { children } = nextProps;
     if (this.childInstanceOfDecoratorItem) {
       const onlyChild = React.Children.only(children) as React.ReactElement;
       required = onlyChild.props.required;
       label = onlyChild.props.label || label;
-      this.update({required, label});
+      this.update({ required, label });
     } else {
-      this.update({required, label});
+      this.update({ required, label });
     }
   }
 
-  update = (data) => {
+  update = (data: FormItemState) => {
     const nextState: FormItemState = {};
     let shouldUpdate = false;
-    let {required, label} = data;
+    let { required, label } = data;
     if (this.state.required !== required) {
       nextState.required = required;
       shouldUpdate = true;
@@ -84,11 +84,11 @@ export default class FormItem extends React.Component<FormItemProps, FormItemSta
     if (shouldUpdate) {
       this.setState(nextState);
     }
-  }
+  };
 
   render() {
-    const {colon, className, style, children, ...extraProps} = this.props;
-    const {required, label} = this.state;
+    const { colon, className, style, children, ...extraProps } = this.props;
+    const { required, label } = this.state;
     const onlyChild = React.Children.only(children);
     const clsName = cx('wx-v2-form-item', className);
     const labelCls = cx('wx-v2-form-item-label');

@@ -13,9 +13,10 @@ interface IBounds {
 /**
  * 计算元素偏移量
  * @param ele
+ * @param {Window} host
  * @returns {{left: number, top: number}}
  */
-export function getOffset(ele: HTMLElement): Offset {
+export function getOffset(ele: HTMLElement, host: Window = window): Offset {
   const offset: Offset = { left: 0, top: 0 };
   let cur = ele;
   while (cur) {
@@ -23,7 +24,10 @@ export function getOffset(ele: HTMLElement): Offset {
     offset.top += cur.offsetTop - cur.scrollTop;
     cur = cur.offsetParent as HTMLElement;
   }
-  return offset;
+  return {
+    top: offset.top + (host.scrollY || host.pageYOffset),
+    left: offset.left + (host.scrollX || host.pageXOffset),
+  };
 }
 
 /**
@@ -35,7 +39,7 @@ export function getOffset(ele: HTMLElement): Offset {
 export function getBounds(ele: Element, host: Window = window): IBounds {
   const svgEle = ele as SVGAElement;
   if (svgEle.ownerSVGElement && svgEle.getBBox) {
-    var box = svgEle.getBBox();
+    const box = svgEle.getBBox();
     return {
       left: box.x,
       top: box.y,

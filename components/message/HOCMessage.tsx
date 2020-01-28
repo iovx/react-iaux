@@ -1,11 +1,12 @@
 import * as React from 'react';
 import cx from 'classnames';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import svg from './assets';
+import { MapType } from '../_utils/type';
 
-const {svgError, svgInfo, svgPrimary, svgSuccess, svgWarning} = svg;
+const { svgError, svgInfo, svgPrimary, svgSuccess, svgWarning } = svg;
 
-const types = [
+const types: MapType<string>[] = [
   {
     name: 'success',
     icon: svgSuccess,
@@ -28,26 +29,47 @@ const types = [
   },
 ];
 
-const typeMap = {};
+const typeMap: MapType<string> = {};
 types.forEach(type => {
   typeMap[type.name] = type.icon;
 });
 
-export default (HOCWrapped, props: any = {}) => class Toast extends React.Component<any, any> {
+export interface IHOCNoticeDataItem {
+  title: string;
+  content: string;
+  type: string;
+  duration?: number;
+}
+
+export interface IHOCToastDataItem extends IHOCNoticeDataItem {
+  uniqueId: string;
+  duration: number;
+
+  onClose?(): void;
+}
+
+export interface IHOCToastState {
+  data: IHOCToastDataItem[];
+}
+
+export default (HOCWrapped: any, props: any = {}) => class Toast extends React.Component<any, IHOCToastState> {
   public transitionTime: number = 300;
   public duration: number = 2000;
+  state: IHOCToastState = {
+    data: [],
+  };
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
-    this.state = {
-      data: [],
-    };
   }
 
-  addItem(dataItem) {
-    dataItem.uniqueId = Date.now() + Math.floor(Math.random() * 9999 + 1000);
-    dataItem.duration = dataItem.duration || this.duration;
-    this.setState(prevState => ({data: prevState.data.concat([dataItem])}), () => {
+  addItem(data: IHOCNoticeDataItem) {
+    const dataItem: IHOCToastDataItem = {
+      ...data,
+      uniqueId: `${Date.now() + Math.floor(Math.random() * 9999 + 1000)}`,
+      duration: data.duration || this.duration,
+    };
+    this.setState((prevState: IHOCToastState) => ({ data: prevState.data.concat([dataItem]) }), () => {
       if (dataItem.duration > 0) {
         setTimeout(() => {
           this.removeItem(dataItem.uniqueId);
@@ -56,8 +78,8 @@ export default (HOCWrapped, props: any = {}) => class Toast extends React.Compon
     });
   }
 
-  removeItem(uniqueId) {
-    this.setState(prevState => ({
+  removeItem(uniqueId: string) {
+    this.setState((prevState: IHOCToastState) => ({
       data: prevState.data.filter(toast => {
         if (toast.uniqueId === uniqueId) {
           if (toast.onClose) {
@@ -66,13 +88,13 @@ export default (HOCWrapped, props: any = {}) => class Toast extends React.Compon
           return false;
         }
         return true;
-      })
+      }),
     }));
   }
 
   render() {
-    const {data} = this.state;
-    const {className, ...restProps} = props;
+    const { data } = this.state;
+    const { className, ...restProps } = props;
     return (
       <TransitionGroup className={className}>
         {
@@ -85,7 +107,7 @@ export default (HOCWrapped, props: any = {}) => class Toast extends React.Compon
                 classNames="wx-v2-toast"
                 timeout={this.transitionTime}
               >
-                <HOCWrapped {...restProps} className={cls} icon={icon} data={item}/>
+                <HOCWrapped {...restProps} className={cls} icon={icon} data={item} />
               </CSSTransition>
             );
           })

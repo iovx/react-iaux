@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import {noop} from "../_utils/function";
+import { noop } from '../_utils/function';
 
 export interface PageObject {
   page: number;
@@ -39,16 +39,16 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     total: 0,
     hideOnSinglePage: true,
     onPageChange: noop,
-  }
+  };
   private firstIndex = 1;
   private pageCount: number = 0;
 
-  constructor(props) {
+  constructor(props: PaginationProps) {
     super(props);
     this.state = {
       page: props.page || 1,
       pages: [],
-    }
+    };
     this.previous = this.previous.bind(this);
     this.go = this.go.bind(this);
     this.next = this.next.bind(this);
@@ -58,10 +58,10 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     this.build(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {page, total} = nextProps;
+  componentWillReceiveProps(nextProps: PaginationProps) {
+    const { page, total } = nextProps;
     if (page !== this.props.page || total !== this.props.total) {
-      this.setState({page}, () => {
+      this.setState({ page: page || 1 }, () => {
         this.build(nextProps);
       });
     }
@@ -69,7 +69,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
 
   private build(props: PaginationProps) {
     const pages: number[] = [];
-    const {pageSize = 15} = props;
+    const { pageSize = 15 } = props;
     this.pageCount = Math.ceil(props.total / pageSize);
     if (this.pageCount <= 9) {
       for (let i = 2; i <= this.pageCount - 1; i++) {
@@ -89,7 +89,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
         pages.push(i);
       }
     }
-    this.setState({pages});
+    this.setState({ pages });
   }
 
   private next() {
@@ -109,22 +109,22 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
       if (page === this.state.page) {
         return;
       }
-      this.setState({page}, () => {
-        const {pageCount} = this;
-        const {pageSize = 15, total} = this.props;
-        const {onPageChange} = this.props;
+      this.setState({ page }, () => {
+        const { pageCount } = this;
+        const { pageSize = 15, total } = this.props;
+        const { onPageChange } = this.props;
         this.build(this.props);
         if (onPageChange) {
-          onPageChange({page, pageCount, pageSize, total})
+          onPageChange({ page, pageCount, pageSize, total });
         }
       });
-    }
+    };
   }
 
   render() {
-    const {hideOnSinglePage, className, total, onPageChange, pageSize, ...props} = this.props;
-    const {pageCount, firstIndex} = this;
-    const {page, pages} = this.state;
+    const { hideOnSinglePage, className, total, onPageChange, pageSize, ...props } = this.props;
+    const { pageCount, firstIndex } = this;
+    const { page, pages } = this.state;
     const clsName = cx('vx-pagination', className);
     const prevCls = cx('vx-pagination-prev', page === 1 ? 'vx-pagination-unarrived' : '');
     const nextCls = cx('vx-pagination-next', page === pageCount ? 'vx-pagination-unarrived' : '');
@@ -132,7 +132,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     const lastItemCls = cx('vx-pagination-item', pageCount === page ? 'vx-pagination-current' : '');
     return (
       <ul className={clsName} onSelect={() => false}
-          style={{display: (hideOnSinglePage && pageCount <= 1) ? 'none' : 'block'}} {...props}>
+          style={{ display: (hideOnSinglePage && pageCount <= 1) ? 'none' : 'block' }} {...props}>
         <li className={prevCls} onClick={this.previous}>上一页</li>
         <li className={firstItemCls} onClick={this.go(firstIndex)}>
           {firstIndex}
@@ -146,10 +146,10 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
         }
         {
           pages.map(pageNum => {
-            const cls = cx("vx-pagination-item", pageNum === page ? 'vx-pagination-current' : '')
+            const cls = cx('vx-pagination-item', pageNum === page ? 'vx-pagination-current' : '');
             return (
               <li className={cls} key={pageNum} onClick={this.go(pageNum)}>{pageNum}</li>
-            )
+            );
           })
         }
         {
@@ -164,7 +164,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
         </li>
         <li className={nextCls} onClick={this.next}>下一页</li>
       </ul>
-    )
+    );
   }
 }
 

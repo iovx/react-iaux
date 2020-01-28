@@ -7,14 +7,14 @@ export const MARK_POS = {
   RIGHT_CENTER: 'rc',
   TOP_CENTER: 'tc',
   BOTTOM_CENTER: 'bc',
-}
+};
 export const RESIZE_TYPE = {
   FOCUS: 'click',
   CLICK: 'click',
-}
-export const LINE_POS= {
-  LEFT:'left',
-  BOTTOM:'bottom',
-  TOP:'top',
-  RIGHT:'right',
-}
+};
+export const LINE_POS = {
+  LEFT: 'left',
+  BOTTOM: 'bottom',
+  TOP: 'top',
+  RIGHT: 'right',
+};

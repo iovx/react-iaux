@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import {getOffset} from "../utils/dom";
+import { getOffset } from '../utils/dom';
 
 interface BaseProps {
   className?: string;
@@ -12,6 +12,11 @@ interface BaseProps {
   onPointerUp: (e: React.PointerEvent) => void;
   onPointerMove: (e: React.PointerEvent) => void;
   onPointerDown: (e: React.PointerEvent) => void;
+}
+
+export interface IPoint {
+  x: number;
+  y: number;
 }
 
 export type SelectionProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
@@ -31,65 +36,61 @@ class Selection extends React.Component<SelectionProps, any> {
     height: 0,
     left: 0,
     top: 0,
-  }
-
-  constructor(props) {
-    super(props);
-  }
+  };
 
   state = {
     isMouseDown: false,
-    startPos: {x: 0, y: 0},
+    startPos: { x: 0, y: 0 },
     width: 0,
     height: 0,
     left: 0,
     top: 0,
     show: false,
-  }
+  };
 
   componentDidMount() {
     this.bounds = this.getBounds(this.selectionWrapper);
   }
 
-  inSelection = (point) => {
-    const {x, y} = this.getSelectionPoint(point);
-    const {width, height} = this.bounds;
+  inSelection = (point: IPoint) => {
+    const { x, y } = this.getSelectionPoint(point);
+    const { width, height } = this.bounds;
     return x > 0 && x < width && y > 0 && y < height;
-  }
-  getSelectionPoint = (point) => {
-    const {x, y} = point;
-    const {left, top} = this.bounds;
+  };
+  getSelectionPoint = (point: IPoint) => {
+    const { x, y } = point;
+    const { left, top } = this.bounds;
     return {
       x: x - left,
       y: y - top,
-    }
-  }
-  getBounds = (ele) => {
+    };
+  };
+  getBounds = (ele: HTMLElement) => {
     return {
       width: ele.clientWidth,
       height: ele.clientHeight,
       ...getOffset(ele),
-    }
-  }
+    };
+  };
   onPointerDown = (e: React.PointerEvent) => {
     e.persist();
     e.preventDefault();
     e.stopPropagation();
-    const {onPointerDown} = this.props;
-    const {pageX: x, pageY: y} = e;
+    const { onPointerDown } = this.props;
+    const { pageX: x, pageY: y } = e;
     this.selection = e.currentTarget as HTMLDivElement;
     this.selection.setPointerCapture(e.pointerId);
-    this.setState({isMouseDown: true, startPos: {x, y}}, () => {
+    this.setState({ isMouseDown: true, startPos: { x, y } }, () => {
       if (onPointerDown) {
         onPointerDown(e);
       }
     });
-  }
+  };
   onPointerMove = (e: React.PointerEvent) => {
-    const {onPointerMove} = this.props;
-    const {isMouseDown, startPos: {x: startX, y: startY}} = this.state;
-    const {pageX, pageY} = e;
-    if (isMouseDown && this.inSelection({x: pageX, y: pageY})) {
+    const { onPointerMove } = this.props;
+    const { isMouseDown, startPos: { x: startX, y: startY } } = this.state;
+    const { pageX, pageY } = e;
+    if (isMouseDown && this.inSelection({ x: pageX, y: pageY })) {
       if (window.getSelection) {
         window.getSelection()!.removeAllRanges();
       } else {
@@ -109,16 +110,16 @@ class Selection extends React.Component<SelectionProps, any> {
         height = -height;
       }
 
-      this.setState({show: width > 0 && height > 0, width, height, left, top});
+      this.setState({ show: width > 0 && height > 0, width, height, left, top });
     }
     if (onPointerMove) {
       onPointerMove(e);
     }
-  }
+  };
   onPointerUp = (e: React.PointerEvent) => {
     e.persist();
-    const {onPointerUp} = this.props;
-    this.setState({isMouseDown: false, show: false,}, () => {
+    const { onPointerUp } = this.props;
+    this.setState({ isMouseDown: false, show: false }, () => {
       if (this.selection) {
         this.selection.releasePointerCapture(e.pointerId);
       }
@@ -126,15 +127,15 @@ class Selection extends React.Component<SelectionProps, any> {
         onPointerUp(e);
       }
     });
-  }
+  };
 
   render() {
-    const {className, contentClassName, contentStyle, selectionBoxClassName, selectionBoxStyle, onPointerUp, onPointerDown, onPointerMove, ...extraProps} = this.props;
+    const { className, contentClassName, contentStyle, selectionBoxClassName, selectionBoxStyle, onPointerUp, onPointerDown, onPointerMove, ...extraProps } = this.props;
     const clsName = cx('wx-v2-selection', className);
     const contentCls = cx('wx-v2-selection-content', contentClassName);
     const selectionBoxCls = cx('wx-v2-selection-select-box', selectionBoxClassName);
-    const {show, width, height, left, top} = this.state;
-    const selectBoxStyle: React.CSSProperties = {...selectionBoxStyle, width, height, left, top};
+    const { show, width, height, left, top } = this.state;
+    const selectBoxStyle: React.CSSProperties = { ...selectionBoxStyle, width, height, left, top };
     if (!show) {
       selectBoxStyle.display = 'none';
     }
@@ -145,14 +146,14 @@ class Selection extends React.Component<SelectionProps, any> {
         onPointerUp={this.onPointerUp}
         onPointerMove={this.onPointerMove}
         ref={(ref) => {
-          this.selectionWrapper = ref as HTMLDivElement
+          this.selectionWrapper = ref as HTMLDivElement;
         }}
         {...extraProps}
       >
         <div className={contentCls} style={contentStyle}>
           {this.props.children}
         </div>
-        <div className={selectionBoxCls} style={selectBoxStyle}/>
+        <div className={selectionBoxCls} style={selectBoxStyle} />
       </div>
     );
   }

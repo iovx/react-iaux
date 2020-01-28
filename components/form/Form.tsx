@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cx from 'classnames';
-import FieldDecorator from "./FomDecorator";
-import FormItem from "./FormItem";
+import FieldDecorator from './FomDecorator';
+import FormItem from './FormItem';
 
 export declare type FormWidgetProps = {
   className?: string;
@@ -29,7 +29,7 @@ export declare type FormState = any
 export default class Form extends React.Component<FormProps, FormState> {
   static Item: typeof FormItem;
   static Decorator: typeof FieldDecorator;
-  static create = (WrappedForm) => {
+  static create = (WrappedForm: React.ComponentClass<React.ComponentProps<any> & { form: IFromPropsRef }>) => {
     const fieldDecorator = new FieldDecorator();
     const form: IFromPropsRef = {
       fieldDecorator,
@@ -38,23 +38,23 @@ export default class Form extends React.Component<FormProps, FormState> {
       },
       validateFields(callback) {
         return fieldDecorator.validateFields(callback);
-      }
-    }
+      },
+    };
     return class FormWidget extends React.Component<FormWidgetProps, FormWidgetState> {
       render() {
-        const {className, ...extraProps} = this.props;
+        const { className, ...extraProps } = this.props;
         const clsName = cx('wx-v2-form', className);
         return (
           <div className={clsName} {...extraProps}>
-            <WrappedForm form={form}/>
+            <WrappedForm form={form} />
           </div>
         );
       }
-    }
-  }
+    };
+  };
 
   render() {
-    const {style, className, children, form, ...extraProps} = this.props;
+    const { style, className, children, form, ...extraProps } = this.props;
     const clsName = cx('wx-v2-form', className);
     return (
       <div className={clsName} style={style} {...extraProps}>

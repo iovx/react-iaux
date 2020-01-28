@@ -54,7 +54,7 @@ class MenuList extends React.Component<MenuListProps, IMenuListState> {
     });
   }
 
-  handleGroupTitleClick(item, contents, idx) {
+  handleGroupTitleClick(item:any, contents:any, idx:number) {
     return () => {
       const nextContents = [...contents];
       this.setState(() => {

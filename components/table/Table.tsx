@@ -1,9 +1,22 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import { MapType } from '../_utils/type';
 
 interface RowProps {
 
+}
+
+export interface IColumn {
+  style?: React.CSSProperties;
+  align?: 'left' | 'center' | 'right';
+  dataIndex: string;
+  key?: string;
+  width?: number;
+
+  render?(value: any, row: MapType<any>, rowIndex: number, columnIndex: number): React.ReactNode;
+
+  [index: string]: any;
 }
 
 interface BaseProps {
@@ -38,12 +51,12 @@ class Table extends React.PureComponent<TableProps, {}> {
     hovered: PropTypes.bool,
   };
 
-  renderCell = (row, rowIndex, column, columnIndex) => {
-    const {render, dataIndex} = column;
+  renderCell = (row: MapType<any>, rowIndex: number, column: IColumn, columnIndex: number) => {
+    const { render, dataIndex } = column;
     const value = row[dataIndex];
     return render ? render(value, row, rowIndex, columnIndex) : value;
-  }
-  getRowKey = (row, rowKey, rowIndex) => {
+  };
+  getRowKey = (row: MapType<any>, rowKey: any, rowIndex: number) => {
     if (rowKey) {
       if (typeof rowKey === 'string') {
         return row[rowKey];
@@ -53,10 +66,10 @@ class Table extends React.PureComponent<TableProps, {}> {
       }
     }
     return rowIndex;
-  }
+  };
 
   render() {
-    const {columns = [], className, stripped, dataSource = [], hovered, bordered = true, caption, tableClassName, rowClassName, headClassName, rowKey, rowProps, ...props} = this.props;
+    const { columns = [], className, stripped, dataSource = [], hovered, bordered = true, caption, tableClassName, rowClassName, headClassName, rowKey, rowProps, ...props } = this.props;
     const clsName = cx('wx-v2-table', stripped ? 'ws-striped' : '', hovered ? 'ws-hr' : '', bordered ? 'ws-bd' : '', className);
     return (
       <div className={tableClassName} {...props}>
@@ -64,34 +77,34 @@ class Table extends React.PureComponent<TableProps, {}> {
           {caption && <caption>{caption}</caption>}
           <colgroup>
             {columns.map(item => {
-              const {style, align = 'left', dataIndex, key} = item;
+              const { style, align = 'left', dataIndex, key } = item;
               const colStyle = {
                 textAlign: align,
                 ...style,
-              }
+              };
               return (
-                <col key={`col-${key || dataIndex}`} className={item.className} style={colStyle}/>
-              )
+                <col key={`col-${key || dataIndex}`} className={item.className} style={colStyle} />
+              );
             })}
           </colgroup>
           <thead>
           <tr className={headClassName}>
             {columns.map(item => {
-              const {dataIndex, key, title, headerProps} = item;
+              const { dataIndex, key, title, headerProps } = item;
               return (
                 <th key={`row-${key || dataIndex}`} {...headerProps}>{title}</th>
-              )
+              );
             })}
           </tr>
           </thead>
           <tbody>
           {dataSource.map((row, rowIndex) => {
             const tds = columns.map((column, columnIndex) => {
-              const {dataIndex, key, style, align = 'left', className, render, headerProps, ...tdProps} = column;
+              const { dataIndex, key, style, align = 'left', className, render, headerProps, ...tdProps } = column;
               const colStyle = {
                 textAlign: align,
                 ...style,
-              }
+              };
               return (
                 <td
                   key={`cell-${key || dataIndex}`}
@@ -99,9 +112,9 @@ class Table extends React.PureComponent<TableProps, {}> {
                   style={colStyle}
                   {...tdProps}
                 >{this.renderCell(row, rowIndex, column, columnIndex)}</td>
-              )
+              );
             });
-            return <tr key={this.getRowKey(row, rowKey, rowIndex)} className={rowClassName} {...rowProps}>{tds}</tr>
+            return <tr key={this.getRowKey(row, rowKey, rowIndex)} className={rowClassName} {...rowProps}>{tds}</tr>;
           })}
           </tbody>
         </table>

@@ -8,7 +8,7 @@
   top: 200px;
   width: 650px;
   position: fixed;
-  border-radius: 3px;
+  border-radius: 1px;
   overflow: hidden;
   z-index: 99997;
   box-shadow: 0 0 16px rgba(0, 0, 0, .12);
@@ -22,12 +22,13 @@
   }
   &-title {
     flex: 1;
+    font-size: 0.9em;
   }
   &-close-btn {
     cursor: pointer;
     line-height: 22px;
     position: relative;
-    top: 2px;
+    top: 0;
     > svg {
       width: 17px;
       height: 17px;
@@ -49,7 +50,9 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.28);
+    background-color: rgba(0, 0, 0, 0.62);
+    transition: all 100ms;
+    z-index: 999;
   }
 }
 

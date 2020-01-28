@@ -30,12 +30,12 @@ class Test2 extends React.Component<Test2Props, any> {
     value: ['1', '2', '4'],
   };
 
-  handleChange(value) {
+  handleChange(value:string) {
     console.log('change', value);
     this.setState({ value });
   }
 
-  handleInputChange(value) {
+  handleInputChange(value:string) {
     console.log(value);
   }
 
@@ -60,9 +60,14 @@ class Test2 extends React.Component<Test2Props, any> {
         <PopOver content={<div style={{ width: 400, height: 200 }}>wind</div>}>
           <Button status='success-pure'>出现</Button>
         </PopOver>
-        <PopOver trigger='hover' content={<div style={{ width: 400, height: 200 }}>wind</div>}>
-          <Button>出现2</Button>
-        </PopOver>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div></div>
+          <div>
+            <PopOver trigger='hover' dir='tr' content={<div style={{ width: 400, height: 200 }}>wind</div>}>
+              <Button style={{ padding: '0 10px' }}>出现2</Button>
+            </PopOver>
+          </div>
+        </div>
         <hr />
         <div>
           <Input status='error' value='李克勤' onChange={this.handleInputChange} placeholder='一个也不能少' />

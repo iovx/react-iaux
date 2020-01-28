@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-export function createToast(ele, props) {
+export function createToast(ele: React.ReactElement, props: any) {
   if (typeof  document === 'undefined') {
     return {
       eleRef: null,

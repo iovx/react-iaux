@@ -8,10 +8,9 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export type GridProps<T = IGridDataItem> = {
-
   gutter?: number;
   cols?: number;
-  render(col: T, colIndex: number, rowIndex: number): React.ReactNode;
+  render?(col: T, colIndex: number, rowIndex: number): React.ReactNode;
   dataSource: T[];
 
 } & BaseProps;
@@ -24,15 +23,17 @@ class Grid extends React.Component<GridProps, any> {
     render: PropTypes.func,
     dataSource: PropTypes.array,
   };
-  static defaultProps = {
+  static defaultProps: GridProps = {
     gutter: 40,
     cols: 4,
     dataSource: [],
-    render: null,
   };
 
-  renderCol(col, colIndex, rowIndex) {
+  renderCol<T = IGridDataItem>(col: T, colIndex: number, rowIndex: number) {
     const { render } = this.props;
+    if (!render) {
+      return null;
+    }
     return (
       <div className='wx-v2-grid-col' key={`${rowIndex}_${colIndex}`}>
         {render(col, colIndex, rowIndex)}
@@ -40,7 +41,7 @@ class Grid extends React.Component<GridProps, any> {
     );
   }
 
-  renderRow(row, rowIndex) {
+  renderRow<T = IGridDataItem>(row: T[], rowIndex: number) {
     const rowCls = cx('wx-v2-grid-row');
     return (
       <div className={rowCls} key={rowIndex}>
@@ -49,12 +50,12 @@ class Grid extends React.Component<GridProps, any> {
     );
   }
 
-  renderRows() {
+  renderRows<T = IGridDataItem>() {
     const { cols, dataSource = [] } = this.props;
     const count = dataSource.length;
-    const gridData: IGridDataItem[] = [];
-    const temp: IGridDataItem[] = [];
-    dataSource.forEach((item, idx) => {
+    const gridData: T[][] = [];
+    const temp: T[] = [];
+    (dataSource as T[]).forEach((item, idx) => {
       temp.push(item);
       if ((idx + 1) % (cols as number) === 0 || idx === count - 1) {
         gridData.push([...temp]);
@@ -67,7 +68,7 @@ class Grid extends React.Component<GridProps, any> {
   }
 
   render() {
-    const { className, ...extraProps } = this.props;
+    const { className, dataSource, cols, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-grid', className);
     return (
       <div className={wrapperCls} {...extraProps}>

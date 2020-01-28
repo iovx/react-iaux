@@ -1,35 +1,35 @@
 import * as React from 'react';
 import Toast from './Toast';
 import Notice from './Notice';
-import HOCMessage from './HOCMessage';
-import {createToast} from './util';
+import HOCMessage, { IHOCNoticeDataItem } from './HOCMessage';
+import { createToast } from './util';
 
-const HOCNotice = HOCMessage(Notice, {className: 'wx-v2-notice'});
-const HOCToast = HOCMessage(Toast, {className: 'wx-v2-toast'});
+const HOCNotice = HOCMessage(Notice, { className: 'wx-v2-notice' });
+const HOCToast = HOCMessage(Toast, { className: 'wx-v2-toast' });
 
-const {eleRef: noticeRef} = createToast(<HOCNotice/>, {});
-const {eleRef: toastRef} = createToast(<HOCToast/>, {});
+const { eleRef: noticeRef } = createToast(<HOCNotice />, {});
+const { eleRef: toastRef } = createToast(<HOCToast />, {});
 
 function create(ref: any) {
   return {
-    success(title, content?) {
-      ref.addItem({title, content, type: 'success'});
+    success(title: any, content?: any) {
+      ref.addItem({ title, content, type: 'success' });
     },
-    info(title, content?) {
-      ref.addItem({title, content, type: 'info'});
+    info(title: any, content?: any) {
+      ref.addItem({ title, content, type: 'info' });
     },
-    error(title, content?) {
-      ref.addItem({title, content, type: 'error'});
+    error(title: any, content?: any) {
+      ref.addItem({ title, content, type: 'error' });
     },
-    primary(title, content?) {
-      ref.addItem({title, content, type: 'primary'});
+    primary(title: any, content?: any) {
+      ref.addItem({ title, content, type: 'primary' });
     },
-    warning(title, content?) {
-      ref.addItem({title, content, type: 'warning'});
+    warning(title: any, content?: any) {
+      ref.addItem({ title, content, type: 'warning' });
     },
-    show(data) {
+    show(data: IHOCNoticeDataItem) {
       ref.addItem(data);
-    }
+    },
   };
 }
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import cx from 'classnames'
-import {getOffset} from "../utils/dom";
-import {tuple} from "../_utils/type";
+import cx from 'classnames';
+import { getOffset } from '../utils/dom';
+import { tuple } from '../_utils/type';
 
-const directionType = tuple('horizontal', 'vertical')
+const directionType = tuple('horizontal', 'vertical');
 
 interface BaseProps {
   onChange?: (progress: number, value: number) => void;
@@ -48,41 +48,36 @@ class Slider extends React.Component<SliderProps, SliderState> {
   static Types = {
     HORIZONTAL: 'horizontal',
     VERTICAL: 'vertical',
-  }
-  static defaultProps = {
+  };
+  static defaultProps: Partial<SliderProps> = {
     progress: 0.7,
     min: 0,
     max: 100,
     allowDrag: true,
     allowSkip: true,
-    type: Slider.Types.HORIZONTAL,
-    onChange: null,
-    onMax: null,
-    onDrag: null,
-    onSkip: null,
-    accuracy: null,
-  }
+    type: 'horizontal',
+  };
   state = {
     progress: 0.7,
     max: 100,
     min: 0,
-    clickPos: {x: 0, y: 0},
+    clickPos: { x: 0, y: 0 },
     isMouseDown: false,
-  }
+  };
 
   componentWillMount() {
-    const {progress, min, max} = this.props;
-    this.setState({progress, min, max});
+    const { progress, min, max } = this.props;
+    this.setState({ progress, min, max });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {progress, min, max} = nextProps;
-    this.setState({progress, min, max});
+  componentWillReceiveProps(nextProps: SliderProps) {
+    const { progress, min, max } = nextProps;
+    this.setState({ progress, min, max });
   }
 
   getProgress = () => {
-    const {accuracy} = this.props;
-    const {progress} = this.state;
+    const { accuracy } = this.props;
+    const { progress } = this.state;
     return accuracy ? parseFloat(progress.toFixed(accuracy)) : progress;
   };
   value = () => {
@@ -93,31 +88,31 @@ class Slider extends React.Component<SliderProps, SliderState> {
     if ((!max) || max <= 0) {
       return this.state.max;
     }
-    this.setState({max});
+    this.setState({ max });
   };
   onMax = () => {
-    const {onMax} = this.props;
+    const { onMax } = this.props;
     if (onMax) {
       onMax();
     }
-  }
+  };
   onChange = () => {
-    const {onChange} = this.props;
-    const {progress} = this.state;
+    const { onChange } = this.props;
+    const { progress } = this.state;
     if (onChange) {
       onChange(progress, this.getProgress());
     }
-  }
+  };
   //设置进度
-  setProgress = (x) => {
+  setProgress = (x: number) => {
     const progress = x > 1 ? 1 : x < 0 ? 0 : x;
     if (progress === 1) {
       this.onMax();
     }
-    this.setState({progress}, () => {
+    this.setState({ progress }, () => {
       this.onChange();
     });
-  }
+  };
 
   onMouseDown = (e: React.PointerEvent) => {
     if (this.props.allowDrag) {
@@ -131,63 +126,63 @@ class Slider extends React.Component<SliderProps, SliderState> {
         x: e.pageX - offset.left,
         y: e.pageY - offset.top,
       };
-      this.setState({isMouseDown, clickPos})
+      this.setState({ isMouseDown, clickPos });
     }
-  }
+  };
   onMouseLeave = (e: React.PointerEvent) => {
     e.stopPropagation();
     const isMouseDown = false;
-    this.setState({isMouseDown})
+    this.setState({ isMouseDown });
   };
-  onMouseMove = (e: React.PointerEvent) => {
+  onMouseMove = (e: React.PointerEvent<HTMLDivElement>) => {
     this.onDrag(e);
-  }
+  };
   onMouseUp = (e: React.PointerEvent) => {
     e.persist();
     e.stopPropagation();
     const isMouseDown = false;
-    e.currentTarget.releasePointerCapture(e.pointerId)
-    this.setState({isMouseDown});
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    this.setState({ isMouseDown });
   };
-  onTouchStart = (e) => {
+  onTouchStart = (e: React.TouchEvent) => {
     if (this.props.allowDrag) {
       e.persist();
       e.preventDefault();
       e.stopPropagation();
-      const {pageX, pageY} = e.touches[0];
+      const { pageX, pageY } = e.touches[0];
       const isMouseDown = true;
-      const offset = getOffset(e.target);
+      const offset = getOffset(e.target as HTMLElement);
       const clickPos = {
         x: pageX - offset.left,
         y: pageY - offset.top,
       };
-      this.setState({isMouseDown, clickPos})
+      this.setState({ isMouseDown, clickPos });
     }
-  }
-  onTouchMove = (e) => {
+  };
+  onTouchMove = (e: React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     // const {pageX, pageY} = e.touches[0];
     // this.onDrag(e)
-  }
-  onTouchEnd = (e) => {
+  };
+  onTouchEnd = (e: React.TouchEvent) => {
     e.stopPropagation();
     const isMouseDown = false;
-    this.setState({isMouseDown})
-  }
+    this.setState({ isMouseDown });
+  };
   onClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const {onSkip, allowSkip, type} = this.props;
+    const { onSkip, allowSkip, type } = this.props;
     const Types = Slider.Types;
     if (allowSkip) {
-      const {pageX, pageY} = e;
+      const { pageX, pageY } = e;
       const target = e.currentTarget as HTMLElement;
       const sliderDragBtn = (target.offsetParent as HTMLElement).childNodes[3] as HTMLElement;
       if (target === sliderDragBtn || target.offsetParent == null) {
         return;
       }
-      const {clientWidth: btnWidth, clientHeight: btnHeight} = sliderDragBtn;
-      const {clientWidth: width, clientHeight: height} = target.offsetParent;
+      const { clientWidth: btnWidth, clientHeight: btnHeight } = sliderDragBtn;
+      const { clientWidth: width, clientHeight: height } = target.offsetParent;
       const offset = getOffset(target);
       let tmp = 0;
       if (type === Types.VERTICAL) {
@@ -199,22 +194,29 @@ class Slider extends React.Component<SliderProps, SliderState> {
         this.setProgress(tmp);
       }
     }
-  }
-  onDrag = (e) => {
-    const {isMouseDown} = this.state;
+  };
+  onDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const { isMouseDown } = this.state;
     if (isMouseDown) {
-      const {pageX, pageY, target} = e;
-      const {max, clickPos} = this.state;
-      const offset = getOffset(target.parentNode);
+      const { pageX, pageY } = e;
+      if (!e.target) {
+        return;
+      }
+      const target = e.target as HTMLDivElement;
+      const { max, clickPos } = this.state;
+      if (!target.parentElement) {
+        return;
+      }
+      const offset = getOffset(target.parentElement);
       const pos = {
         x: pageX - offset.left - clickPos.x,
         y: pageY - offset.top - clickPos.y,
-      }
+      };
 
-      const {clientWidth: btnWidth, clientHeight: btnHeight} = target;
-      const {clientWidth: width, clientHeight: height} = target.parentNode;
+      const { clientWidth: btnWidth, clientHeight: btnHeight } = target;
+      const { clientWidth: width, clientHeight: height } = target.parentElement;
 
-      const {type, onDrag} = this.props;
+      const { type, onDrag } = this.props;
       if (type === Slider.Types.VERTICAL) {
         if (pos.y >= 0 && pos.y <= height) {
           const h = height - btnHeight;
@@ -235,14 +237,14 @@ class Slider extends React.Component<SliderProps, SliderState> {
         }
       }
     }
-  }
+  };
 
   render() {
     const {
       progress: pg, accuracy, type, max, min, onPointerLeave, onPointerMove,
       onTouchEnd, onClick, onTouchMove, onMax, allowDrag, allowSkip, onSkip, ...extraProps
     } = this.props;
-    const {progress, isMouseDown} = this.state;
+    const { progress, isMouseDown } = this.state;
     const length = `${progress * 100}%`;
     const sliderCls = cx('wx-v2-slider ws-hr', isMouseDown ? 'ws-active' : '');
     const dragBtnStyle = {
@@ -264,9 +266,9 @@ class Slider extends React.Component<SliderProps, SliderState> {
         onClick={this.onClick}
       >
         <div className={sliderCls}>
-          <div className="wx-v2-slider-layer wx-v2-slider-bg"/>
-          <div className="wx-v2-slider-layer wx-v2-slider-fp" style={fpStyle}/>
-          <div className="wx-v2-slider-layer wx-v2-slider-sp" style={spStyle}/>
+          <div className="wx-v2-slider-layer wx-v2-slider-bg" />
+          <div className="wx-v2-slider-layer wx-v2-slider-fp" style={fpStyle} />
+          <div className="wx-v2-slider-layer wx-v2-slider-sp" style={spStyle} />
           <div
             className="wx-v2-slider-drag-btn"
             style={dragBtnStyle}

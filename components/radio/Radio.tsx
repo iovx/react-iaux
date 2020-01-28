@@ -64,7 +64,7 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
     }
   }
 
-  handleChange(e) {
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.stopPropagation();
     const { checked } = e.currentTarget;
     if (!('checked' in this.props)) {

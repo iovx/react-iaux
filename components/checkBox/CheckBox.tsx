@@ -61,11 +61,11 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
   triggerChange(checked: boolean) {
     const { onChange, value, unCheckedValue } = this.props;
     if (onChange) {
-      onChange((checked ? value : unCheckedValue)||'', checked);
+      onChange((checked ? value : unCheckedValue) || '', checked);
     }
   }
 
-  handleChange(e) {
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.stopPropagation();
     const { checked } = e.currentTarget;
     if (!('checked' in this.props)) {
@@ -98,7 +98,7 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
             checked={checked}
             onChange={this.handleChange}
           />
-          <span className="wx-v2-checkbox-inner"/>
+          <span className="wx-v2-checkbox-inner" />
         </span>
         <span>{label}</span>
       </label>

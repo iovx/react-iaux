@@ -1,4 +1,6 @@
-type HttpMethod = "GET" | "POST" | "HEAD" | "PUT" | "DELETE";
+import { MapType } from '../_utils/type';
+
+type HttpMethod = 'GET' | 'POST' | 'HEAD' | 'PUT' | 'DELETE';
 
 interface HttpParams {
   [prop: string]: any;
@@ -11,11 +13,11 @@ interface HttpRequest {
 }
 
 interface IHttpResponse {
-  header: any[];
+  header: MapType<string>[];
 }
 
 class HttpResponse implements IHttpResponse {
-  header=[];
+  header: MapType<string>[] = [];
 }
 
 class HttpUtil {
@@ -44,5 +46,5 @@ class HttpUtil {
   }
 }
 
-export {HttpParams, HttpMethod, HttpResponse, HttpRequest};
+export { HttpParams, HttpMethod, HttpResponse, HttpRequest };
 export default HttpUtil;

@@ -20,8 +20,8 @@ const ComponentDocs = React.lazy(() =>
   import(/* webpackChunkName:'page.intro */ './pages/started/ComponentDocs'),
 );
 
-const LazyHolder = Comp => {
-  return props => (
+const LazyHolder = (Comp: any) => {
+  return (props: any) => (
     <React.Suspense fallback={<div>正在加载...</div>}>
       <Comp {...props} />
     </React.Suspense>
@@ -38,25 +38,25 @@ class App extends React.PureComponent<AppProps, {}> {
   render() {
     return (
       <Wrapper className="dc-root">
-        <HeaderLayout/>
+        <HeaderLayout />
         <Router history={this.props.history}>
           <Switch>
-            <Route path="/" exact component={LazyHolder(StartPage)}/>
+            <Route path="/" exact component={LazyHolder(StartPage)} />
             <div style={{ minHeight: 400, paddingTop: 60 }}>
-              <Route path="/test" exact component={LazyHolder(Test)}/>
+              <Route path="/test" exact component={LazyHolder(Test)} />
             </div>
             <Wrapper style={{ display: 'none' }} className="dc-main">
               <Wrapper className="dc-intro-page">
-                <Wrapper className="dc-intro-page-tip"/>
+                <Wrapper className="dc-intro-page-tip" />
                 <Wrapper className="dc-intro-page-menu">
-                  <MenuList/>
+                  <MenuList />
                 </Wrapper>
                 <Wrapper className="dc-intro-page-main">
-                  <Route path="/getStarted" exact component={LazyHolder(IntroPage)}/>
-                  <Route path="/test" exact component={LazyHolder(IntroPage)}/>
-                  <Route path="/component/:name" exact component={LazyHolder(ComponentDocs)}/>
+                  <Route path="/getStarted" exact component={LazyHolder(IntroPage)} />
+                  <Route path="/test" exact component={LazyHolder(IntroPage)} />
+                  <Route path="/component/:name" exact component={LazyHolder(ComponentDocs)} />
                 </Wrapper>
-                <Wrapper className="dc-intro-page-tip"/>
+                <Wrapper className="dc-intro-page-tip" />
               </Wrapper>
             </Wrapper>
           </Switch>

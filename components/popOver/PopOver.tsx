@@ -106,12 +106,18 @@ class PopOver extends React.Component<PopOverProps, PopOverState> {
     const padding = 10;
     switch (dir) {
       case 'tl':
-      case 'tr':
         top = this.top + parseInt(h || '0') + padding;
         break;
+      case 'tr':
+        top = this.top + parseInt(h || '0') + padding;
+        left = this.left - parseInt(popWidth || '0') + parseInt(w || '0');
+        break;
       case 'bl':
+        top = this.top - parseInt(popHeight || '0') - padding;
+        break;
       case 'br':
         top = this.top - parseInt(popHeight || '0') - padding;
+        left = this.left - parseInt(popWidth || '0') + parseInt(w || '0');
         break;
       case 'lt':
       case 'lb':

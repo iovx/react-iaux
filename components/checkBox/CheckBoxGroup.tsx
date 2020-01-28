@@ -24,7 +24,7 @@ export interface CheckBoxGroupState {
   value: any[],
 }
 
-function getArrayValue(value) {
+function getArrayValue(value?: string | string[]) {
   return !value ? [] : (Array.isArray(value) ? value : [value]);
 }
 
@@ -38,7 +38,7 @@ class CheckBoxGroup extends React.PureComponent<CheckBoxGroupProps, CheckBoxGrou
       value: PropTypes.string.isRequired,
     })),
   };
-  static defaultProps = {
+  static defaultProps: Partial<CheckBoxGroupProps> = {
     defaultValue: [],
   };
 

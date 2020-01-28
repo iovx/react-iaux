@@ -39,7 +39,7 @@ class Test extends React.PureComponent<TestProps, {}> {
     return Promise.resolve(true);
   }
 
-  handleClick = (e) => {
+  handleClick = (e: any) => {
     console.log(e.pageX, e.pageY);
     this.setState({ showPop: true, left: e.pageX, top: e.pageY });
   };
@@ -47,10 +47,10 @@ class Test extends React.PureComponent<TestProps, {}> {
     this.setState({ showPop: false });
   };
 
-  handleCheckBoxChange = (e) => {
+  handleCheckBoxChange = (e: any) => {
     console.log(e);
   };
-  handleRadioChange = (e) => {
+  handleRadioChange = (e: any) => {
     console.log(e);
   };
 
@@ -60,12 +60,12 @@ class Test extends React.PureComponent<TestProps, {}> {
         <CollapsePanel header={<div className='collapse-panel-holder'>收起</div>} body={
           <div>
             <div>是否开启配置:</div>
-            <CheckBox defaultChecked label='是否开启配置'/>
+            <CheckBox defaultChecked label='是否开启配置' />
             <div>实现方式:</div>
-            <Radio defaultChecked label='实现方式'/>
-            <Radio disabled label='自定义'/>
+            <Radio defaultChecked label='实现方式' />
+            <Radio disabled label='自定义' />
           </div>
-        }/>
+        } />
         <CollapsePanel header={<div className='collapse-panel-holder'>收起2</div>} body={
           <div>
             <div>请选出你熟悉的语言:</div>
@@ -137,7 +137,7 @@ class Test extends React.PureComponent<TestProps, {}> {
               ]}
             />
           </div>
-        }/>
+        } />
         <Tab style={{ marginTop: 10 }}>
           <TabPanel title='测试一' className='alert-test2'>
             <Alert closable onClose={this.handleClose} className='alert'>
@@ -167,7 +167,7 @@ class Test extends React.PureComponent<TestProps, {}> {
               </Popup>
             </div>
             <div>
-              <Pagination total={100}/>
+              <Pagination total={100} />
             </div>
           </TabPanel>
         </Tab>

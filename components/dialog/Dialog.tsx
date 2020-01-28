@@ -30,7 +30,7 @@ class Dialog extends React.Component<DialogProps, any> {
     onClose: PropTypes.func,
   };
 
-  constructor(props) {
+  constructor(props: DialogProps) {
     super(props);
     this.onClose = this.onClose.bind(this);
   }

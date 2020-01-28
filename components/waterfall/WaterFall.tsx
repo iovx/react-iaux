@@ -90,7 +90,17 @@ export function getScrollTop() {
 
 const errorUrl = 'http://temp.im/660x880';
 
-class WaterFall extends React.Component<WaterFallProps, any> {
+export interface WaterFallState {
+  dataList: any[],
+  isLoading: boolean,
+  isEnd: boolean,
+  width: number,
+  height: number,
+  page: number,
+  pageSize: number,
+}
+
+class WaterFall extends React.Component<WaterFallProps, WaterFallState> {
   static defaultProps = {
     response: true,
     gap: 7,
@@ -110,7 +120,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
   private wrapper: HTMLDivElement;
   private timer: any;
 
-  constructor(props) {
+  constructor(props: WaterFallProps) {
     super(props);
     this.state = {
       dataList: [],
@@ -128,23 +138,22 @@ class WaterFall extends React.Component<WaterFallProps, any> {
     this.setState({ width }, () => {
       this.loadImage(this.state.page).then(null);
     });
-    if (typeof  window === 'undefined') {
-      return null;
+    if (typeof  window !== 'undefined') {
+      if (this.props.response) {
+        window.addEventListener('resize', this.resizeHandler);
+      }
+      window.addEventListener('scroll', this.scrollHandler);
     }
-    if (this.props.response) {
-      window.addEventListener('resize', this.resizeHandler);
-    }
-    window.addEventListener('scroll', this.scrollHandler);
+
   }
 
   componentWillUnmount() {
-    if (typeof  window === 'undefined') {
-      return null;
+    if (typeof  window !== 'undefined') {
+      if (this.props.response) {
+        window.removeEventListener('resize', this.resizeHandler);
+      }
+      window.removeEventListener('scroll', this.scrollHandler);
     }
-    if (this.props.response) {
-      window.removeEventListener('resize', this.resizeHandler);
-    }
-    window.removeEventListener('scroll', this.scrollHandler);
   }
 
   getConfig = () => {
@@ -170,7 +179,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
     }
     return result;
   };
-  loadImage = (page, pageSize = 30) => {
+  loadImage = (page: number, pageSize = 30) => {
     const config = this.getConfig();
     this.setState({ isLoading: true });
     const { loader, onLoadOver } = this.props;
@@ -204,7 +213,7 @@ class WaterFall extends React.Component<WaterFallProps, any> {
       });
     });
   };
-  loadNext = (items) => {
+  loadNext = (items: any[]) => {
     if (getWindowSize().height + getScrollTop() >= items[items.length - 1].top + getOffset(this.wrapper).top) {
       this.setState({ page: this.state.page + 1 }, () => {
         this.loadImage(this.state.page).then(null);

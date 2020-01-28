@@ -30,8 +30,6 @@ export type ButtonProps = {} & BaseButtonProps & React.HTMLAttributes<HTMLButton
 class Button extends React.Component<ButtonProps, any> {
   static defaultProps = {
     status: 'default',
-    text: null,
-    icon: null,
     size: 'md',
     active: false,
     disabled: false,
@@ -46,7 +44,7 @@ class Button extends React.Component<ButtonProps, any> {
     disabled: PropTypes.bool,
   };
 
-  handleClick = (e) => {
+  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { onClick } = this.props;
     if (onClick) {
       onClick(e);

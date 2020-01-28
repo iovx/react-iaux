@@ -11,7 +11,7 @@ interface IRadioDataItem {
 
 interface BaseProps {
   data: IRadioDataItem[];
-  defaultValue?: string;
+  defaultValue?: string | string[];
   value?: string;
   disabled?: boolean;
 
@@ -21,7 +21,7 @@ interface BaseProps {
 export type RadioGroupProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement> ;
 
 export interface RadioGroupState {
-  value: string,
+  value: string | string[],
   data: IRadioDataItem[];
 }
 
@@ -36,7 +36,7 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
       value: PropTypes.string.isRequired,
     })),
   };
-  static defaultProps = {
+  static defaultProps: Partial<RadioGroupProps> = {
     defaultValue: [],
   };
 
