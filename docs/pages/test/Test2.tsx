@@ -10,6 +10,8 @@ import Button from '../../../components/button/Button';
 import '../../../components/button/style';
 import '../../../components/panel/style';
 import Input from '../../../components/input/Input';
+import Slider from '../../../components/slider';
+import '../../../components/slider/style';
 import '../../../components/input/style';
 import '../../../components/form/style';
 import '../../../components/upload/style';
@@ -28,8 +30,15 @@ class Test2 extends React.Component<Test2Props, any> {
   static propTypes = {};
   state = {
     value: ['1', '2', '4'],
+    progress: 0.2,
   };
   popRef: React.RefObject<PopOver> = React.createRef();
+
+  handleProgressChange = (p: number, v: number) => {
+    this.setState({
+      progress: p,
+    });
+  };
 
   handleChange(value: string) {
     console.log('change', value);
@@ -47,6 +56,7 @@ class Test2 extends React.Component<Test2Props, any> {
   };
 
   render() {
+    const { progress } = this.state;
     const title = '能共你沿途来爬天梯,黑夜亦亮丽，于山头同盟洪海中发誓,留住你旁人如何话过不可一世,问我亦无愧,有你可拆破这天际';
     return (
       <div style={{ padding: 20 }}>
@@ -86,6 +96,8 @@ class Test2 extends React.Component<Test2Props, any> {
           <hr />
           <Input status='success' defaultValue='李克勤' disabled onChange={this.handleInputChange} placeholder='一个也不能少' />
         </div>
+        <hr />
+        <Slider onChange={this.handleProgressChange} max={100} progress={progress} />
         <hr />
         <FullScreen>
           <IndexPage from={'wind'} />

@@ -13,7 +13,7 @@ export declare type FormWidgetState = any
 
 export interface IFromPropsRef {
   fieldDecorator: FieldDecorator;
-  getFieldsValue: object;
+  getFieldsValue: () => object;
   validateFields: (callback: (error: object, values: any) => void) => any;
 }
 
@@ -60,5 +60,4 @@ export default class Form extends React.Component<FormProps, FormState> {
       </div>
     );
   }
-
 }

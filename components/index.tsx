@@ -55,7 +55,7 @@ export { default as ToolTip } from './toolTip';
 export { default as AuthWrapper } from './authWrapper';
 export { default as Col } from './col';
 export { default as Row } from './row';
-export { default as CollapsePanel } from './collapse';
+export { default as CollapsePanel } from './collapsePanel';
 export { default as Grid } from './grid';
 export { default as Layout } from './layout';
 export { default as Text } from './text';

@@ -78,9 +78,9 @@ class CollapsePanel extends React.Component<CollapsePanelProps, CollapsePanelSta
   render() {
     const { header, body, headerClassName, headerStyle, bodyClassName, bodyStyle, className, open: p, defaultOpen, onChange, ...extraProps } = this.props;
     const { open } = this.state;
-    const wrapperCls = cx('wx-v2-collapse-panel', className);
-    const headerCls = cx('wx-v2-collapse-panel-header', headerClassName);
-    const bodyCls = cx('wx-v2-collapse-panel-body', {
+    const wrapperCls = cx('wx-v2-collapsePanel', className);
+    const headerCls = cx('wx-v2-collapsePanel-header', headerClassName);
+    const bodyCls = cx('wx-v2-collapsePanel-body', {
       'wx-v2-collapse-panel-hide': !open,
     }, bodyClassName);
     return (

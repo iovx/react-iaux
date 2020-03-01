@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import omit from 'omit.js';
 import { getOffset } from '../utils/dom';
 import { tuple } from '../_utils/type';
 
 const directionType = tuple('horizontal', 'vertical');
 
 interface BaseProps {
-  onChange?: (progress: number, value: number) => void;
+  onChange?: (progress: number, value: number, formatProgress:number) => void;
   onDrag?: (progress: number, value: number) => boolean | undefined;
   onSkip?: (progress: number, value: number) => boolean | undefined;
   onMax?: () => void;
@@ -20,7 +21,7 @@ interface BaseProps {
   type?: typeof directionType[number];
 }
 
-export type SliderProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement>;
+export type SliderProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
 
 
 export interface SliderState {
@@ -64,6 +65,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
     clickPos: { x: 0, y: 0 },
     isMouseDown: false,
   };
+  dragBtnRef = React.createRef<HTMLDivElement>();
 
   componentWillMount() {
     const { progress, min, max } = this.props;
@@ -100,7 +102,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
     const { onChange } = this.props;
     const { progress } = this.state;
     if (onChange) {
-      onChange(progress, this.getProgress());
+      onChange(progress, this.value(), this.getProgress());
     }
   };
   //设置进度
@@ -177,7 +179,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
     if (allowSkip) {
       const { pageX, pageY } = e;
       const target = e.currentTarget as HTMLElement;
-      const sliderDragBtn = (target.offsetParent as HTMLElement).childNodes[3] as HTMLElement;
+      const sliderDragBtn = this.dragBtnRef.current as HTMLDivElement;
       if (target === sliderDragBtn || target.offsetParent == null) {
         return;
       }
@@ -194,6 +196,9 @@ class Slider extends React.Component<SliderProps, SliderState> {
         this.setProgress(tmp);
       }
     }
+  };
+  handleDragBtnClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
   onDrag = (e: React.PointerEvent<HTMLDivElement>) => {
     const { isMouseDown } = this.state;
@@ -240,10 +245,6 @@ class Slider extends React.Component<SliderProps, SliderState> {
   };
 
   render() {
-    const {
-      progress: pg, accuracy, type, max, min, onPointerLeave, onPointerMove,
-      onTouchEnd, onClick, onTouchMove, onMax, allowDrag, allowSkip, onSkip, ...extraProps
-    } = this.props;
     const { progress, isMouseDown } = this.state;
     const length = `${progress * 100}%`;
     const sliderCls = cx('wx-v2-slider ws-hr', isMouseDown ? 'ws-active' : '');
@@ -258,7 +259,10 @@ class Slider extends React.Component<SliderProps, SliderState> {
     };
     return (
       <div
-        {...extraProps}
+        {...omit(this.props, [
+          'progress', 'accuracy', 'type', 'max', 'min', 'onPointerLeave', 'onPointerMove',
+          'onTouchEnd', 'onClick', 'onTouchMove', 'onMax', 'allowDrag', 'allowSkip', 'onSkip', 'onChange',
+        ])}
         onPointerLeave={this.onMouseLeave}
         onPointerMove={this.onMouseMove}
         onTouchMove={this.onTouchMove}
@@ -275,7 +279,8 @@ class Slider extends React.Component<SliderProps, SliderState> {
             onPointerDown={this.onMouseDown}
             onPointerUp={this.onMouseUp}
             onTouchStart={this.onTouchStart}
-
+            ref={this.dragBtnRef}
+            onClick={this.handleDragBtnClick}
           />
         </div>
       </div>

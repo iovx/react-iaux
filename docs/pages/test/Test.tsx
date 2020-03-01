@@ -12,8 +12,8 @@ import Button from '../../../components/button/Button';
 import '../../../components/button/style';
 import Tab from '../../../components/tab';
 import '../../../components/tab/style';
-import CollapsePanel from '../../../components/collapse/CollapsePanel';
-import '../../../components/collapse/style';
+import CollapsePanel from '../../../components/collapsePanel';
+import '../../../components/collapsePanel/style';
 import '../../../components/card/style';
 import '../../../components/pagination/style';
 
