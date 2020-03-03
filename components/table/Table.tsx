@@ -100,7 +100,7 @@ class Table extends React.PureComponent<TableProps, {}> {
           <tbody>
           {dataSource.map((row, rowIndex) => {
             const tds = columns.map((column, columnIndex) => {
-              const { dataIndex, key, style, align = 'left', className, render, headerProps, ...tdProps } = column;
+              const { dataIndex, key, style, title, align = 'left', className, render, headerProps, ...tdProps } = column;
               const colStyle = {
                 textAlign: align,
                 ...style,
