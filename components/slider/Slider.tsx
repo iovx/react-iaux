@@ -8,20 +8,21 @@ import { tuple } from '../_utils/type';
 const directionType = tuple('horizontal', 'vertical');
 
 interface BaseProps {
-  onChange?: (progress: number, value: number, formatProgress:number) => void;
+  onChange?: (progress: number, value: number, formatProgress: number) => void;
   onDrag?: (progress: number, value: number) => boolean | undefined;
   onSkip?: (progress: number, value: number) => boolean | undefined;
   onMax?: () => void;
   min?: number,
   max?: number,
   progress?: number,
+  secondProgress?: number,
   accuracy?: number,
   allowDrag?: boolean;
   allowSkip?: boolean;
   type?: typeof directionType[number];
 }
 
-export type SliderProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
+export type SliderProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDrag'>;
 
 
 export interface SliderState {
@@ -57,6 +58,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
     allowDrag: true,
     allowSkip: true,
     type: 'horizontal',
+    secondProgress: 0,
   };
   state = {
     progress: 0.7,
@@ -246,13 +248,15 @@ class Slider extends React.Component<SliderProps, SliderState> {
 
   render() {
     const { progress, isMouseDown } = this.state;
+    const { secondProgress } = this.props;
     const length = `${progress * 100}%`;
+    const secondLength = `${(secondProgress || 0) * 100}%`;
     const sliderCls = cx('wx-v2-slider ws-hr', isMouseDown ? 'ws-active' : '');
     const dragBtnStyle = {
       left: length,
     };
     const fpStyle = {
-      width: length,
+      width: secondLength,
     };
     const spStyle = {
       width: length,
@@ -260,7 +264,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
     return (
       <div
         {...omit(this.props, [
-          'progress', 'accuracy', 'type', 'max', 'min', 'onPointerLeave', 'onPointerMove',
+          'progress', 'accuracy', 'onDrag', 'type', 'max', 'min', 'onPointerLeave', 'onPointerMove',
           'onTouchEnd', 'onClick', 'onTouchMove', 'onMax', 'allowDrag', 'allowSkip', 'onSkip', 'onChange',
         ])}
         onPointerLeave={this.onMouseLeave}
