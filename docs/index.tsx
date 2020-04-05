@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 import App from './App';
 import Test2 from './pages/test/Test2';
 import Test3 from './pages/test/Test3';
+import Test4 from './pages/test/Test4';
 
 // import '../dist/react-iaux.css';
 
@@ -16,6 +17,7 @@ function RouteConfig() {
       <Switch>
         <Route path="/test2" component={Test2}/>
         <Route path="/test3" component={Test3}/>
+        <Route path="/test4" component={Test4}/>
         <Route path="/" component={App}/>
       </Switch>
     </Router>

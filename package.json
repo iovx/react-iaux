@@ -35,11 +35,9 @@
   ],
   "typings": "lib/index.d.ts",
   "devDependencies": {
-    "@types/classnames": "^2.2.6",
     "@types/highlight.js": "^9.12.3",
     "@types/marked": "^0.6.3",
     "@types/node": "^11.9.4",
-    "@types/prop-types": "^15.5.9",
     "@types/react": "~16.8.1",
     "@types/react-dom": "^16.0.11",
     "@types/react-intl": "^2.3.14",
@@ -92,12 +90,18 @@
     "webpack-dev-server": "^3.2.0"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.6",
+    "@types/node": "^11.9.4",
+    "@types/prop-types": "^15.5.9",
+    "@types/react-calendar": "^3.0.0",
+    "@types/react-datepicker": "^2.11.0",
     "@types/react-transition-group": "^4.2.3",
     "classnames": "^2.2.6",
     "filesize": "^6.0.1",
     "moment": "^2.24.0",
     "omit.js": "^1.0.2",
     "prop-types": "^15.7.2",
+    "react-date-picker": "^8.0.0",
     "react-transition-group": "^2.6.1"
   }
 }

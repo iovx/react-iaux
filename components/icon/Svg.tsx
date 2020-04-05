@@ -33,7 +33,8 @@ export type SvgProps = {} & BaseProps & React.HTMLAttributes<HTMLSpanElement>;
 
 class Svg extends React.Component<SvgProps, any> {
   static propTypes = {
-    svg: PropTypes.any.isRequired,
+    content: PropTypes.any,
+    type: PropTypes.string,
   };
 
   render() {
