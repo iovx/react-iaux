@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import omit from 'omit.js';
 import { IGridDataItem } from './interface';
+import ImageGrid from './ImageGrid';
 
 interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
 
@@ -17,6 +19,7 @@ export type GridProps<T = IGridDataItem> = {
 
 
 class Grid extends React.Component<GridProps, any> {
+  static Image: typeof ImageGrid;
   static propTypes = {
     gutter: PropTypes.number,
     cols: PropTypes.number,
@@ -68,10 +71,10 @@ class Grid extends React.Component<GridProps, any> {
   }
 
   render() {
-    const { className, dataSource, cols, ...extraProps } = this.props;
+    const { className, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-grid', className);
     return (
-      <div className={wrapperCls} {...extraProps}>
+      <div className={wrapperCls} {...omit(extraProps, ['render', 'cols', 'dataSource'])}>
         {this.renderRows()}
       </div>
     );

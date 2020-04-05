@@ -2,5 +2,5 @@ import Grid from './Grid';
 import ImageGrid from './ImageGrid';
 
 
-export { ImageGrid };
+Grid.Image = ImageGrid;
 export default Grid;

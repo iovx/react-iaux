@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import omit from 'omit.js';
 import Grid from './Grid';
 import { IImageGridDataItem } from './interface';
 
@@ -35,19 +36,14 @@ class ImageGrid extends React.Component<ImageGridProps, any> {
     );
   };
 
-  getExtraProps() {
-    const { className, colClassName, imageStyle, ...extraProps } = this.props;
-    return extraProps;
-  }
-
   render() {
-    const { className } = this.props;
+    const { className, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-image-grid', className);
     return (
       <Grid
         className={wrapperCls}
         render={this.renderCol}
-        {...this.getExtraProps()}
+        {...omit(extraProps, ['colClassName', 'imageStyle'])}
       />
     );
   }
