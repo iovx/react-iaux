@@ -1,6 +1,6 @@
 import Grid from './Grid';
+import ImageGrid from './ImageGrid';
 
 
-export { Grid };
-
+export { ImageGrid };
 export default Grid;
