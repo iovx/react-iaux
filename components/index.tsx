@@ -42,6 +42,7 @@ export { default as Drag } from './drag';
 export { default as Avatar } from './avatar';
 export { default as Menu } from './menu';
 export { default as DatePicker } from './datePicker';
+export { default as Svg } from './svg';
 export { default as Dialog } from './dialog';
 export { default as Portal } from './portal';
 export { default as WaterFall } from './waterfall';
