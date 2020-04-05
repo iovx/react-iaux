@@ -102,6 +102,7 @@
     "omit.js": "^1.0.2",
     "prop-types": "^15.7.2",
     "react-date-picker": "^8.0.0",
+    "react-draggable": "^4.2.0",
     "react-transition-group": "^2.6.1"
   }
 }

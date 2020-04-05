@@ -97,6 +97,12 @@ class Upload extends React.Component<UploadProps, UploadState> {
     }
   }
 
+  truncate = () => {
+    if (this.selectorRef.current) {
+      this.selectorRef.current.truncate();
+    }
+  };
+
   render() {
     const { onChange, className, showList, children, disabled, value, defaultValue, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-upload', className);

@@ -284,6 +284,7 @@ class Test2 extends React.Component<Test2Props, any> {
               title='天梯'
               mask={false}
               visible={this.state.show}
+              draggable
               onClose={() => this.setState({ show: false })}
             >
               <div>一个也不能少</div>

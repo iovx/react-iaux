@@ -195,6 +195,14 @@ class FileSelector extends React.Component<FileSelectorProps, FileSelectorState>
       fileList: nextFileList,
     }), () => this.onChange(nextFileList.map(item => item.file)));
   };
+  truncate = () => {
+    const el = document.getElementById(this.uniqueId);
+    if (el) {
+      const fileInputEle = el as HTMLInputElement;
+      fileInputEle.value = '';
+      this.onChange([]);
+    }
+  };
 
   render() {
     const { className: clsName, multiple, tabIndex, dragOnly, selectText, dropText, selectOnly, disabled, onClick, override, repeat, onFileChange, activeClassName, onDrop, onDragEnter, onDragOver, onDragLeave, ...extraProps } = this.props;

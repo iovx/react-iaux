@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
-import Svg from '../icon/Svg';
+import Svg from '../svg';
 
 interface BaseProps {
   className?: string;

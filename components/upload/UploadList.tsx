@@ -5,9 +5,8 @@ import * as moment from 'moment';
 import * as filesize from 'filesize';
 import { FileNode } from './interface';
 import { FileState } from './constant';
-import Icon from '../icon';
+import Svg from '../svg';
 
-const { Svg } = Icon;
 
 interface BaseProps {
   itemClassName?: string;

@@ -1,11 +1,25 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
+import svgMap from './assets';
 import { tuple } from '../_utils/type';
 import { getIcon } from './util';
 
-const SvgType = tuple();
-const svgMap: { [index: string]: string } = {};
+const SvgType = tuple(
+  'add',
+  'close',
+  'arrow',
+  'delete',
+  'login',
+  'logo',
+  'split',
+  'minus',
+  'loading',
+  'success',
+  'error',
+  'info',
+  'warning',
+);
 
 interface BaseProps {
   content?: any;
