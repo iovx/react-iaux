@@ -57,7 +57,7 @@ class UploadList extends React.Component<UploadListProps, any> {
   };
 
   render() {
-    const { data, className, itemClassName, disabled, ...extraProps } = this.props;
+    const { data, className, itemClassName, disabled, onDelete, ...extraProps } = this.props;
     const wrapperCls = cx('wx-v2-upload-list', className);
     const itemCls = cx('wx-v2-upload-list-item', {
       'wx-v2-upload-list-item-disabled': disabled,
