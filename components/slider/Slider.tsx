@@ -26,10 +26,10 @@ export type SliderProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLDivElem
 
 
 export interface SliderState {
-  progress?: number;
-  max?: number;
-  min?: number;
-  clickPos?: { x: number, y: number },
+  progress: number;
+  max: number;
+  min: number;
+  clickPos: { x: number, y: number },
   isMouseDown?: boolean;
 }
 
@@ -60,23 +60,23 @@ class Slider extends React.Component<SliderProps, SliderState> {
     type: 'horizontal',
     secondProgress: 0,
   };
-  state = {
-    progress: 0.7,
-    max: 100,
-    min: 0,
-    clickPos: { x: 0, y: 0 },
-    isMouseDown: false,
-  };
   dragBtnRef = React.createRef<HTMLDivElement>();
 
-  componentWillMount() {
-    const { progress, min, max } = this.props;
-    this.setState({ progress, min, max });
+  constructor(props: SliderProps) {
+    super(props);
+    const { progress = 0, min = 0, max = 100 } = props;
+    this.state = {
+      progress,
+      min,
+      max,
+      clickPos: { x: 0, y: 0 },
+      isMouseDown: false,
+    };
   }
 
-  componentWillReceiveProps(nextProps: SliderProps) {
+  static getDerivedStateFromProps(nextProps: SliderProps) {
     const { progress, min, max } = nextProps;
-    this.setState({ progress, min, max });
+    return { progress, min, max };
   }
 
   getProgress = () => {
@@ -188,7 +188,7 @@ class Slider extends React.Component<SliderProps, SliderState> {
       const { clientWidth: btnWidth, clientHeight: btnHeight } = sliderDragBtn;
       const { clientWidth: width, clientHeight: height } = target.offsetParent;
       const offset = getOffset(target);
-      let tmp = 0;
+      let tmp: number;
       if (type === Types.VERTICAL) {
         tmp = (pageY - offset.top) / (height - btnHeight);
       } else {

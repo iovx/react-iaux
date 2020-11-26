@@ -58,7 +58,7 @@ class Pagination extends React.PureComponent<PaginationProps, PaginationState> {
     this.build(this.props);
   }
 
-  componentWillReceiveProps(nextProps: PaginationProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: PaginationProps) {
     const { page, total } = nextProps;
     if (page !== this.props.page || total !== this.props.total) {
       this.setState({ page: page || 1 }, () => {

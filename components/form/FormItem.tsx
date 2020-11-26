@@ -12,7 +12,7 @@ export interface FormItemProps {
   children?: React.ReactChild,
 }
 
-export declare type FormItemState = {
+export interface FormItemState {
   required?: boolean;
   label?: React.ReactNode;
 }
@@ -29,34 +29,28 @@ export default class FormItem extends React.Component<FormItemProps, FormItemSta
     colon: PropTypes.string,
   };
 
+  childInstanceOfDecoratorItem: boolean;
+
   constructor(props: FormItemProps) {
     super(props);
-    const { children } = this.props;
-    const onlyChild = React.Children.only(children) as any;
+    const { children } = props;
+    const onlyChild = React.Children.only(children) as React.ReactElement;
     this.childInstanceOfDecoratorItem = false;
     if (onlyChild && onlyChild.type === FieldDecorator.FieldDecoratorItem) {
       this.childInstanceOfDecoratorItem = true;
     }
-  }
-
-  childInstanceOfDecoratorItem: boolean;
-  state = {
-    label: '',
-    required: false,
-  };
-
-  componentWillMount() {
-    const { children } = this.props;
     let { required, label } = this.props;
-    const onlyChild = React.Children.only(children) as React.ReactElement;
     if (this.childInstanceOfDecoratorItem) {
       required = onlyChild.props.required;
       label = onlyChild.props.label || label;
     }
-    this.setState({ required, label });
+    this.state = {
+      required,
+      label: label || '',
+    };
   }
 
-  componentWillReceiveProps(nextProps: FormItemProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: FormItemProps) {
     let { required, label } = nextProps;
     const { children } = nextProps;
     if (this.childInstanceOfDecoratorItem) {

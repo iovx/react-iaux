@@ -20,12 +20,11 @@ class FileImage extends React.Component<FileImageProps, FileImageState> {
     src: null as any,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { src } = this.props;
     this.loadSrc(src);
   }
-
-  componentWillReceiveProps(nextProps: FileImageProps) {
+  componentDidUpdate(nextProps: FileImageProps) {
     if (this.props.src !== nextProps.src) {
       this.loadSrc(nextProps.src);
     }

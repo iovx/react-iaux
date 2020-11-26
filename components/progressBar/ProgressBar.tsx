@@ -37,22 +37,16 @@ class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressBarState
   constructor(props: ProgressBarProps) {
     super(props);
     this.state = {
-      progress: 0,
+      progress: props.progress || 0,
     };
   }
 
-  componentWillMount() {
-    const { progress } = this.props;
-    if (progress) {
-      this.setState({ progress });
-    }
-  }
-
-  componentWillReceiveProps(nextProps: ProgressBarProps) {
+  static getDerivedStateFromProps(nextProps: ProgressBarProps, prevState: ProgressBarState) {
     const { progress } = nextProps;
-    if (this.props.progress !== progress && typeof progress === 'number') {
-      this.setState({ progress });
+    if (progress !== prevState.progress && typeof progress === 'number') {
+      return { progress };
     }
+    return null;
   }
 
   render() {

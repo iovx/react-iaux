@@ -54,6 +54,15 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
 
   constructor(props: ResizeCellProps) {
     super(props);
+    const { style } = this.props;
+    let width = 0;
+    let height = 0;
+    if (style) {
+      const styleWidth = parseFloat(style.width as string);
+      const styleHeight = parseFloat(style.width as string);
+      width = isNaN(styleWidth) ? width : styleWidth;
+      height = isNaN(styleWidth) ? height : styleHeight;
+    }
     this.state = {
       isEnter: false,
       isMarkMouseDown: false,
@@ -65,29 +74,13 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
     };
   }
 
-
-  componentWillMount() {
-    const { style } = this.props;
-    let { width, height } = this.state;
-    if (style) {
-      const styleWidth = parseFloat(style.width as string);
-      const styleHeight = parseFloat(style.width as string);
-      width = isNaN(styleWidth) ? width : styleWidth;
-      height = isNaN(styleWidth) ? height : styleHeight;
-      this.initSize(width, height);
-    }
-  }
-
   componentDidMount() {
     const { clientWidth: width, clientHeight: height } = this.cell;
     this.initSize(width, height);
   }
 
-  shouldComponentUpdate(nextState: any) {
-    if (this.state.width === nextState.width || this.state.height === nextState.height) {
-      return false;
-    }
-    return true;
+  shouldComponentUpdate(nextProps: ResizeCellProps, nextState: ResizeCellState) {
+    return !(this.state.width === nextState.width || this.state.height === nextState.height);
   }
 
   initSize = (width: number, height: number) => {
