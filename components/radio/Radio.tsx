@@ -3,8 +3,9 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import RadioGroup from './RadioGroup';
 import { Omit } from '../_utils/type';
+import omit from 'omit.js';
 
-interface BaseProps {
+export interface BaseProps {
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
@@ -76,11 +77,6 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
     }
   }
 
-  getExtraProps() {
-    const { value, checked, className, defaultChecked, label, onChange, children, ...extraProps } = this.props;
-    return extraProps;
-  }
-
   render() {
     const { value, className, label, children, disabled } = this.props;
     const { checked } = this.state;
@@ -89,7 +85,7 @@ class Radio extends React.PureComponent<RadioProps, RadioState> {
       <label className="wx-v2-radio-wrapper">
         <span className={checkBoxCls}>
           <input
-            {...this.getExtraProps()}
+            {...omit(this.props,['value', 'checked', 'unCheckedValue','label', 'className','defaultChecked','onChange', 'children', 'label'])}
             type="radio"
             className="wx-v2-radio-input"
             value={value}

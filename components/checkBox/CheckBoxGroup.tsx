@@ -3,13 +3,13 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import CheckBox from './CheckBox';
 
-interface ICheckBoxDataItem {
+export interface ICheckBoxDataItem {
   name?: string;
   label?: string;
   value: string;
 }
 
-interface BaseProps {
+export  interface CheckBoxGroupProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>{
   data: ICheckBoxDataItem[];
   defaultValue?: string | string[];
   value?: string | string[];
@@ -17,8 +17,6 @@ interface BaseProps {
 
   onChange?(value: string[]): void;
 }
-
-export type CheckBoxGroupProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface CheckBoxGroupState {
   value: any[],

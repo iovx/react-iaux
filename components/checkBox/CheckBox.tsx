@@ -2,8 +2,9 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import CheckBoxGroup from './CheckBoxGroup';
+import omit from 'omit.js';
 
-interface BaseProps {
+export interface CheckBoxProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>{
   checked?: boolean;
   defaultChecked?: boolean;
   label?: string;
@@ -14,8 +15,6 @@ interface BaseProps {
 
   onChange?(value: string, checked: boolean): void;
 }
-
-export type CheckBoxProps = {} & BaseProps & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface CheckBoxState {
   checked: boolean;
@@ -77,11 +76,6 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
     }
   }
 
-  getExtraProps() {
-    const { value, checked, unCheckedValue, className, defaultChecked, label, ...extraProps } = this.props;
-    return extraProps;
-  }
-
   render() {
     const { value, className, label, disabled } = this.props;
     const { checked } = this.state;
@@ -91,7 +85,7 @@ class CheckBox extends React.PureComponent<CheckBoxProps, CheckBoxState> {
       <label className="wx-v2-checkbox-wrapper">
         <span className={checkBoxCls}>
           <input
-            {...this.getExtraProps()}
+            {...omit(this.props,['value', 'checked', 'unCheckedValue', 'className', 'defaultChecked', 'label'])}
             type="checkbox"
             className="wx-v2-checkbox-input"
             value={value}

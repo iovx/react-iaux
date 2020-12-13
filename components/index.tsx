@@ -61,4 +61,5 @@ export { default as CollapsePanel } from './collapsePanel';
 export { default as Grid } from './grid';
 export { default as Layout } from './layout';
 export { default as Text } from './text';
+export { default as LoadLine } from './loadLine';
 export * from './utils';

@@ -3,13 +3,13 @@ import * as PropTypes from 'prop-types';
 import cx from 'classnames';
 import Radio from './Radio';
 
-interface IRadioDataItem {
+export interface IRadioDataItem {
   name?: string;
   label?: string;
   value: string;
 }
 
-interface BaseProps {
+export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>,'onChange'>{
   data: IRadioDataItem[];
   defaultValue?: string | string[];
   value?: string;
@@ -17,8 +17,6 @@ interface BaseProps {
 
   onChange?(value: string): void;
 }
-
-export type RadioGroupProps = {} & BaseProps & React.HTMLAttributes<HTMLDivElement> ;
 
 export interface RadioGroupState {
   value: string | string[],
@@ -37,7 +35,7 @@ class RadioGroup extends React.PureComponent<RadioGroupProps, RadioGroupState> {
     })),
   };
   static defaultProps: Partial<RadioGroupProps> = {
-    defaultValue: [],
+
   };
 
   constructor(props: RadioGroupProps) {

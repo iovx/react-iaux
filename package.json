@@ -1,6 +1,6 @@
 {
   "name": "react-iaux",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "一个React UI Library, 使用简单",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -31,7 +31,9 @@
   "files": [
     "dist",
     "lib",
-    "es"
+    "es",
+    "CHANGELOG.md",
+    "README.md"
   ],
   "typings": "lib/index.d.ts",
   "devDependencies": {

@@ -6,6 +6,7 @@ export { UploadProps } from './Upload';
 export { FileSelectorProps, FileSelectorState } from './FileSelector';
 export { FileImageProps } from './FileImage';
 export { FileState } from './constant';
+export * from './interface';
 Upload.FileImage = FileImage;
 Upload.FileSelector = FileSelector;
 
