@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibreeze2017/react-iaux.git"
+    "url": "git+https://github.com/iovx/react-iaux.git"
   },
   "author": "wx-2017",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ibreeze2017/react-iaux/issues"
+    "url": "https://github.com/iovx/react-iaux/issues"
   },
-  "homepage": "https://github.com/ibreeze2017/react-iaux#readme",
+  "homepage": "https://github.com/iovx/react-iaux#readme",
   "browserslist": [
     "> 1%",
     "last 2 versions"

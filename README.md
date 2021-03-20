@@ -1,23 +1,112 @@
-# react-iaux
+# ღ react-iaux
 
-> 一个React UI Library, 使用简单
+一个React UI Library, 使用简单
 
-### 2019年7月14日
+[![npm][npm]][npm-url]
+[![deps][deps]][deps-url]
+[![license][license]][license-url]
+[![last-commit][last-commit]][last-commit-url]
+[![release][release]][release-url]
+[![prs][prs]][prs-url]
+[![download][download]][download-url]
 
-[fix] 修复 Avatar 、  Menu 样式丢失的问题
+## Get Started ☆
 
-### 2019年07月08日
+### install
 
-[feat] 增加使用文档
+```
+npm i -S react-iaux
+```
 
-### 2019年07月07日 
+### Usage
 
-[feat] 增加 CSS 分离压缩， 优化打包后的体积
+```js
+import React from 'react';
+import { Button } from 'react-iaux';
 
-[feat] 针对react-iaux 组件配置按需加载
+export default function() {
+  return (
+    <div className="dc-btn-line">
+      <Button onClick={() => console.log('Hello React')}>Get Started</Button>
+    </div>
+  );
+}
 
-### 2019年07月02日 
+```
 
-[fix] 修复打包报错 ReferenceError: document is not defined
+### Load on demand
 
-[https://github.com/reactjs/react-rails/issues/319]https://github.com/reactjs/react-rails/issues/319
+- direct import
+
+```js
+import Button from 'react-iaux/es/button';
+```
+
+- with `babel-import-plugin`
+
+```js
+module.exports = {
+  'plugins': [
+    [
+      'import',
+      {
+        'libraryName': 'react-iaux',
+        'libraryDirectory': 'es',
+        'style': true,
+        'camel2DashComponentName': false,
+        'customName': name => {
+          return `react-iaux/es/${[name[0].toLowerCase(), name.substr(1)].join('')}`;
+        },
+      },
+    ],
+}
+```
+
+## LICENSE
+
+The MIT License (MIT)
+
+
+[npm]: https://img.shields.io/npm/v/react-iaux
+
+[npm-url]: https://www.npmjs.com/package/react-iaux
+
+[node]: https://badgen.net/npm/node/react-iaux
+
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/david/webpack/webpack.svg
+
+[deps-url]: #
+
+[prs]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
+
+[prs-url]: https://github.com/iovx/iovx/react-iaux
+
+[tag]: https://badgen.net/github/tags/iovx/react-iaux
+
+[tag-url]: #
+
+[release]: https://badgen.net/github/release/iovx/react-iaux
+
+[release-url]: #
+
+[license]: https://img.shields.io/github/license/iovx/react-iaux
+
+[license-url]: #
+
+[tests-url]:https://travis-ci.com/github/iovx/react-iaux/builds
+
+[tests]:https://badgen.net/travis/iovx/react-iaux
+
+[last-commit-url]: https://travis-ci.com/github/iovx/react-iaux/builds
+
+[last-commit]: https://badgen.net/github/iovx/last-commit/react-iaux
+
+[cover-url]: https://codecov.io/github/react-iaux/
+
+[cover]: https://badgen.net/codecov/c/github/react-iaux/master
+
+[download-url]: https://www.npmjs.com/package/react-iaux
+
+[download]: https://badgen.net/npm/dw/react-iaux
