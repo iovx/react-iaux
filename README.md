@@ -101,7 +101,7 @@ The MIT License (MIT)
 
 [last-commit-url]: https://travis-ci.com/github/iovx/react-iaux/builds
 
-[last-commit]: https://badgen.net/github/iovx/last-commit/react-iaux
+[last-commit]: https://badgen.net/github/last-commit/iovx/react-iaux
 
 [cover-url]: https://codecov.io/github/react-iaux/
 
