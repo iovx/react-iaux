@@ -37,7 +37,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', 'json'],
     alias: {
       '@':path.resolve(__dirname, '../pages'),
-      'react-iaux': path.resolve(__dirname, '../es'),
+      'react-iaux': path.resolve(__dirname, './'),
     },
   },
   module: {
