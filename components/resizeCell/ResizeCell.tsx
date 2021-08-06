@@ -80,7 +80,7 @@ class ResizeCell extends React.Component<ResizeCellProps, ResizeCellState> {
   }
 
   shouldComponentUpdate(nextProps: ResizeCellProps, nextState: ResizeCellState) {
-    return !(this.state.width === nextState.width || this.state.height === nextState.height);
+    return true; // !(this.state.width === nextState.width || this.state.height === nextState.height);
   }
 
   initSize = (width: number, height: number) => {
